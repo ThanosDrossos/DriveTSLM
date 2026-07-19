@@ -49,7 +49,7 @@ body {
   border-radius: 7px; padding: 7px 8px; font-size: 12.5px;
 }
 
-.main { flex: 1; overflow-y: auto; padding: 26px 30px 60px; }
+.main { flex: 1; min-width: 0; overflow-y: auto; padding: 26px 30px 60px; }
 .main h1 { font-size: 20px; margin: 0 0 5px; }
 .main .sub { color: var(--muted); margin: 0 0 20px; max-width: 880px; line-height: 1.55; font-size: 14.5px; }
 .prose { font-size: 15px; line-height: 1.7; max-width: 940px; }
@@ -170,8 +170,8 @@ select, input[type="password"], input[type="text"] {
   color: var(--muted); }
 
 .card-grid {
-  display: grid; grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
-  gap: 12px; margin-bottom: 14px;
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 12px;
 }
 .nav-card {
   all: unset; box-sizing: border-box; cursor: pointer; display: flex;

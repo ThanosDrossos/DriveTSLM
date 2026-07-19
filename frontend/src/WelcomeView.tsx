@@ -110,7 +110,7 @@ export default function WelcomeView({
         </p>
       </div>
 
-      <div className="panel">
+      <div className="panel" style={{ maxWidth: 940 }}>
         <h3>The four views</h3>
         <div className="card-grid">
           {pages.map((p) => (
