@@ -1,0 +1,184 @@
+{
+ "narratives": [
+  {
+   "narrative_id": "ciss_2022_24570_v2__real",
+   "event_id": "ciss_2022_24570_v2",
+   "text": "V1 and V2 were traveling north bound on a four lane, physically divided, bidirectional roadway, with two lanes north bound and two lanes south bound. Both vehicles were negotiating a curve to the right, with a slight incline to the roadway. V1 was traveling in lane one, while V2 was traveling in lane two. V1 began to move into lane two as V2 was attempting to pass it. V2 departed its lane to the right, where  V2's frontal plane impacted V1's rear plane. V2 came to final rest off of the right side of the roadway. There was a small fire in the engine compartment of V2. V1 continued north bound and was not located.",
+   "ground_truth": "consistent",
+   "injected_error": null,
+   "source": "ciss_summary",
+   "note": "real CISS technician summary; describes the whole crash, telemetry is from V2"
+  },
+  {
+   "narrative_id": "ciss_2022_24570_v2__speed_mismatch",
+   "event_id": "ciss_2022_24570_v2",
+   "text": "I was driving my Subaru Legacy northbound in the left lane at about 60 km/h. The car ahead of me drifted into my lane, and the front of my car hit its rear end. I had braked just before we collided.",
+   "ground_truth": "inconsistent",
+   "injected_error": "speed_mismatch",
+   "source": "authored_claimant_style",
+   "note": "claimed ~60 km/h; EDR pre-crash speed is 111-121 km/h (braking + frontal impact are consistent with the EDR)"
+  },
+  {
+   "narrative_id": "ciss_2022_25326_v1__real",
+   "event_id": "ciss_2022_25326_v1",
+   "text": "V1 was traveling east in the first of four lanes on a positively divided, two-way roadway. V2 was traveling east in the same lane ahead of V1. The front of V1 contacted the back of V2. V2 was redirected off the right side of the road. The right side of V2 contacted the concrete traffic barrier. Both vehicles then came to rest in the road. V2 at final rest had a major fire.",
+   "ground_truth": "consistent",
+   "injected_error": null,
+   "source": "ciss_summary",
+   "note": "real CISS technician summary; describes the whole crash, telemetry is from V1"
+  },
+  {
+   "narrative_id": "ciss_2022_25326_v1__speed_mismatch",
+   "event_id": "ciss_2022_25326_v1",
+   "text": "I was doing roughly 100 km/h in the left lane when the car in front of me suddenly slowed. I braked for several seconds but could not avoid hitting it with my front end.",
+   "ground_truth": "inconsistent",
+   "injected_error": "speed_mismatch",
+   "source": "authored_claimant_style",
+   "note": "claimed ~100 km/h; EDR shows 203-253 km/h (multi-second braking + frontal impact are consistent)"
+  },
+  {
+   "narrative_id": "ciss_2022_26540_v1__real",
+   "event_id": "ciss_2022_26540_v1",
+   "text": "V1 was traveling westbound in lane one of a two lane, one way roadway.  V2 was legally parked on the north side of the same roadway.  The front plane of V1 contacted the back plane of V2.  V1 and V2 final rest positions were in the roadway.",
+   "ground_truth": "consistent",
+   "injected_error": null,
+   "source": "ciss_summary",
+   "note": "real CISS technician summary; describes the whole crash, telemetry is from V1"
+  },
+  {
+   "narrative_id": "ciss_2022_26540_v1__speed_mismatch",
+   "event_id": "ciss_2022_26540_v1",
+   "text": "I was traveling at highway speed, about 90 km/h, when I struck the back of a parked vehicle with my front bumper. I hit the brakes only at the last moment.",
+   "ground_truth": "inconsistent",
+   "injected_error": "speed_mismatch",
+   "source": "authored_claimant_style",
+   "note": "claimed ~90 km/h; EDR shows 32-36 km/h (last-moment braking + frontal impact are consistent)"
+  },
+  {
+   "narrative_id": "ciss_2022_25411_v1__real",
+   "event_id": "ciss_2022_25411_v1",
+   "text": "V1 was east bound on a two lane, non-divided, bidirectional roadway. The roadway had a slight curve to the left, and a positive grade. V1 departed the roadway to the right, where its frontal plane impacted a large tree. V1 came to final rest in the east bound lane of travel, facing south.",
+   "ground_truth": "consistent",
+   "injected_error": null,
+   "source": "ciss_summary",
+   "note": "real CISS technician summary; describes the whole crash, telemetry is from V1"
+  },
+  {
+   "narrative_id": "ciss_2022_25411_v1__claimed_braking_absent",
+   "event_id": "ciss_2022_25411_v1",
+   "text": "I was heading east at just under 100 km/h when I lost control on the curve. I braked hard for several seconds, but the car left the road and hit a tree head-on.",
+   "ground_truth": "inconsistent",
+   "injected_error": "claimed_braking_absent",
+   "source": "authored_claimant_style",
+   "note": "claimed multi-second hard braking; EDR service-brake is OFF for the entire pre-crash window (speed ~98 km/h and frontal tree impact are consistent)"
+  },
+  {
+   "narrative_id": "ciss_2022_26196_v1__real",
+   "event_id": "ciss_2022_26196_v1",
+   "text": "V1 was traveling east on a two lane undivided roadway. V1 departed the roadway to the right. The front of V1 contacted a bridge abutment. V1 came to final rest at the point of impact.",
+   "ground_truth": "consistent",
+   "injected_error": null,
+   "source": "ciss_summary",
+   "note": "real CISS technician summary; describes the whole crash, telemetry is from V1"
+  },
+  {
+   "narrative_id": "ciss_2022_26196_v1__claimed_braking_absent",
+   "event_id": "ciss_2022_26196_v1",
+   "text": "I was driving east at about 85 km/h when I drifted off the road. I stood on the brakes well before leaving the roadway, but the front of my car still struck the bridge abutment.",
+   "ground_truth": "inconsistent",
+   "injected_error": "claimed_braking_absent",
+   "source": "authored_claimant_style",
+   "note": "claimed braking well before impact; EDR brake is OFF throughout and speed RISES 77->90 km/h (speed ~85 and frontal impact are consistent)"
+  },
+  {
+   "narrative_id": "ciss_2022_25581_v1__real",
+   "event_id": "ciss_2022_25581_v1",
+   "text": "V1 was traveling northbound on a two-lane, two-way roadway negotiating a left hand curve. V1 departed the roadway on the right side where the front plane contacted a utility pole. After impact V1 rotated clockwise and came to final rest in the middle of the roadway partially in the north and southbound lanes facing southeast.",
+   "ground_truth": "consistent",
+   "injected_error": null,
+   "source": "ciss_summary",
+   "note": "real CISS technician summary; describes the whole crash, telemetry is from V1"
+  },
+  {
+   "narrative_id": "ciss_2022_25581_v1__understated_severity",
+   "event_id": "ciss_2022_25581_v1",
+   "text": "Coming out of the curve I slid off the road and clipped a utility pole. It was a light, glancing contact; the car needed only cosmetic repairs.",
+   "ground_truth": "inconsistent",
+   "injected_error": "understated_severity",
+   "source": "authored_claimant_style",
+   "note": "claimed light glancing contact; EDR max longitudinal delta-V is -76 km/h with airbag deployment at 3.5 ms (a severe frontal pole impact)"
+  },
+  {
+   "narrative_id": "ciss_2022_24665_v1__real",
+   "event_id": "ciss_2022_24665_v1",
+   "text": "V1 was traveling east on a one-way exit ramp. V2, a tractor-trailer, was parked on the paved shoulder of the exit ramp facing east. V1 departed the roadway to the left, returned to the roadway then departed the roadway to the right and its front plane contacted the back plane of V2's trailer. V2 was pushed forward and came to rest near impact. V1 rotated clockwise and bounce back and came to rest on the left shoulder facing east.",
+   "ground_truth": "consistent",
+   "injected_error": null,
+   "source": "ciss_summary",
+   "note": "real CISS technician summary; describes the whole crash, telemetry is from V1"
+  },
+  {
+   "narrative_id": "ciss_2022_24665_v1__understated_severity",
+   "event_id": "ciss_2022_24665_v1",
+   "text": "I drifted onto the shoulder and bumped the back of a parked trailer. It was a light tap; the truck was still driveable.",
+   "ground_truth": "inconsistent",
+   "injected_error": "understated_severity",
+   "source": "authored_claimant_style",
+   "note": "claimed light tap; EDR max longitudinal delta-V is -99 km/h at ~96 km/h travel speed with airbag deployment"
+  },
+  {
+   "narrative_id": "ciss_2022_25905_v2__real",
+   "event_id": "ciss_2022_25905_v2",
+   "text": "Vehicle 1 was heading south in lane two of a two-lane protected turn lane that was about to merge into a south-bound three-lane one-way road. Vehicle #2 was traveling east in lane one of a nine-lane, two-way road. Vehicle #2 turned right to travel south in lane two of the road that the protected left turn lanes were merging into. Vehicle 1 made a right turn across a painted gore before the merge, intending to enter a parking lot, and vehicle 1's right side and vehicle 2's front end made contact with each other. Both vehicles came to rest on the road.",
+   "ground_truth": "consistent",
+   "injected_error": null,
+   "source": "ciss_summary",
+   "note": "real CISS technician summary; describes the whole crash, telemetry is from V2"
+  },
+  {
+   "narrative_id": "ciss_2022_25905_v2__wrong_impact_direction",
+   "event_id": "ciss_2022_25905_v2",
+   "text": "As I was making my right turn onto the southbound road, another car struck the left side of my Outback. I had just accelerated from a near stop.",
+   "ground_truth": "inconsistent",
+   "injected_error": "wrong_impact_direction",
+   "source": "authored_claimant_style",
+   "note": "claimed left-side impact; EDR shows dominant LONGITUDINAL delta-V (-17 km/h long vs +4 lat), i.e. a frontal impact (acceleration from near stop 6->28 km/h is consistent)"
+  },
+  {
+   "narrative_id": "ciss_2022_27367_v2__real",
+   "event_id": "ciss_2022_27367_v2",
+   "text": "V1 was entering the roadway from a parking spot on a five lane, two-way roadway, attempting to make a u-turn to head west.  V2 was traveling east in lane two of a five lane two way trafficway.  As V1 made the u-turn, the left side of V1 made contact with V2's front plane. As the vehicles continued in motion, the left side of V1 struck the front of V2. V1 came to final rest in west bound lanes of travel. V2 came to final rest in the middle of the roadway.",
+   "ground_truth": "consistent",
+   "injected_error": null,
+   "source": "ciss_summary",
+   "note": "real CISS technician summary; describes the whole crash, telemetry is from V2"
+  },
+  {
+   "narrative_id": "ciss_2022_27367_v2__wrong_impact_direction",
+   "event_id": "ciss_2022_27367_v2",
+   "text": "I was accelerating eastbound when my Accord was rear-ended from behind by another vehicle. I braked right as it happened.",
+   "ground_truth": "inconsistent",
+   "injected_error": "wrong_impact_direction",
+   "source": "authored_claimant_style",
+   "note": "claimed rear-ended (would produce POSITIVE longitudinal delta-V); EDR shows -18 km/h longitudinal, a frontal deceleration (acceleration 5->35 km/h and late braking are consistent)"
+  },
+  {
+   "narrative_id": "ciss_2022_24878_v1__real",
+   "event_id": "ciss_2022_24878_v1",
+   "text": "V1 was traveling westbound in lane two (2) of an undivided five (5) lane roadway (two westbound lanes, two eastbound lanes with a common left/right center turn lane). V1 traversed the lanes lines and entered lane one (1) before departing the left side of the roadway initiating a clockwise yaw. V1's left side impacted an overhead traffic signal pole a pole and the driver was ejected. The vehicle rotated rapidly clockwise around the pole as the vehicle split into two pieces. The rear box came to rest in the center of the roadway while the front continued westerly, impacting a concrete electric box with its right side plane, before coming to rest, facing easterly.",
+   "ground_truth": "consistent",
+   "injected_error": null,
+   "source": "ciss_summary",
+   "note": "real CISS technician summary; describes the whole crash, telemetry is from V1"
+  },
+  {
+   "narrative_id": "ciss_2022_24878_v1__event_count_mismatch",
+   "event_id": "ciss_2022_24878_v1",
+   "text": "My truck left the road and hit the traffic signal pole. That single impact was the only one in the crash; the truck then simply came to rest.",
+   "ground_truth": "inconsistent",
+   "injected_error": "event_count_mismatch",
+   "source": "authored_claimant_style",
+   "note": "claimed a single impact; the EDR recorded 3 events (narrative also describes pole impact, vehicle splitting, and a further impact)"
+  }
+ ]
+}
