@@ -12,10 +12,17 @@ ground-truth-by-construction narrative perturbations.
 
 ## Quick start
 
+Hosted demo: **https://claims-desk.graybush-6924b6da.germanywestcentral.azurecontainerapps.io**
+(password-gated; the password ships with the application materials, not this repo).
+
 ```bash
 cp .env.example .env        # fill in OPENAI_API_KEY (KIT AI Toolbox) + DEMO_PASSWORD
 docker compose up           # build + serve everything on http://localhost:8000
 ```
+
+Deployment (Azure Container Apps, mirrors the lab's example PoC): local `docker build`,
+push to ACR, `az containerapp create` with the two secrets sealed as ACA secrets —
+scripted steps in the git history; teardown is `az group delete --name rg-claims-desk`.
 
 Local dev without Docker: create a venv from `backend/requirements.txt`, build the
 frontend once (`docker run --rm -v "$PWD/frontend:/app" -w /app node:22-alpine sh -c
