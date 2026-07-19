@@ -1,0 +1,12 @@
+[
+  {
+    "year": 2022,
+    "cases_total": 2929,
+    "has_summary_column": true,
+    "cases_with_narrative": 2929,
+    "vehicles_with_precrash_speed": 1552,
+    "vehicles_with_speed_and_deltav": 1467,
+    "joined_cases": 1322,
+    "joined_vehicles": 1467
+  }
+]

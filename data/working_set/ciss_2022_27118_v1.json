@@ -1,0 +1,261 @@
+{
+ "event_id": "ciss_2022_27118_v1",
+ "source": "ciss",
+ "label": null,
+ "duration_s": null,
+ "time_zero": "impact (t=0); pre-crash negative, crash pulse positive",
+ "narrative": "V1 was traveling northwest on a two-way, two lane undivided roadway, approaching a sign controlled intersection. V2 was traveling northeast, on a median divided trafficway, with three lanes in the same direction, approaching the same intersection as V1. Both vehicles entered the intersection. The frontal plane of V2 contacted the left side plane of V1. V1 continued forward rotating in a counter clockwise direction and came to a final rest off the roadway in the median. V2 continued forward and came to a final rest in the roadway",
+ "narrative_vehicle_ref": "V1",
+ "channels": {
+  "speed": {
+   "unit": "km/h",
+   "desc": "Vehicle speed (EDR pre-crash)",
+   "t": [
+    -4.8,
+    -4.3,
+    -3.8,
+    -3.3,
+    -2.8,
+    -2.3,
+    -1.8,
+    -1.3,
+    -0.8,
+    -0.3,
+    0.0
+   ],
+   "v": [
+    0.0,
+    0.0,
+    1.0,
+    4.0,
+    8.0,
+    11.0,
+    14.0,
+    17.0,
+    20.0,
+    25.0,
+    27.0
+   ]
+  },
+  "throttle": {
+   "unit": "%",
+   "desc": "Engine throttle, percent full",
+   "t": [
+    -4.8,
+    -4.3,
+    -3.8,
+    -3.3,
+    -2.8,
+    -2.3,
+    -1.8,
+    -1.3,
+    -0.8,
+    -0.3,
+    0.0
+   ],
+   "v": [
+    0.0,
+    0.0,
+    10.5,
+    9.0,
+    11.0,
+    12.0,
+    14.5,
+    33.5,
+    30.5,
+    30.5,
+    36.5
+   ]
+  },
+  "accel_pedal": {
+   "unit": "%",
+   "desc": "Accelerator pedal, percent full",
+   "t": [
+    -4.8,
+    -4.3,
+    -3.8,
+    -3.3,
+    -2.8,
+    -2.3,
+    -1.8,
+    -1.3,
+    -0.8,
+    -0.3,
+    0.0
+   ],
+   "v": [
+    0.0,
+    0.0,
+    21.5,
+    24.5,
+    24.0,
+    23.5,
+    24.0,
+    72.5,
+    100.0,
+    99.0,
+    79.5
+   ]
+  },
+  "brake": {
+   "unit": "on/off",
+   "desc": "Service brake status (0=off, 1=on)",
+   "t": [
+    -4.8,
+    -4.3,
+    -3.8,
+    -3.3,
+    -2.8,
+    -2.3,
+    -1.8,
+    -1.3,
+    -0.8,
+    -0.3,
+    0.0
+   ],
+   "v": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ]
+  },
+  "rpm": {
+   "unit": "rpm",
+   "desc": "Engine RPM",
+   "t": [
+    -4.8,
+    -4.3,
+    -3.8,
+    -3.3,
+    -2.8,
+    -2.3,
+    -1.8,
+    -1.3,
+    -0.8,
+    -0.3,
+    0.0
+   ],
+   "v": [
+    500.0,
+    500.0,
+    500.0,
+    1200.0,
+    1300.0,
+    1500.0,
+    1600.0,
+    1900.0,
+    2200.0,
+    2700.0,
+    3100.0
+   ]
+  },
+  "steering": {
+   "unit": "deg",
+   "desc": "Steering input",
+   "t": [
+    -4.8,
+    -4.3,
+    -3.8,
+    -3.3,
+    -2.8,
+    -2.3,
+    -1.8,
+    -1.3,
+    -0.8,
+    -0.3,
+    0.0
+   ],
+   "v": [
+    4.5,
+    4.5,
+    4.5,
+    4.5,
+    4.5,
+    13.5,
+    7.5,
+    -42.0,
+    -16.5,
+    88.5,
+    223.5
+   ]
+  },
+  "delta_v_long": {
+   "unit": "km/h",
+   "desc": "Cumulative longitudinal delta-V during impact (times converted from ms to s)",
+   "t": [
+    0.0,
+    0.01,
+    0.02,
+    0.03,
+    0.04,
+    0.05,
+    0.06,
+    0.07,
+    0.08,
+    0.09,
+    0.1,
+    0.11,
+    0.12,
+    0.13,
+    0.14,
+    0.15,
+    0.16,
+    0.17,
+    0.18
+   ],
+   "v": [
+    0.0,
+    -0.6,
+    -1.4,
+    -2.0,
+    -2.3,
+    -3.3,
+    -3.7,
+    -4.4,
+    -6.2,
+    -6.7,
+    -6.9,
+    -7.0,
+    -7.6,
+    -8.0,
+    -8.7,
+    -8.9,
+    -9.3,
+    -9.7,
+    -10.1
+   ]
+  }
+ },
+ "edr_summary": {
+  "max_delta_v_long_kmh": -10.1,
+  "max_delta_v_long_time_ms": 182.0,
+  "max_delta_v_lat_kmh": NaN,
+  "max_delta_v_lat_time_ms": null,
+  "num_events_recorded": null,
+  "event_desc": "Most Recent Event",
+  "driver_belt_code": 1,
+  "driver_airbag_stage1_ms": null
+ },
+ "meta": {
+  "year": 2022,
+  "caseid": 27118,
+  "casenumber": "1-54-2022-071-03",
+  "vehno": 1,
+  "vehicles_in_crash": 2,
+  "vehicle": {
+   "make": "Toyota",
+   "model": "Tacoma",
+   "model_year": 2016,
+   "speed_limit_kmh": 40.0
+  },
+  "note": "EDR kinematics are sparse: ~2Hz pre-crash series plus a crash-pulse delta-V curve, unlike VZCrash's 100Hz streams."
+ }
+}
