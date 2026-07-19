@@ -94,6 +94,20 @@ TOOL_SPECS = [
 ]
 
 
+# OpenAI chat-completions function specs (same source of truth as TOOL_SPECS)
+OPENAI_TOOLS = [
+    {
+        "type": "function",
+        "function": {
+            "name": t["name"],
+            "description": t["description"],
+            "parameters": t["input_schema"],
+        },
+    }
+    for t in TOOL_SPECS
+]
+
+
 def run_tool(name: str, args: dict) -> tuple[dict, bytes | None]:
     """Dispatch one tool call. Returns (json_result, png_bytes_or_None).
     Errors are returned as {"error": ...} so the agent can adapt."""

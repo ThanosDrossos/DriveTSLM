@@ -35,9 +35,13 @@ sys.path.insert(0, str(ROOT / "backend"))
 
 from app import narratives  # noqa: E402
 from app.consistency import run_consistency_check  # noqa: E402
-from app.llm import MODEL  # noqa: E402
+from app.llm import DEFAULT_MODEL  # noqa: E402
 
 RUNS_DIR = ROOT / "eval" / "results" / "runs"
+
+
+def _runs_dir(model: str) -> Path:
+    return RUNS_DIR / model.replace("/", "_").replace(":", "_")
 
 ERROR_TO_ASSERTION_TYPE = {
     "speed_mismatch": "speed",
@@ -49,7 +53,7 @@ ERROR_TO_ASSERTION_TYPE = {
 
 
 def run_one(narrative: dict, rep: int, model: str) -> dict:
-    path = RUNS_DIR / f"{narrative['narrative_id']}__rep{rep}.json"
+    path = _runs_dir(model) / f"{narrative['narrative_id']}__rep{rep}.json"
     if path.exists():
         return json.loads(path.read_text(encoding="utf-8"))
 
@@ -72,7 +76,7 @@ def run_one(narrative: dict, rep: int, model: str) -> dict:
         "wall_s": round(time.time() - t0, 1),
         "result": final,
     }
-    RUNS_DIR.mkdir(parents=True, exist_ok=True)
+    _runs_dir(model).mkdir(parents=True, exist_ok=True)
     path.write_text(json.dumps(record, indent=1), encoding="utf-8")
     return record
 
@@ -144,7 +148,7 @@ def summarize(records: list[dict]) -> dict:
     mean = lambda xs: round(sum(xs) / len(xs), 4) if xs else None  # noqa: E731
 
     return {
-        "model": records[0]["model"] if records else MODEL,
+        "model": records[0]["model"] if records else DEFAULT_MODEL,
         "n_runs": len(records),
         "n_ok": len(ok),
         "n_failed": len(failed),
@@ -201,7 +205,7 @@ def to_markdown(s: dict) -> str:
 def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--reps", type=int, default=3)
-    ap.add_argument("--model", default=MODEL)
+    ap.add_argument("--model", default=DEFAULT_MODEL)
     ap.add_argument("--workers", type=int, default=2)
     ap.add_argument("--only", help="only narrative_ids starting with this prefix")
     args = ap.parse_args()

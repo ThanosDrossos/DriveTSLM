@@ -4,7 +4,7 @@ import { api } from "./api";
 import ClaimsDeskView from "./ClaimsDeskView";
 import ExplorerView from "./ExplorerView";
 import ResultsView from "./ResultsView";
-import type { EventRow } from "./types";
+import type { EventRow, ModelInfo } from "./types";
 
 type Tab = "explorer" | "analysis" | "claims" | "results";
 
@@ -43,19 +43,24 @@ export default function App() {
   const [locked, setLocked] = useState<boolean | null>(null);
   const [tab, setTab] = useState<Tab>("explorer");
   const [events, setEvents] = useState<EventRow[]>([]);
+  const [models, setModels] = useState<ModelInfo[]>([]);
   const [model, setModel] = useState("");
 
   const load = async () => {
     try {
       const r = await api("/api/events");
       setEvents(r.events);
-      setModel(r.model);
+      const m = await api("/api/models");
+      setModels(m.models);
+      setModel((cur) => cur || m.default);
       setLocked(false);
     } catch (e: any) {
       setLocked(true);
     }
   };
   useEffect(() => { load(); }, []);
+
+  const families = [...new Set(models.map((m) => m.family))];
 
   const [selected, setSelected] = useState<string | null>(null);
 
@@ -83,8 +88,20 @@ export default function App() {
             </button>
           ))}
         </nav>
+        <div className="model-pick">
+          <label>Model (KIT AI Toolbox)</label>
+          <select value={model} onChange={(e) => setModel(e.target.value)}>
+            {families.map((fam) => (
+              <optgroup key={fam} label={fam}>
+                {models.filter((m) => m.family === fam).map((m) => (
+                  <option key={m.id} value={m.id}>{m.label}</option>
+                ))}
+              </optgroup>
+            ))}
+          </select>
+        </div>
         <div className="foot">
-          {events.length} real events · model <code>{model}</code>
+          {events.length} real events · agent runs on <code>{model}</code>
           <br />data: VZCrash (Verizon Connect) + NHTSA CISS
         </div>
       </aside>
@@ -92,8 +109,8 @@ export default function App() {
         {tab === "explorer" && (
           <ExplorerView events={events} selected={selected} onSelect={setSelected} />
         )}
-        {tab === "analysis" && <AnalysisView events={events} />}
-        {tab === "claims" && <ClaimsDeskView events={events} />}
+        {tab === "analysis" && <AnalysisView events={events} model={model} />}
+        {tab === "claims" && <ClaimsDeskView events={events} model={model} />}
         {tab === "results" && <ResultsView />}
       </main>
     </div>

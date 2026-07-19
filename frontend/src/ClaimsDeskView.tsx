@@ -9,7 +9,7 @@ function displayName(n: Narrative, idx: number): string {
   return `Claimant statement ${String.fromCharCode(65 + idx)}`;
 }
 
-export default function ClaimsDeskView({ events }: { events: EventRow[] }) {
+export default function ClaimsDeskView({ events, model }: { events: EventRow[]; model: string }) {
   const withNarr = useMemo(() => events.filter((e) => e.n_narratives > 0), [events]);
   const [eventId, setEventId] = useState("");
   const [narrs, setNarrs] = useState<Narrative[]>([]);
@@ -43,7 +43,7 @@ export default function ClaimsDeskView({ events }: { events: EventRow[] }) {
     reset();
     setRunning(true);
     try {
-      await streamRun(`/api/check/${eventId}`, { narrative_id: narrId }, (ev) => {
+      await streamRun(`/api/check/${eventId}`, { narrative_id: narrId, model }, (ev) => {
         if (ev.type === "assertions") setAssertions(ev.assertions);
         if (ev.type === "tool_call")
           setCalls((s) => [...s, { id: ev.id, name: ev.name, args: ev.args }]);

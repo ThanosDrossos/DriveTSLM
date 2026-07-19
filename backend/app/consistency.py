@@ -1,9 +1,9 @@
-"""Narrative-vs-telemetry consistency checker.
+"""Narrative-vs-telemetry consistency checker (OpenAI-compatible endpoint).
 
-Step 1: extract_assertions — one LLM call turning the narrative into atomic,
-typed, checkable assertions (structured output, guaranteed JSON).
+Step 1: extract_assertions — one forced function call turning the narrative
+into atomic, typed, checkable assertions.
 Step 2: verification agent — same telemetry tools as the analysis agent; must
-finish by calling the strict submit_verdicts tool with a per-assertion verdict
+finish by calling the submit_verdicts function with a per-assertion verdict
 (supported / contradicted / unverifiable) whose evidence strings carry [claim](Tn)
 citations, validated by the backend.
 
@@ -17,10 +17,11 @@ import json
 from typing import Iterator
 
 from . import citations
-from .agent import AGENT_RULES, _serialize_result
+from .agent import (AGENT_RULES, assistant_to_message, execute_tool_calls,
+                    parse_args)
 from .events import store
-from .llm import MODEL, UsageTotal, get_client
-from .toolspec import TOOL_SPECS, run_tool
+from .llm import UsageTotal, get_client, resolve_model
+from .toolspec import OPENAI_TOOLS
 
 MAX_STEPS = 10
 
@@ -40,60 +41,68 @@ independently be true or false. Type them:
 Only extract claims about the physics of the event (motion, impacts, braking, speeds, \
 ordering). Ignore administrative details (names, roads, insurance, weather, injuries)."""
 
-EXTRACT_SCHEMA = {
-    "type": "object",
-    "properties": {
-        "assertions": {
-            "type": "array",
-            "items": {
-                "type": "object",
-                "properties": {
-                    "id": {"type": "string", "description": "a1, a2, ..."},
-                    "type": {"type": "string", "enum": ASSERTION_TYPES},
-                    "text": {"type": "string",
-                             "description": "the assertion, self-contained"},
-                },
-                "required": ["id", "type", "text"],
-                "additionalProperties": False,
+EXTRACT_TOOL = {
+    "type": "function",
+    "function": {
+        "name": "submit_assertions",
+        "description": "Submit the extracted checkable assertions.",
+        "parameters": {
+            "type": "object",
+            "properties": {
+                "assertions": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "id": {"type": "string", "description": "a1, a2, ..."},
+                            "type": {"type": "string", "enum": ASSERTION_TYPES},
+                            "text": {"type": "string",
+                                     "description": "the assertion, self-contained"},
+                        },
+                        "required": ["id", "type", "text"],
+                    },
+                }
             },
-        }
+            "required": ["assertions"],
+        },
     },
-    "required": ["assertions"],
-    "additionalProperties": False,
 }
 
 SUBMIT_TOOL = {
-    "name": "submit_verdicts",
-    "description": ("Submit your final per-assertion verdicts. Call this exactly once, "
-                    "after you have gathered the evidence. This ends the analysis."),
-    "strict": True,
-    "input_schema": {
-        "type": "object",
-        "properties": {
-            "verdicts": {
-                "type": "array",
-                "items": {
-                    "type": "object",
-                    "properties": {
-                        "assertion_id": {"type": "string"},
-                        "verdict": {"type": "string",
-                                    "enum": ["supported", "contradicted", "unverifiable"]},
-                        "evidence": {
-                            "type": "string",
-                            "description": ("1-3 sentences; every quantitative claim as a "
-                                            "[claim](Tn) citation of a tool result"),
+    "type": "function",
+    "function": {
+        "name": "submit_verdicts",
+        "description": ("Submit your final per-assertion verdicts. Call this exactly "
+                        "once, after you have gathered the evidence. This ends the "
+                        "analysis."),
+        "parameters": {
+            "type": "object",
+            "properties": {
+                "verdicts": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "assertion_id": {"type": "string"},
+                            "verdict": {"type": "string",
+                                        "enum": ["supported", "contradicted",
+                                                 "unverifiable"]},
+                            "evidence": {
+                                "type": "string",
+                                "description": ("1-3 sentences; every quantitative "
+                                                "claim as a [claim](Tn) citation of a "
+                                                "tool result"),
+                            },
                         },
+                        "required": ["assertion_id", "verdict", "evidence"],
                     },
-                    "required": ["assertion_id", "verdict", "evidence"],
-                    "additionalProperties": False,
                 },
+                "overall": {"type": "string",
+                            "enum": ["consistent", "inconsistent", "uncertain"]},
+                "rationale": {"type": "string"},
             },
-            "overall": {"type": "string",
-                        "enum": ["consistent", "inconsistent", "uncertain"]},
-            "rationale": {"type": "string"},
+            "required": ["verdicts", "overall", "rationale"],
         },
-        "required": ["verdicts", "overall", "rationale"],
-        "additionalProperties": False,
     },
 }
 
@@ -129,21 +138,66 @@ Assertions to verify against event {event_id}:
 Verify each assertion with the tools, then call submit_verdicts."""
 
 
-def extract_assertions(narrative: str, model: str | None = None) -> tuple[list[dict], UsageTotal]:
-    model = model or MODEL
-    client = get_client()
+def _strip_fences(text: str) -> str:
+    t = text.strip()
+    if t.startswith("```"):
+        t = t.split("\n", 1)[-1]
+        if t.rstrip().endswith("```"):
+            t = t.rstrip()[:-3]
+    return t.strip()
+
+
+def extract_assertions(narrative: str, model: str,
+                       client) -> tuple[list[dict], UsageTotal]:
     usage = UsageTotal(model)
-    response = client.messages.create(
+    response = client.chat.completions.create(
         model=model,
-        max_tokens=4000,
-        system=EXTRACT_SYSTEM,
-        output_config={"format": {"type": "json_schema", "schema": EXTRACT_SCHEMA}},
-        messages=[{"role": "user",
-                   "content": f"Extract the checkable assertions:\n---\n{narrative}\n---"}],
+        messages=[
+            {"role": "system", "content": EXTRACT_SYSTEM},
+            {"role": "user",
+             "content": f"Extract the checkable assertions:\n---\n{narrative}\n---"},
+        ],
+        tools=[EXTRACT_TOOL],
+        tool_choice={"type": "function", "function": {"name": "submit_assertions"}},
     )
     usage.add(response.usage)
-    text = next(b.text for b in response.content if b.type == "text")
-    return json.loads(text)["assertions"], usage
+    msg = response.choices[0].message
+    if msg.tool_calls:
+        args, err = parse_args(msg.tool_calls[0].function.arguments)
+        if err:
+            raise ValueError(f"assertion extraction returned bad JSON: {err}")
+        assertions = args.get("assertions", [])
+    else:  # fallback: some routes may answer in text despite tool_choice
+        assertions = json.loads(_strip_fences(msg.content or ""))["assertions"]
+    cleaned = []
+    for i, a in enumerate(assertions, 1):
+        cleaned.append({
+            "id": str(a.get("id") or f"a{i}"),
+            "type": a.get("type") if a.get("type") in ASSERTION_TYPES else "other",
+            "text": str(a.get("text", "")).strip(),
+        })
+    return [a for a in cleaned if a["text"]], usage
+
+
+def _valid_verdicts(raw: dict, assertions: list[dict]) -> list[dict] | None:
+    verdicts = raw.get("verdicts")
+    if not isinstance(verdicts, list) or not verdicts:
+        return None
+    ok_ids = {a["id"] for a in assertions}
+    out = []
+    for v in verdicts:
+        if not isinstance(v, dict):
+            return None
+        if v.get("verdict") not in ("supported", "contradicted", "unverifiable"):
+            return None
+        out.append({
+            "assertion_id": str(v.get("assertion_id", "")),
+            "verdict": v["verdict"],
+            "evidence": str(v.get("evidence", "")),
+        })
+    # tolerate ids the model invented as long as most map back
+    mapped = sum(1 for v in out if v["assertion_id"] in ok_ids)
+    return out if mapped >= max(1, len(out) // 2) else None
 
 
 def derive_overall(verdicts: list[dict]) -> str:
@@ -159,13 +213,13 @@ def derive_overall(verdicts: list[dict]) -> str:
 def run_consistency_check(event_id: str, narrative: str,
                           model: str | None = None,
                           max_steps: int = MAX_STEPS) -> Iterator[dict]:
-    model = model or MODEL
+    model = resolve_model(model)
     client = get_client()
     ev = store().get(event_id)
 
     yield {"type": "start", "arm": "consistency", "event_id": event_id, "model": model}
 
-    assertions, usage = extract_assertions(narrative, model)
+    assertions, usage = extract_assertions(narrative, model, client)
     yield {"type": "assertions", "assertions": assertions}
 
     vehicle_note = ""
@@ -175,61 +229,75 @@ def run_consistency_check(event_id: str, narrative: str,
 
     tool_results: dict[str, dict] = {}
     trace: list[dict] = []
-    messages = [{"role": "user", "content": CHECK_TASK.format(
-        vehicle_note=vehicle_note, narrative=narrative, event_id=event_id,
-        assertions_json=json.dumps(assertions, indent=1))}]
+    messages: list[dict] = [
+        {"role": "system", "content": CHECK_SYSTEM},
+        {"role": "user", "content": CHECK_TASK.format(
+            vehicle_note=vehicle_note, narrative=narrative, event_id=event_id,
+            assertions_json=json.dumps(assertions, indent=1))},
+    ]
+    tools = OPENAI_TOOLS + [SUBMIT_TOOL]
 
     n_calls = 0
+    nudges = 0
+    format_retried = False
     submitted: dict | None = None
-    for _step in range(max_steps + 3):
-        response = client.messages.create(
-            model=model,
-            max_tokens=8000,
-            system=[{"type": "text", "text": CHECK_SYSTEM,
-                     "cache_control": {"type": "ephemeral"}}],
-            tools=TOOL_SPECS + [SUBMIT_TOOL],
-            messages=messages,
-        )
+    for _step in range(max_steps + 5):
+        response = client.chat.completions.create(
+            model=model, messages=messages, tools=tools)
         usage.add(response.usage)
-        tool_uses = [b for b in response.content if b.type == "tool_use"]
-        if not tool_uses:
-            if n_calls >= max_steps:
+        msg = response.choices[0].message
+        tool_calls = msg.tool_calls or []
+
+        if not tool_calls:
+            if nudges >= 2 or n_calls >= max_steps + 2:
                 break
-            # nudge once if the model answered in prose instead of submitting
-            messages.append({"role": "assistant", "content": response.content})
+            nudges += 1
+            messages.append(assistant_to_message(msg))
             messages.append({"role": "user",
                              "content": "Call submit_verdicts to finish."})
             continue
 
-        messages.append({"role": "assistant", "content": response.content})
-        result_blocks = []
-        for tu in tool_uses:
-            if tu.name == "submit_verdicts":
-                submitted = dict(tu.input)
-                result_blocks.append({"type": "tool_result", "tool_use_id": tu.id,
-                                      "content": "verdicts recorded"})
-                continue
-            n_calls += 1
-            tool_id = f"T{n_calls}"
-            yield {"type": "tool_call", "id": tool_id, "name": tu.name, "args": tu.input}
-            result, png = run_tool(tu.name, dict(tu.input))
-            tool_results[tool_id] = result
-            trace.append({"id": tool_id, "name": tu.name, "args": dict(tu.input),
-                          "result": result})
-            yield {"type": "tool_result", "id": tool_id, "name": tu.name,
-                   "result": result, "has_image": png is not None}
-            content: list[dict] = [{"type": "text",
-                                    "text": _serialize_result(tool_id, result)}]
-            if png is not None:
-                import base64
-                content.append({"type": "image",
-                                "source": {"type": "base64", "media_type": "image/png",
-                                           "data": base64.standard_b64encode(png).decode()}})
-            result_blocks.append({"type": "tool_result", "tool_use_id": tu.id,
-                                  "content": content,
-                                  **({"is_error": True} if "error" in result else {})})
-        messages.append({"role": "user", "content": result_blocks})
+        messages.append(assistant_to_message(msg))
+        telemetry_calls = []
+        for tc in tool_calls:
+            if tc.function.name == "submit_verdicts":
+                args, err = parse_args(tc.function.arguments)
+                verdicts = None if err else _valid_verdicts(args, assertions)
+                if verdicts is None:
+                    messages.append({"role": "tool", "tool_call_id": tc.id,
+                                     "content": "invalid submission; call "
+                                                "submit_verdicts again with the "
+                                                "required fields"})
+                else:
+                    submitted = {"verdicts": verdicts,
+                                 "overall": args.get("overall", "uncertain"),
+                                 "rationale": str(args.get("rationale", ""))}
+                    messages.append({"role": "tool", "tool_call_id": tc.id,
+                                     "content": "verdicts recorded"})
+            else:
+                telemetry_calls.append(tc)
+        if telemetry_calls:
+            n_calls = yield from execute_tool_calls(
+                telemetry_calls, messages, tool_results, trace, n_calls)
         if submitted is not None:
+            # validator-in-the-loop: one re-submission if evidence is uncited
+            ev_text = "\n".join(v["evidence"] for v in submitted["verdicts"])
+            val = citations.validate(ev_text, tool_results)
+            if (not format_retried and val.n_valid == 0 and val.n_uncited > 0
+                    and tool_results):
+                format_retried = True
+                yield {"type": "format_retry",
+                       "message": f"validator found {val.n_uncited} uncited claims "
+                                  "in the evidence; requesting one re-submission"}
+                messages.append({"role": "user", "content": (
+                    "The citation validator rejected your evidence fields: they "
+                    "contain ZERO valid [claim](Tn) citations. Call submit_verdicts "
+                    "again with the SAME verdicts, but write every quantitative "
+                    "claim in each evidence field as a markdown link "
+                    "[claim text with the numbers](Tn) pointing at the tool result "
+                    "that contains them. Bare [Tn] tags do not count.")})
+                submitted = None
+                continue
             break
 
     if submitted is None:

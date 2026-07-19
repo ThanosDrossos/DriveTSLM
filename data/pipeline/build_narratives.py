@@ -132,16 +132,141 @@ def build_ciss() -> list[dict]:
     return narratives
 
 
-def load_existing_vz() -> list[dict]:
-    """Preserve VZCrash narratives if the file already has them."""
-    if OUT.exists():
-        old = json.loads(OUT.read_text(encoding="utf-8"))["narratives"]
-        return [n for n in old if n["event_id"].startswith("vz_")]
-    return []
+# VZCrash has no real narratives (no FNOL corpus is public anywhere), so BOTH
+# variants are hand-authored claimant-style texts: the consistent one was
+# checked fact-by-fact against the real signals (see digest values in the
+# notes); the inconsistent one differs by exactly ONE injected error.
+# No vehicle-frame direction claims anywhere (axis alignment undocumented).
+# (event_id, [(suffix, ground_truth, injected_error, text, note), ...])
+VZ_NARRATIVES: list[tuple[str, list[tuple[str, str, str | None, str, str]]]] = [
+    ("vz_1511197", [
+        ("consistent", "consistent", None,
+         "I was on the highway doing just under 80 km/h and had been easing off "
+         "gradually for a few seconds as traffic ahead slowed. Then the collision "
+         "happened: I felt two distinct jolts about a second apart, and the car "
+         "dropped from motorway pace to a crawl within two or three seconds.",
+         "matches GPS 79->70 km/h gradual, two accel_x spikes at 9.20 s (-4.7 g) "
+         "and 10.17 s (+5.75 g), speed 70->43->16 km/h after impact"),
+        ("event_count_mismatch", "inconsistent", "event_count_mismatch",
+         "I was on the highway doing just under 80 km/h, easing off as traffic "
+         "slowed. There was a single impact - one jolt only - and the car dropped "
+         "to a crawl within a couple of seconds.",
+         "claims exactly one impact; accelerometer shows two distinct spikes "
+         "(-4.7 g at 9.20 s, +5.75 g at 10.17 s, ~1 s apart)"),
+    ]),
+    ("vz_2026308", [
+        ("consistent", "consistent", None,
+         "I was traveling at motorway speed, right around 100 km/h, when the crash "
+         "happened without much warning. The impact was violent and the car rotated "
+         "sharply before coming to a standstill within a few seconds.",
+         "matches GPS ~102 km/h steady, +5.89 g spike at 9.74 s, gyro peak "
+         "~779 deg/s, speed 98->0 km/h in ~5 s"),
+        ("speed_mismatch", "inconsistent", "speed_mismatch",
+         "I was driving at about 50 km/h when the crash happened without much "
+         "warning. The impact was violent and the car rotated sharply before "
+         "coming to a stop.",
+         "claims ~50 km/h; GPS shows 98-103 km/h in the seconds before the impact"),
+    ]),
+    ("vz_1529161", [
+        ("consistent", "consistent", None,
+         "I was doing about 60 km/h when something hit us more or less out of "
+         "nowhere. There were a couple of rapid jolts in quick succession, and we "
+         "went from cruising to fully stopped within about four seconds.",
+         "matches GPS 60-63 km/h steady, spikes at 6.74/7.44/7.77 s, speed "
+         "60->0 km/h between t=6 and t=11"),
+        ("claimed_braking_absent", "inconsistent", "claimed_braking_absent",
+         "I saw the danger well ahead and braked hard for a good four or five "
+         "seconds, but could not avoid the collision. Even after all that heavy "
+         "braking from about 60 km/h we still hit and came to a stop.",
+         "claims 4-5 s of hard braking BEFORE the impact; GPS is constant "
+         "60-63 km/h until the impact spikes at ~6.7 s - deceleration only "
+         "begins with the impact itself"),
+    ]),
+    ("vz_2076649", [
+        ("consistent", "consistent", None,
+         "I was on the motorway at around 105 to 110 km/h when we took one strong "
+         "blow. The car stayed drivable and slowed steadily over the following "
+         "seconds.",
+         "matches GPS 102-110 km/h, single dominant accel_x spike -5.51 g at "
+         "9.97 s, gradual decel 104->27 km/h afterwards"),
+        ("understated_severity", "inconsistent", "understated_severity",
+         "On the motorway there was a gentle nudge from another vehicle - barely "
+         "noticeable, just a light tap. We slowed down afterwards as a precaution.",
+         "claims a barely noticeable tap; accelerometer records a -5.5 g spike at "
+         "~10 s with multi-g transients on other axes at motorway speed"),
+    ]),
+    ("vz_2698954", [
+        ("consistent", "consistent", None,
+         "I had just pulled away and was accelerating for about ten seconds, up to "
+         "roughly 45 km/h, when a single heavy impact occurred. After the collision "
+         "we slowed and rolled to a near stop.",
+         "matches GPS 0->47 km/h acceleration over ~11 s, single -5.86 g spike at "
+         "11.01 s, decel to 2 km/h afterwards"),
+        ("speed_mismatch", "inconsistent", "speed_mismatch",
+         "We were stationary, waiting, when a single heavy impact struck the car. "
+         "We had not been moving at all at the time of the collision.",
+         "claims the vehicle was stationary at impact; GPS shows ~45 km/h at the "
+         "moment of the 11.01 s spike"),
+    ]),
+    ("vz_2128081", [
+        ("consistent", "consistent", None,
+         "I accelerated up to about 85 km/h, and then it all went wrong: there "
+         "were several impacts in quick succession and the car was thrown about "
+         "before we came to a complete stop.",
+         "matches GPS 30->86 km/h acceleration, repeated multi-g spikes at "
+         "11.0-12.3 s across axes, gyro ~133 deg/s, speed to 0 km/h"),
+        ("understated_severity", "inconsistent", "understated_severity",
+         "After speeding up, we had a light touch with another vehicle - we barely "
+         "made contact, and there was hardly anything to feel inside the car "
+         "before we pulled over and stopped.",
+         "claims barely perceptible contact; accelerometer records repeated "
+         "multi-g spikes (-4.3 g, +4.5 g) and the vehicle goes from 66 km/h to 0"),
+    ]),
+    ("vz_61371", [
+        ("consistent", "consistent", None,
+         "A car pulled out in front of me on the fast road. I emergency-braked "
+         "from around 110 km/h down to walking pace within a few seconds and we "
+         "never touched - no contact at all. Once clear, I picked up speed again.",
+         "matches GPS 113->10 km/h hard braking over ~8 s, zero impact spikes, "
+         "speed recovering to 42 km/h at window end (near_miss label)"),
+        ("event_count_mismatch", "inconsistent", "event_count_mismatch",
+         "A car pulled out in front of me on the fast road. I emergency-braked "
+         "from around 110 km/h, but it still clipped my car once - a single "
+         "impact - before I slowed to walking pace.",
+         "claims one impact occurred; the accelerometer shows no impact spike "
+         "anywhere in the window (pure braking profile, max |dev| < 1 g)"),
+    ]),
+    ("vz_23172", [
+        ("consistent", "consistent", None,
+         "Ordinary city driving: I sped up to about 50 km/h, then slowed down for "
+         "a junction and continued at low speed. Nothing unusual happened on this "
+         "stretch.",
+         "matches GPS 43->52->14 km/h profile, zero impact spikes "
+         "(normal_driving label)"),
+    ]),
+]
+
+
+def build_vz() -> list[dict]:
+    narratives = []
+    st = store()
+    for event_id, variants in VZ_NARRATIVES:
+        st.get(event_id)  # fail fast if the working set lacks the event
+        for suffix, gt, err, text, note in variants:
+            narratives.append({
+                "narrative_id": f"{event_id}__{suffix}",
+                "event_id": event_id,
+                "text": text,
+                "ground_truth": gt,
+                "injected_error": err,
+                "source": "authored_claimant_style",
+                "note": note,
+            })
+    return narratives
 
 
 def main() -> None:
-    narratives = build_ciss() + load_existing_vz()
+    narratives = build_ciss() + build_vz()
     OUT.parent.mkdir(parents=True, exist_ok=True)
     OUT.write_text(json.dumps({"narratives": narratives}, indent=1), encoding="utf-8")
     counts: dict[str, int] = {}

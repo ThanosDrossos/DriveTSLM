@@ -20,7 +20,8 @@ export const UsageStats = ({ usage }: { usage: Usage }) => (
     <Stat k="output tokens" v={usage.output_tokens.toLocaleString()} />
     <Stat k="cache read" v={usage.cache_read_tokens.toLocaleString()} />
     <Stat k="API calls" v={usage.n_api_calls} />
-    <Stat k="est. cost" v={`$${usage.cost_usd_estimate.toFixed(4)}`} />
+    <Stat k="est. cost"
+          v={usage.cost_usd_estimate != null ? `$${usage.cost_usd_estimate.toFixed(4)}` : "n/a"} />
   </div>
 );
 

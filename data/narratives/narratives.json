@@ -179,6 +179,141 @@
    "injected_error": "event_count_mismatch",
    "source": "authored_claimant_style",
    "note": "claimed a single impact; the EDR recorded 3 events (narrative also describes pole impact, vehicle splitting, and a further impact)"
+  },
+  {
+   "narrative_id": "vz_1511197__consistent",
+   "event_id": "vz_1511197",
+   "text": "I was on the highway doing just under 80 km/h and had been easing off gradually for a few seconds as traffic ahead slowed. Then the collision happened: I felt two distinct jolts about a second apart, and the car dropped from motorway pace to a crawl within two or three seconds.",
+   "ground_truth": "consistent",
+   "injected_error": null,
+   "source": "authored_claimant_style",
+   "note": "matches GPS 79->70 km/h gradual, two accel_x spikes at 9.20 s (-4.7 g) and 10.17 s (+5.75 g), speed 70->43->16 km/h after impact"
+  },
+  {
+   "narrative_id": "vz_1511197__event_count_mismatch",
+   "event_id": "vz_1511197",
+   "text": "I was on the highway doing just under 80 km/h, easing off as traffic slowed. There was a single impact - one jolt only - and the car dropped to a crawl within a couple of seconds.",
+   "ground_truth": "inconsistent",
+   "injected_error": "event_count_mismatch",
+   "source": "authored_claimant_style",
+   "note": "claims exactly one impact; accelerometer shows two distinct spikes (-4.7 g at 9.20 s, +5.75 g at 10.17 s, ~1 s apart)"
+  },
+  {
+   "narrative_id": "vz_2026308__consistent",
+   "event_id": "vz_2026308",
+   "text": "I was traveling at motorway speed, right around 100 km/h, when the crash happened without much warning. The impact was violent and the car rotated sharply before coming to a standstill within a few seconds.",
+   "ground_truth": "consistent",
+   "injected_error": null,
+   "source": "authored_claimant_style",
+   "note": "matches GPS ~102 km/h steady, +5.89 g spike at 9.74 s, gyro peak ~779 deg/s, speed 98->0 km/h in ~5 s"
+  },
+  {
+   "narrative_id": "vz_2026308__speed_mismatch",
+   "event_id": "vz_2026308",
+   "text": "I was driving at about 50 km/h when the crash happened without much warning. The impact was violent and the car rotated sharply before coming to a stop.",
+   "ground_truth": "inconsistent",
+   "injected_error": "speed_mismatch",
+   "source": "authored_claimant_style",
+   "note": "claims ~50 km/h; GPS shows 98-103 km/h in the seconds before the impact"
+  },
+  {
+   "narrative_id": "vz_1529161__consistent",
+   "event_id": "vz_1529161",
+   "text": "I was doing about 60 km/h when something hit us more or less out of nowhere. There were a couple of rapid jolts in quick succession, and we went from cruising to fully stopped within about four seconds.",
+   "ground_truth": "consistent",
+   "injected_error": null,
+   "source": "authored_claimant_style",
+   "note": "matches GPS 60-63 km/h steady, spikes at 6.74/7.44/7.77 s, speed 60->0 km/h between t=6 and t=11"
+  },
+  {
+   "narrative_id": "vz_1529161__claimed_braking_absent",
+   "event_id": "vz_1529161",
+   "text": "I saw the danger well ahead and braked hard for a good four or five seconds, but could not avoid the collision. Even after all that heavy braking from about 60 km/h we still hit and came to a stop.",
+   "ground_truth": "inconsistent",
+   "injected_error": "claimed_braking_absent",
+   "source": "authored_claimant_style",
+   "note": "claims 4-5 s of hard braking BEFORE the impact; GPS is constant 60-63 km/h until the impact spikes at ~6.7 s - deceleration only begins with the impact itself"
+  },
+  {
+   "narrative_id": "vz_2076649__consistent",
+   "event_id": "vz_2076649",
+   "text": "I was on the motorway at around 105 to 110 km/h when we took one strong blow. The car stayed drivable and slowed steadily over the following seconds.",
+   "ground_truth": "consistent",
+   "injected_error": null,
+   "source": "authored_claimant_style",
+   "note": "matches GPS 102-110 km/h, single dominant accel_x spike -5.51 g at 9.97 s, gradual decel 104->27 km/h afterwards"
+  },
+  {
+   "narrative_id": "vz_2076649__understated_severity",
+   "event_id": "vz_2076649",
+   "text": "On the motorway there was a gentle nudge from another vehicle - barely noticeable, just a light tap. We slowed down afterwards as a precaution.",
+   "ground_truth": "inconsistent",
+   "injected_error": "understated_severity",
+   "source": "authored_claimant_style",
+   "note": "claims a barely noticeable tap; accelerometer records a -5.5 g spike at ~10 s with multi-g transients on other axes at motorway speed"
+  },
+  {
+   "narrative_id": "vz_2698954__consistent",
+   "event_id": "vz_2698954",
+   "text": "I had just pulled away and was accelerating for about ten seconds, up to roughly 45 km/h, when a single heavy impact occurred. After the collision we slowed and rolled to a near stop.",
+   "ground_truth": "consistent",
+   "injected_error": null,
+   "source": "authored_claimant_style",
+   "note": "matches GPS 0->47 km/h acceleration over ~11 s, single -5.86 g spike at 11.01 s, decel to 2 km/h afterwards"
+  },
+  {
+   "narrative_id": "vz_2698954__speed_mismatch",
+   "event_id": "vz_2698954",
+   "text": "We were stationary, waiting, when a single heavy impact struck the car. We had not been moving at all at the time of the collision.",
+   "ground_truth": "inconsistent",
+   "injected_error": "speed_mismatch",
+   "source": "authored_claimant_style",
+   "note": "claims the vehicle was stationary at impact; GPS shows ~45 km/h at the moment of the 11.01 s spike"
+  },
+  {
+   "narrative_id": "vz_2128081__consistent",
+   "event_id": "vz_2128081",
+   "text": "I accelerated up to about 85 km/h, and then it all went wrong: there were several impacts in quick succession and the car was thrown about before we came to a complete stop.",
+   "ground_truth": "consistent",
+   "injected_error": null,
+   "source": "authored_claimant_style",
+   "note": "matches GPS 30->86 km/h acceleration, repeated multi-g spikes at 11.0-12.3 s across axes, gyro ~133 deg/s, speed to 0 km/h"
+  },
+  {
+   "narrative_id": "vz_2128081__understated_severity",
+   "event_id": "vz_2128081",
+   "text": "After speeding up, we had a light touch with another vehicle - we barely made contact, and there was hardly anything to feel inside the car before we pulled over and stopped.",
+   "ground_truth": "inconsistent",
+   "injected_error": "understated_severity",
+   "source": "authored_claimant_style",
+   "note": "claims barely perceptible contact; accelerometer records repeated multi-g spikes (-4.3 g, +4.5 g) and the vehicle goes from 66 km/h to 0"
+  },
+  {
+   "narrative_id": "vz_61371__consistent",
+   "event_id": "vz_61371",
+   "text": "A car pulled out in front of me on the fast road. I emergency-braked from around 110 km/h down to walking pace within a few seconds and we never touched - no contact at all. Once clear, I picked up speed again.",
+   "ground_truth": "consistent",
+   "injected_error": null,
+   "source": "authored_claimant_style",
+   "note": "matches GPS 113->10 km/h hard braking over ~8 s, zero impact spikes, speed recovering to 42 km/h at window end (near_miss label)"
+  },
+  {
+   "narrative_id": "vz_61371__event_count_mismatch",
+   "event_id": "vz_61371",
+   "text": "A car pulled out in front of me on the fast road. I emergency-braked from around 110 km/h, but it still clipped my car once - a single impact - before I slowed to walking pace.",
+   "ground_truth": "inconsistent",
+   "injected_error": "event_count_mismatch",
+   "source": "authored_claimant_style",
+   "note": "claims one impact occurred; the accelerometer shows no impact spike anywhere in the window (pure braking profile, max |dev| < 1 g)"
+  },
+  {
+   "narrative_id": "vz_23172__consistent",
+   "event_id": "vz_23172",
+   "text": "Ordinary city driving: I sped up to about 50 km/h, then slowed down for a junction and continued at low speed. Nothing unusual happened on this stretch.",
+   "ground_truth": "consistent",
+   "injected_error": null,
+   "source": "authored_claimant_style",
+   "note": "matches GPS 43->52->14 km/h profile, zero impact spikes (normal_driving label)"
   }
  ]
 }

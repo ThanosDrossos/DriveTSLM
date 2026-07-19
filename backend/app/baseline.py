@@ -9,7 +9,7 @@ import base64
 from typing import Iterator
 
 from .events import store
-from .llm import MODEL, UsageTotal, get_client
+from .llm import UsageTotal, get_client, resolve_model
 from .tools import get_window_info, render_plot
 
 BASELINE_SYSTEM = """You are an expert automotive crash analyst. You are shown a \
@@ -24,7 +24,7 @@ Give your best analysis in this markdown format, under 350 words:
 
 
 def run_baseline(event_id: str, model: str | None = None) -> Iterator[dict]:
-    model = model or MODEL
+    model = resolve_model(model)
     client = get_client()
     ev = store().get(event_id)
 
@@ -42,23 +42,21 @@ def run_baseline(event_id: str, model: str | None = None) -> Iterator[dict]:
     yield {"type": "start", "arm": "baseline", "event_id": event_id, "model": model}
 
     usage = UsageTotal(model)
-    response = client.messages.create(
+    response = client.chat.completions.create(
         model=model,
-        max_tokens=8000,
-        system=BASELINE_SYSTEM,
-        messages=[{
-            "role": "user",
-            "content": [
-                {"type": "image",
-                 "source": {"type": "base64", "media_type": "image/png",
-                            "data": base64.standard_b64encode(png).decode()}},
+        messages=[
+            {"role": "system", "content": BASELINE_SYSTEM},
+            {"role": "user", "content": [
+                {"type": "image_url", "image_url": {
+                    "url": "data:image/png;base64,"
+                           + base64.standard_b64encode(png).decode()}},
                 {"type": "text",
                  "text": legend + "\n\nAnalyze this event following the required format."},
-            ],
-        }],
+            ]},
+        ],
     )
     usage.add(response.usage)
-    answer = "\n".join(b.text for b in response.content if b.type == "text")
+    answer = response.choices[0].message.content or ""
     yield {
         "type": "final",
         "arm": "baseline",

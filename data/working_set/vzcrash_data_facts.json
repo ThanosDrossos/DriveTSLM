@@ -1,0 +1,42 @@
+{
+  "verified_at": "fetch time, from actual arrays",
+  "rows_scanned": 8000,
+  "shard": "data/test-00000-of-00002.parquet",
+  "label_space": [
+    "crash",
+    "near_miss",
+    "normal_driving"
+  ],
+  "gsensor_shapes_seen": [
+    "(1250, 3)",
+    "(1300, 3)",
+    "(1420, 3)",
+    "(1430, 3)",
+    "(1440, 3)",
+    "(1470, 3)",
+    "(1500, 3)",
+    "(1600, 3)"
+  ],
+  "gps_speed_lengths_seen": [
+    13,
+    14,
+    15,
+    16,
+    17
+  ],
+  "units": {
+    "accel": "g",
+    "gyro": "deg/s",
+    "gps_speed": "km/h"
+  },
+  "sampling": {
+    "accel_hz": 100,
+    "gyro_hz": 100,
+    "gps_speed_hz": 1
+  },
+  "selected": {
+    "crash": 15,
+    "near_miss": 8,
+    "normal_driving": 7
+  }
+}

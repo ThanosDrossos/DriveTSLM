@@ -24,7 +24,7 @@ from .agent import AGENT_RULES, run_grounded_analysis
 from .baseline import run_baseline
 from .consistency import run_consistency_check
 from .events import store
-from .llm import MODEL
+from .llm import CURATED_MODELS, DEFAULT_MODEL, resolve_model
 from .tools import compute_stats, detect_events, get_window_info, render_plot
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -82,14 +82,19 @@ def login(body: LoginBody, response: Response):
 
 @app.get("/api/health")
 def health():
-    return {"ok": True, "events": len(store().ids()), "model": MODEL,
+    return {"ok": True, "events": len(store().ids()), "model": DEFAULT_MODEL,
             "gate": bool(DEMO_PASSWORD),
-            "api_key_present": bool(os.environ.get("ANTHROPIC_API_KEY"))}
+            "api_key_present": bool(os.environ.get("OPENAI_API_KEY"))}
 
 
 @app.get("/api/rules")
 def rules():
-    return {"model": MODEL, "rules": AGENT_RULES}
+    return {"model": DEFAULT_MODEL, "rules": AGENT_RULES}
+
+
+@app.get("/api/models")
+def models():
+    return {"models": CURATED_MODELS, "default": DEFAULT_MODEL}
 
 
 @app.get("/api/events")
@@ -105,7 +110,7 @@ def list_events():
             "meta": e.meta,
             "n_narratives": len(narratives.for_event(e.event_id)),
         })
-    return {"events": out, "model": MODEL}
+    return {"events": out, "model": DEFAULT_MODEL}
 
 
 @app.get("/api/events/{event_id}")
@@ -166,17 +171,22 @@ def _sse(gen):
 
 
 @app.post("/api/analyze/{event_id}")
-def analyze(event_id: str, arm: str = "agent"):
+def analyze(event_id: str, arm: str = "agent", model: str | None = None):
     if event_id not in store().ids():
         raise HTTPException(404, f"unknown event {event_id}")
+    try:
+        model = resolve_model(model)
+    except ValueError as exc:
+        raise HTTPException(422, str(exc))
     if arm == "baseline":
-        return _sse(run_baseline(event_id))
-    return _sse(run_grounded_analysis(event_id))
+        return _sse(run_baseline(event_id, model=model))
+    return _sse(run_grounded_analysis(event_id, model=model))
 
 
 class CheckBody(BaseModel):
     narrative_id: str | None = None
     text: str | None = None
+    model: str | None = None
 
 
 @app.post("/api/check/{event_id}")
@@ -189,7 +199,11 @@ def check(event_id: str, body: CheckBody):
         text = body.text
     else:
         raise HTTPException(422, "narrative_id or text required")
-    return _sse(run_consistency_check(event_id, text))
+    try:
+        model = resolve_model(body.model)
+    except ValueError as exc:
+        raise HTTPException(422, str(exc))
+    return _sse(run_consistency_check(event_id, text, model=model))
 
 
 @app.get("/api/narratives")

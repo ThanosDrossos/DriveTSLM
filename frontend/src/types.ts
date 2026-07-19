@@ -51,7 +51,13 @@ export interface Usage {
   output_tokens: number;
   cache_read_tokens: number;
   cache_creation_tokens: number;
-  cost_usd_estimate: number;
+  cost_usd_estimate: number | null;
+}
+
+export interface ModelInfo {
+  id: string;
+  label: string;
+  family: string;
 }
 
 export interface Verdict {

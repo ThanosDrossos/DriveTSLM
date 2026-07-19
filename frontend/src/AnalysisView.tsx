@@ -49,7 +49,7 @@ function ArmPanel({ title, subtitle, state, openTool, children }: {
   );
 }
 
-export default function AnalysisView({ events }: { events: EventRow[] }) {
+export default function AnalysisView({ events, model }: { events: EventRow[]; model: string }) {
   const [eventId, setEventId] = useState<string>("");
   const [agent, setAgent] = useState<ArmState>(empty());
   const [baseline, setBaseline] = useState<ArmState>(empty());
@@ -60,7 +60,7 @@ export default function AnalysisView({ events }: { events: EventRow[] }) {
                         set: React.Dispatch<React.SetStateAction<ArmState>>) => {
     set({ ...empty(), running: true });
     try {
-      await streamRun(`/api/analyze/${eventId}?arm=${arm}`, undefined, (ev) => {
+      await streamRun(`/api/analyze/${eventId}?arm=${arm}&model=${encodeURIComponent(model)}`, undefined, (ev) => {
         if (ev.type === "start" && ev.rules) setRules(ev.rules);
         if (ev.type === "tool_call")
           set((s) => ({ ...s, calls: [...s.calls, { id: ev.id, name: ev.name, args: ev.args }] }));
