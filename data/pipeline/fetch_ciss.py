@@ -253,9 +253,11 @@ def build_year(year: int, n_keep: int) -> tuple[list[dict], dict]:
             "narrative_vehicle_ref": f"V{veh}",
             "channels": channels,
             "edr_summary": {
-                "max_delta_v_long_kmh": row.maxdv_long,
+                # clean_dv again: pandas re-casts None -> NaN in float columns,
+                # and NaN in JSON breaks strict parsers downstream
+                "max_delta_v_long_kmh": clean_dv(row.maxdv_long),
                 "max_delta_v_long_time_ms": clean_ms(row.MAXDVLONGTIME),
-                "max_delta_v_lat_kmh": row.maxdv_lat,
+                "max_delta_v_lat_kmh": clean_dv(row.maxdv_lat),
                 "max_delta_v_lat_time_ms": clean_ms(row.MAXDVLATTIME),
                 "num_events_recorded": int(row.NUMEVNTS) if pd.notna(row.NUMEVNTS) and row.NUMEVNTS <= 10 else None,
                 "event_desc": str(row.EVENTDESC),

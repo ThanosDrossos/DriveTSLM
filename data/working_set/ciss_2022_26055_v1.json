@@ -279,7 +279,7 @@
  "edr_summary": {
   "max_delta_v_long_kmh": -10.787,
   "max_delta_v_long_time_ms": 173.5,
-  "max_delta_v_lat_kmh": NaN,
+  "max_delta_v_lat_kmh": null,
   "max_delta_v_lat_time_ms": null,
   "num_events_recorded": null,
   "event_desc": "2nd Prior Event",

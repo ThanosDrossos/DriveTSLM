@@ -361,7 +361,7 @@
  "edr_summary": {
   "max_delta_v_long_kmh": -10.35,
   "max_delta_v_long_time_ms": 40.5,
-  "max_delta_v_lat_kmh": NaN,
+  "max_delta_v_lat_kmh": null,
   "max_delta_v_lat_time_ms": null,
   "num_events_recorded": 1,
   "event_desc": "First Record",
