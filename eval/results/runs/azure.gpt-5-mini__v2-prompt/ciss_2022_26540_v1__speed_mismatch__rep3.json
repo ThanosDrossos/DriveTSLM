@@ -1,0 +1,445 @@
+{
+ "narrative_id": "ciss_2022_26540_v1__speed_mismatch",
+ "event_id": "ciss_2022_26540_v1",
+ "ground_truth": "inconsistent",
+ "injected_error": "speed_mismatch",
+ "rep": 3,
+ "model": "azure.gpt-5-mini",
+ "wall_s": 15.1,
+ "result": {
+  "type": "final",
+  "arm": "consistency",
+  "event_id": "ciss_2022_26540_v1",
+  "assertions": [
+   {
+    "id": "a1",
+    "type": "speed",
+    "text": "I was traveling at highway speed, about 90 km/h."
+   },
+   {
+    "id": "a2",
+    "type": "impact_direction",
+    "text": "I struck the back of a parked vehicle with my front bumper."
+   },
+   {
+    "id": "a3",
+    "type": "braking",
+    "text": "I hit the brakes only at the last moment."
+   },
+   {
+    "id": "a4",
+    "type": "impact_count",
+    "text": "There was a single impact (struck the back of a parked vehicle)."
+   },
+   {
+    "id": "a5",
+    "type": "sequence",
+    "text": "Braking occurred after most of the approach and immediately before the impact (braked only at the last moment, then struck)."
+   },
+   {
+    "id": "a6",
+    "type": "severity",
+    "text": "The collision involved the front bumper impacting the rear of another vehicle (implying a front-to-rear collision; no claim about high severity beyond that)."
+   }
+  ],
+  "verdicts": [
+   {
+    "assertion_id": "a1",
+    "verdict": "contradicted",
+    "evidence": "The claimant said [I was traveling at highway speed, about 90 km/h.](T1) but the recorded vehicle speed shows a first pre-crash value of [34.0](T2) km/h and a last pre-crash value of [32.0](T2) km/h, with a max of [36.0](T2) km/h \u2014 far below 90 km/h."
+   },
+   {
+    "assertion_id": "a2",
+    "verdict": "supported",
+    "evidence": "The claimant said [I struck the back of a parked vehicle with my front bumper.](T1) and the crash pulse shows a negative longitudinal delta-V (cumulative) with a max of [\u201118.0](T1) km/h at [182.5](T1) ms indicating the vehicle decelerated on impact consistent with a frontal impact into another vehicle; lateral delta-V is small ([\u20111.0](T1) km/h) suggesting primarily front-to-rear contact."
+   },
+   {
+    "assertion_id": "a3",
+    "verdict": "supported",
+    "evidence": "The claimant said [I hit the brakes only at the last moment.](T1) and the brake channel shows a transition from off to on at [\u20110.5](T2) s before impact, with fraction on [0.18](T2) indicating braking began very shortly before the collision."
+   },
+   {
+    "assertion_id": "a4",
+    "verdict": "supported",
+    "evidence": "The claimant said [There was a single impact (struck the back of a parked vehicle).](T1) and the EDR summary reports [num_events_recorded: 1](T1) and a single crash pulse with final longitudinal delta-V [\u201118.0](T2) km/h, consistent with one impact."
+   },
+   {
+    "assertion_id": "a5",
+    "verdict": "supported",
+    "evidence": "The claimant said [Braking occurred after most of the approach and immediately before the impact (braked only at the last moment, then struck).](T1) \u2014 speed was nearly constant from [34.0](T2) to [32.0](T2) km/h in the 5 s before impact while the brake transition occurred at [\u20110.5](T2) s before impact, supporting that braking happened immediately before the impact."
+   },
+   {
+    "assertion_id": "a6",
+    "verdict": "unverifiable",
+    "evidence": "The claimant said [The collision involved the front bumper impacting the rear of another vehicle (implying a front-to-rear collision; no claim about high severity beyond that).](T1) \u2014 while the negative longitudinal delta-V of [\u201118.0](T2) km/h indicates a frontal deceleration, axis alignment between device axes and vehicle frame is not documented, so labeling it specifically as 'front bumper impacting the rear' is an inference beyond sensor-provided frame alignment and is unverifiable."
+   }
+  ],
+  "model_overall": "consistent",
+  "derived_overall": "inconsistent",
+  "rationale": "Telemetry shows a single frontal-type impact with a longitudinal delta-V of [\u201118.0](T2) km/h, pre-crash speed around [32\u201336](T2) km/h, and braking applied [\u20110.5](T2) s before impact; these data contradict the 90 km/h claim but support the timing, single-impact, and frontal-contact assertions, while the exact bumper-to-bumper geometry is unverifiable from device-frame axes.",
+  "validation": {
+   "citations": [
+    {
+     "claim": "I was traveling at highway speed, about 90 km/h.",
+     "tool_id": "T1",
+     "numbers": [
+      "90 km/h"
+     ],
+     "unmatched": [
+      "90 km/h"
+     ],
+     "status": "invalid"
+    },
+    {
+     "claim": "34.0",
+     "tool_id": "T2",
+     "numbers": [
+      "34.0"
+     ],
+     "unmatched": [],
+     "status": "valid"
+    },
+    {
+     "claim": "32.0",
+     "tool_id": "T2",
+     "numbers": [
+      "32.0"
+     ],
+     "unmatched": [],
+     "status": "valid"
+    },
+    {
+     "claim": "36.0",
+     "tool_id": "T2",
+     "numbers": [
+      "36.0"
+     ],
+     "unmatched": [],
+     "status": "valid"
+    },
+    {
+     "claim": "I struck the back of a parked vehicle with my front bumper.",
+     "tool_id": "T1",
+     "numbers": [],
+     "unmatched": [],
+     "status": "valid"
+    },
+    {
+     "claim": "\u201118.0",
+     "tool_id": "T1",
+     "numbers": [
+      "18.0"
+     ],
+     "unmatched": [],
+     "status": "valid"
+    },
+    {
+     "claim": "182.5",
+     "tool_id": "T1",
+     "numbers": [
+      "182.5"
+     ],
+     "unmatched": [],
+     "status": "valid"
+    },
+    {
+     "claim": "\u20111.0",
+     "tool_id": "T1",
+     "numbers": [
+      "1.0"
+     ],
+     "unmatched": [],
+     "status": "valid"
+    },
+    {
+     "claim": "I hit the brakes only at the last moment.",
+     "tool_id": "T1",
+     "numbers": [],
+     "unmatched": [],
+     "status": "valid"
+    },
+    {
+     "claim": "\u20110.5",
+     "tool_id": "T2",
+     "numbers": [
+      "0.5"
+     ],
+     "unmatched": [],
+     "status": "valid"
+    },
+    {
+     "claim": "0.18",
+     "tool_id": "T2",
+     "numbers": [
+      "0.18"
+     ],
+     "unmatched": [],
+     "status": "valid"
+    },
+    {
+     "claim": "There was a single impact (struck the back of a parked vehicle).",
+     "tool_id": "T1",
+     "numbers": [],
+     "unmatched": [],
+     "status": "valid"
+    },
+    {
+     "claim": "num_events_recorded: 1",
+     "tool_id": "T1",
+     "numbers": [
+      "1"
+     ],
+     "unmatched": [],
+     "status": "valid"
+    },
+    {
+     "claim": "\u201118.0",
+     "tool_id": "T2",
+     "numbers": [
+      "18.0"
+     ],
+     "unmatched": [],
+     "status": "valid"
+    },
+    {
+     "claim": "Braking occurred after most of the approach and immediately before the impact (braked only at the last moment, then struck).",
+     "tool_id": "T1",
+     "numbers": [],
+     "unmatched": [],
+     "status": "valid"
+    },
+    {
+     "claim": "34.0",
+     "tool_id": "T2",
+     "numbers": [
+      "34.0"
+     ],
+     "unmatched": [],
+     "status": "valid"
+    },
+    {
+     "claim": "32.0",
+     "tool_id": "T2",
+     "numbers": [
+      "32.0"
+     ],
+     "unmatched": [],
+     "status": "valid"
+    },
+    {
+     "claim": "\u20110.5",
+     "tool_id": "T2",
+     "numbers": [
+      "0.5"
+     ],
+     "unmatched": [],
+     "status": "valid"
+    },
+    {
+     "claim": "The collision involved the front bumper impacting the rear of another vehicle (implying a front-to-rear collision; no claim about high severity beyond that).",
+     "tool_id": "T1",
+     "numbers": [],
+     "unmatched": [],
+     "status": "valid"
+    },
+    {
+     "claim": "\u201118.0",
+     "tool_id": "T2",
+     "numbers": [
+      "18.0"
+     ],
+     "unmatched": [],
+     "status": "valid"
+    }
+   ],
+   "uncited_quantitative_claims": [
+    {
+     "match": "90 km/h",
+     "context": "pre-crash value of   km/h, with a max of   km/h \u2014 far below 90 km/h.\nThe claimant said   and the crash pulse shows a negative l"
+    },
+    {
+     "match": "5 s",
+     "context": "said   \u2014 speed was nearly constant from   to   km/h in the 5 s before impact while the brake transition occurred at   s be"
+    },
+    {
+     "match": "one impact",
+     "context": "lse with final longitudinal delta-V   km/h, consistent with one impact.\nThe claimant said   \u2014 speed was nearly constant from   to"
+    }
+   ],
+   "n_valid": 19,
+   "n_invalid": 1,
+   "n_unknown_id": 0,
+   "n_uncited": 3,
+   "citation_validity_rate": 0.95,
+   "fully_grounded": false
+  },
+  "tool_trace": [
+   {
+    "id": "T1",
+    "name": "get_window_info",
+    "args": {
+     "event_id": "ciss_2022_26540_v1"
+    },
+    "result": {
+     "event_id": "ciss_2022_26540_v1",
+     "source": "ciss",
+     "time_zero": "impact (t=0); pre-crash negative, crash pulse positive",
+     "t_min": -5.0,
+     "t_max": 0.25,
+     "channels": [
+      {
+       "name": "speed",
+       "unit": "km/h",
+       "sampling": "irregular, 11 points",
+       "t_start": -5.0,
+       "t_end": 0.0,
+       "desc": "Vehicle speed (EDR pre-crash)"
+      },
+      {
+       "name": "accel_pedal",
+       "unit": "%",
+       "sampling": "irregular, 11 points",
+       "t_start": -5.0,
+       "t_end": 0.0,
+       "desc": "Accelerator pedal, percent full"
+      },
+      {
+       "name": "brake",
+       "unit": "on/off",
+       "sampling": "irregular, 11 points",
+       "t_start": -5.0,
+       "t_end": 0.0,
+       "desc": "Service brake status (0=off, 1=on)"
+      },
+      {
+       "name": "rpm",
+       "unit": "rpm",
+       "sampling": "irregular, 11 points",
+       "t_start": -5.0,
+       "t_end": 0.0,
+       "desc": "Engine RPM"
+      },
+      {
+       "name": "steering",
+       "unit": "deg",
+       "sampling": "irregular, 11 points",
+       "t_start": -5.0,
+       "t_end": 0.0,
+       "desc": "Steering input"
+      },
+      {
+       "name": "delta_v_long",
+       "unit": "km/h",
+       "sampling": "irregular, 26 points",
+       "t_start": 0.0,
+       "t_end": 0.25,
+       "desc": "Cumulative longitudinal delta-V during impact (times converted from ms to s)"
+      },
+      {
+       "name": "delta_v_lat",
+       "unit": "km/h",
+       "sampling": "irregular, 26 points",
+       "t_start": 0.0,
+       "t_end": 0.25,
+       "desc": "Cumulative lateral delta-V during impact (times converted from ms to s)"
+      }
+     ],
+     "notes": "NHTSA CISS EDR data: sparse pre-crash series (~2 Hz, t<0) plus a crash-pulse delta-V curve (t>=0, ~10 ms steps). t=0 is the impact.",
+     "edr_summary": {
+      "max_delta_v_long_kmh": -18.0,
+      "max_delta_v_long_time_ms": 182.5,
+      "max_delta_v_lat_kmh": -1.0,
+      "max_delta_v_lat_time_ms": 110.0,
+      "num_events_recorded": 1,
+      "event_desc": "Event Record 1",
+      "driver_belt_code": 1,
+      "driver_airbag_stage1_ms": 0.0
+     },
+     "vehicle": {
+      "make": "Acura",
+      "model": "RDX",
+      "model_year": 2017,
+      "speed_limit_kmh": 48.0
+     },
+     "vehicles_in_crash": 1,
+     "edr_vehicle": "V1"
+    }
+   },
+   {
+    "id": "T2",
+    "name": "compute_stats",
+    "args": {
+     "event_id": "ciss_2022_26540_v1",
+     "channels": [
+      "speed",
+      "brake",
+      "delta_v_long",
+      "delta_v_lat"
+     ],
+     "t_start": -5,
+     "t_end": 0.25
+    },
+    "result": {
+     "range": {
+      "t_start": -5.0,
+      "t_end": 0.25
+     },
+     "channels": {
+      "speed": {
+       "unit": "km/h",
+       "n_samples": 11,
+       "first_value": 34.0,
+       "first_t": -5.0,
+       "last_value": 32.0,
+       "last_t": 0.0,
+       "min": 32.0,
+       "max": 36.0,
+       "change": -2.0
+      },
+      "brake": {
+       "unit": "on/off",
+       "n_samples": 11,
+       "fraction_on": 0.18,
+       "first_value": 0,
+       "last_value": 1,
+       "transitions": [
+        {
+         "t": -0.5,
+         "from": 0,
+         "to": 1
+        }
+       ]
+      },
+      "delta_v_long": {
+       "unit": "km/h",
+       "n_samples": 26,
+       "max_abs_value": 18.0,
+       "value_at_max": -18.0,
+       "t_at_max": 0.16,
+       "final_value": -18.0,
+       "note": "cumulative velocity change during the crash pulse"
+      },
+      "delta_v_lat": {
+       "unit": "km/h",
+       "n_samples": 26,
+       "max_abs_value": 1.0,
+       "value_at_max": -1.0,
+       "t_at_max": 0.11,
+       "final_value": 0.0,
+       "note": "cumulative velocity change during the crash pulse"
+      }
+     }
+    }
+   }
+  ],
+  "usage": {
+   "model": "azure.gpt-5-mini",
+   "n_api_calls": 4,
+   "input_tokens": 7719,
+   "output_tokens": 1050,
+   "cache_read_tokens": 6016,
+   "cache_creation_tokens": 0,
+   "cost_usd_estimate": 0.004
+  }
+ }
+}

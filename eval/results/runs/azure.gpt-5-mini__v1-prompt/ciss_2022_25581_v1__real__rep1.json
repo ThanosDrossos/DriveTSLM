@@ -1,0 +1,13 @@
+{
+ "narrative_id": "ciss_2022_25581_v1__real",
+ "event_id": "ciss_2022_25581_v1",
+ "ground_truth": "consistent",
+ "injected_error": null,
+ "rep": 1,
+ "model": "azure.gpt-5-mini",
+ "wall_s": 78.1,
+ "result": {
+  "type": "error",
+  "message": "checker did not submit verdicts within the step budget"
+ }
+}

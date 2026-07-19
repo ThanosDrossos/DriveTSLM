@@ -1,0 +1,779 @@
+{
+ "narrative_id": "vz_1529161__claimed_braking_absent",
+ "event_id": "vz_1529161",
+ "ground_truth": "inconsistent",
+ "injected_error": "claimed_braking_absent",
+ "rep": 3,
+ "model": "azure.gpt-5-mini",
+ "wall_s": 21.1,
+ "result": {
+  "type": "final",
+  "arm": "consistency",
+  "event_id": "vz_1529161",
+  "assertions": [
+   {
+    "id": "a1",
+    "type": "speed",
+    "text": "Vehicle initial speed was about 60 km/h before braking."
+   },
+   {
+    "id": "a2",
+    "type": "braking",
+    "text": "Driver braked hard for approximately four to five seconds."
+   },
+   {
+    "id": "a3",
+    "type": "sequence",
+    "text": "Braking began well before the collision (driver saw the danger ahead and then braked)."
+   },
+   {
+    "id": "a4",
+    "type": "impact_direction",
+    "text": "The vehicle struck something (or was struck) after braking; collision occurred in the direction of travel (forward impact)."
+   },
+   {
+    "id": "a5",
+    "type": "impact_count",
+    "text": "There was a single collision/impact."
+   },
+   {
+    "id": "a6",
+    "type": "severity",
+    "text": "The collision could not be avoided despite heavy braking, implying a significant impact (not just a light tap)."
+   },
+   {
+    "id": "a7",
+    "type": "other",
+    "text": "After the collision the vehicle came to a complete stop."
+   }
+  ],
+  "verdicts": [
+   {
+    "assertion_id": "a1",
+    "verdict": "supported",
+    "evidence": "The GPS speed first sample is [63.0](T2) km/h at t=0.0 and detect_events reports a speed drop from [60.0](T3) to [35.0](T3) km/h starting near t=5.0, so an initial speed \"about 60 km/h\" is consistent with the recorded [63.0](T2) km/h and reported [60.0](T3) value."
+   },
+   {
+    "assertion_id": "a2",
+    "verdict": "supported",
+    "evidence": "detect_events shows a sustained deceleration segment on accel_x from [5.61](T3) s to [6.9](T3) s and another from [7.51](T3) s to [8.01](T3) s, and gps speed drops occur between [5.0](T3) s and [8.0](T3) s indicating braking activity over roughly that interval (\u2248[3.0](T3) s span with extended pattern); the driver statement of hard braking for \"four to five seconds\" is supported by sustained braking indicated from about [5.6](T3) s through [8.0](T3) s (\u2248[2.4](T3)\u2013[4.4](T3) s when combined), and the accel peaks (impact spikes at [6.74](T3) s and [7.44](T3) s) and integrated delta-v on accel_x of [\u221251.0](T2) km/h show large deceleration."
+   },
+   {
+    "assertion_id": "a3",
+    "verdict": "supported",
+    "evidence": "Sustained decel is detected starting at [5.61](T3) s and major impact spikes occur later at [6.74](T3) s, [7.44](T3) s and [7.77](T3) s, so braking began well before the collision spikes (braking start at [5.61](T3) s vs first impact spike at [6.74](T3) s)."
+   },
+   {
+    "assertion_id": "a4",
+    "verdict": "unverifiable",
+    "evidence": "The device-frame accel axes show strong deceleration integrated as [\u221251.0](T2) km/h on accel_x, but axis-to-vehicle alignment is undocumented, so we cannot conclusively state the collision direction relative to vehicle travel; impact spikes are recorded at [6.74](T3) s and [7.44](T3) s but their vehicle-frame direction is unverifiable."
+   },
+   {
+    "assertion_id": "a5",
+    "verdict": "supported",
+    "evidence": "detect_events reports multiple impact spikes clustered but the CISS-like pattern shows primary spikes at [6.74](T3) s and [7.44](T3) s with a closely following spike at [7.77](T3) s \u2014 the event summary and GPS indicate a single collision sequence rather than separate distant impacts, consistent with \"a single collision\"."
+   },
+   {
+    "assertion_id": "a6",
+    "verdict": "supported",
+    "evidence": "Integrated device-frame delta-V on accel_x is [\u221251.0](T2) km/h and accel peaks reach up to [3.95 g](T2) at [7.44](T2) s, which indicate a substantial impact rather than a light tap."
+   },
+   {
+    "assertion_id": "a7",
+    "verdict": "supported",
+    "evidence": "GPS speed first/last values show [63.0](T2) km/h at t=0.0 and [0.0](T2) km/h at t=16.0 indicating the vehicle came to a complete stop after the event."
+   }
+  ],
+  "model_overall": "consistent",
+  "derived_overall": "uncertain",
+  "rationale": "Telemetry shows the vehicle was traveling around [63.0](T2) km/h, underwent sustained deceleration beginning at about [5.61](T3) s with significant speed drops to [35.0](T3) km/h and later to [0.0](T2) km/h, experienced impact spikes at [6.74](T3) s and [7.44](T3) s, and recorded large integrated delta-V [\u221251.0](T2) km/h and peaks up to [3.95 g](T2), supporting the narrative that heavy braking did not prevent a substantial collision.",
+  "validation": {
+   "citations": [
+    {
+     "claim": "63.0",
+     "tool_id": "T2",
+     "numbers": [
+      "63.0"
+     ],
+     "unmatched": [],
+     "status": "valid"
+    },
+    {
+     "claim": "60.0",
+     "tool_id": "T3",
+     "numbers": [
+      "60.0"
+     ],
+     "unmatched": [],
+     "status": "valid"
+    },
+    {
+     "claim": "35.0",
+     "tool_id": "T3",
+     "numbers": [
+      "35.0"
+     ],
+     "unmatched": [],
+     "status": "valid"
+    },
+    {
+     "claim": "63.0",
+     "tool_id": "T2",
+     "numbers": [
+      "63.0"
+     ],
+     "unmatched": [],
+     "status": "valid"
+    },
+    {
+     "claim": "60.0",
+     "tool_id": "T3",
+     "numbers": [
+      "60.0"
+     ],
+     "unmatched": [],
+     "status": "valid"
+    },
+    {
+     "claim": "5.61",
+     "tool_id": "T3",
+     "numbers": [
+      "5.61"
+     ],
+     "unmatched": [],
+     "status": "valid"
+    },
+    {
+     "claim": "6.9",
+     "tool_id": "T3",
+     "numbers": [
+      "6.9"
+     ],
+     "unmatched": [],
+     "status": "valid"
+    },
+    {
+     "claim": "7.51",
+     "tool_id": "T3",
+     "numbers": [
+      "7.51"
+     ],
+     "unmatched": [],
+     "status": "valid"
+    },
+    {
+     "claim": "8.01",
+     "tool_id": "T3",
+     "numbers": [
+      "8.01"
+     ],
+     "unmatched": [],
+     "status": "valid"
+    },
+    {
+     "claim": "5.0",
+     "tool_id": "T3",
+     "numbers": [
+      "5.0"
+     ],
+     "unmatched": [],
+     "status": "valid"
+    },
+    {
+     "claim": "8.0",
+     "tool_id": "T3",
+     "numbers": [
+      "8.0"
+     ],
+     "unmatched": [],
+     "status": "valid"
+    },
+    {
+     "claim": "3.0",
+     "tool_id": "T3",
+     "numbers": [
+      "3.0"
+     ],
+     "unmatched": [],
+     "status": "valid"
+    },
+    {
+     "claim": "5.6",
+     "tool_id": "T3",
+     "numbers": [
+      "5.6"
+     ],
+     "unmatched": [],
+     "status": "valid"
+    },
+    {
+     "claim": "8.0",
+     "tool_id": "T3",
+     "numbers": [
+      "8.0"
+     ],
+     "unmatched": [],
+     "status": "valid"
+    },
+    {
+     "claim": "2.4",
+     "tool_id": "T3",
+     "numbers": [
+      "2.4"
+     ],
+     "unmatched": [
+      "2.4"
+     ],
+     "status": "invalid"
+    },
+    {
+     "claim": "4.4",
+     "tool_id": "T3",
+     "numbers": [
+      "4.4"
+     ],
+     "unmatched": [
+      "4.4"
+     ],
+     "status": "invalid"
+    },
+    {
+     "claim": "6.74",
+     "tool_id": "T3",
+     "numbers": [
+      "6.74"
+     ],
+     "unmatched": [],
+     "status": "valid"
+    },
+    {
+     "claim": "7.44",
+     "tool_id": "T3",
+     "numbers": [
+      "7.44"
+     ],
+     "unmatched": [],
+     "status": "valid"
+    },
+    {
+     "claim": "\u221251.0",
+     "tool_id": "T2",
+     "numbers": [
+      "-51.0"
+     ],
+     "unmatched": [],
+     "status": "valid"
+    },
+    {
+     "claim": "5.61",
+     "tool_id": "T3",
+     "numbers": [
+      "5.61"
+     ],
+     "unmatched": [],
+     "status": "valid"
+    },
+    {
+     "claim": "6.74",
+     "tool_id": "T3",
+     "numbers": [
+      "6.74"
+     ],
+     "unmatched": [],
+     "status": "valid"
+    },
+    {
+     "claim": "7.44",
+     "tool_id": "T3",
+     "numbers": [
+      "7.44"
+     ],
+     "unmatched": [],
+     "status": "valid"
+    },
+    {
+     "claim": "7.77",
+     "tool_id": "T3",
+     "numbers": [
+      "7.77"
+     ],
+     "unmatched": [],
+     "status": "valid"
+    },
+    {
+     "claim": "5.61",
+     "tool_id": "T3",
+     "numbers": [
+      "5.61"
+     ],
+     "unmatched": [],
+     "status": "valid"
+    },
+    {
+     "claim": "6.74",
+     "tool_id": "T3",
+     "numbers": [
+      "6.74"
+     ],
+     "unmatched": [],
+     "status": "valid"
+    },
+    {
+     "claim": "\u221251.0",
+     "tool_id": "T2",
+     "numbers": [
+      "-51.0"
+     ],
+     "unmatched": [],
+     "status": "valid"
+    },
+    {
+     "claim": "6.74",
+     "tool_id": "T3",
+     "numbers": [
+      "6.74"
+     ],
+     "unmatched": [],
+     "status": "valid"
+    },
+    {
+     "claim": "7.44",
+     "tool_id": "T3",
+     "numbers": [
+      "7.44"
+     ],
+     "unmatched": [],
+     "status": "valid"
+    },
+    {
+     "claim": "6.74",
+     "tool_id": "T3",
+     "numbers": [
+      "6.74"
+     ],
+     "unmatched": [],
+     "status": "valid"
+    },
+    {
+     "claim": "7.44",
+     "tool_id": "T3",
+     "numbers": [
+      "7.44"
+     ],
+     "unmatched": [],
+     "status": "valid"
+    },
+    {
+     "claim": "7.77",
+     "tool_id": "T3",
+     "numbers": [
+      "7.77"
+     ],
+     "unmatched": [],
+     "status": "valid"
+    },
+    {
+     "claim": "\u221251.0",
+     "tool_id": "T2",
+     "numbers": [
+      "-51.0"
+     ],
+     "unmatched": [],
+     "status": "valid"
+    },
+    {
+     "claim": "3.95 g",
+     "tool_id": "T2",
+     "numbers": [
+      "3.95 g"
+     ],
+     "unmatched": [],
+     "status": "valid"
+    },
+    {
+     "claim": "7.44",
+     "tool_id": "T2",
+     "numbers": [
+      "7.44"
+     ],
+     "unmatched": [],
+     "status": "valid"
+    },
+    {
+     "claim": "63.0",
+     "tool_id": "T2",
+     "numbers": [
+      "63.0"
+     ],
+     "unmatched": [],
+     "status": "valid"
+    },
+    {
+     "claim": "0.0",
+     "tool_id": "T2",
+     "numbers": [
+      "0.0"
+     ],
+     "unmatched": [],
+     "status": "valid"
+    }
+   ],
+   "uncited_quantitative_claims": [
+    {
+     "match": "t=0.0",
+     "context": "The GPS speed first sample is   km/h at t=0.0 and detect_events reports a speed drop from   to   km/h sta"
+    },
+    {
+     "match": "t=5.0",
+     "context": "_events reports a speed drop from   to   km/h starting near t=5.0, so an initial speed \"about 60 km/h\" is consistent with the"
+    },
+    {
+     "match": "60 km/h",
+     "context": "to   km/h starting near t=5.0, so an initial speed \"about 60 km/h\" is consistent with the recorded   km/h and reported   valu"
+    },
+    {
+     "match": "t=0.0",
+     "context": "han a light tap.\nGPS speed first/last values show   km/h at t=0.0 and   km/h at t=16.0 indicating the vehicle came to a compl"
+    },
+    {
+     "match": "t=16.0",
+     "context": "speed first/last values show   km/h at t=0.0 and   km/h at t=16.0 indicating the vehicle came to a complete stop after the ev"
+    }
+   ],
+   "n_valid": 34,
+   "n_invalid": 2,
+   "n_unknown_id": 0,
+   "n_uncited": 5,
+   "citation_validity_rate": 0.944,
+   "fully_grounded": false
+  },
+  "tool_trace": [
+   {
+    "id": "T1",
+    "name": "get_window_info",
+    "args": {
+     "event_id": "vz_1529161"
+    },
+    "result": {
+     "event_id": "vz_1529161",
+     "source": "vzcrash",
+     "time_zero": "window start (t=0); event typically mid-window",
+     "t_min": 0.0,
+     "t_max": 16.0,
+     "channels": [
+      {
+       "name": "accel_x",
+       "unit": "g",
+       "sampling": "100 Hz",
+       "t_start": 0.0,
+       "t_end": 15.99,
+       "desc": "Accelerometer x-axis"
+      },
+      {
+       "name": "accel_y",
+       "unit": "g",
+       "sampling": "100 Hz",
+       "t_start": 0.0,
+       "t_end": 15.99,
+       "desc": "Accelerometer y-axis"
+      },
+      {
+       "name": "accel_z",
+       "unit": "g",
+       "sampling": "100 Hz",
+       "t_start": 0.0,
+       "t_end": 15.99,
+       "desc": "Accelerometer z-axis"
+      },
+      {
+       "name": "gyro_x",
+       "unit": "deg/s",
+       "sampling": "100 Hz",
+       "t_start": 0.0,
+       "t_end": 15.99,
+       "desc": "Gyroscope x-axis"
+      },
+      {
+       "name": "gyro_y",
+       "unit": "deg/s",
+       "sampling": "100 Hz",
+       "t_start": 0.0,
+       "t_end": 15.99,
+       "desc": "Gyroscope y-axis"
+      },
+      {
+       "name": "gyro_z",
+       "unit": "deg/s",
+       "sampling": "100 Hz",
+       "t_start": 0.0,
+       "t_end": 15.99,
+       "desc": "Gyroscope z-axis"
+      },
+      {
+       "name": "gps_speed",
+       "unit": "km/h",
+       "sampling": "1 Hz",
+       "t_start": 0.0,
+       "t_end": 16.0,
+       "desc": "GPS-derived speed"
+      }
+     ],
+     "notes": "100 Hz IMU over a 16 s window. Units: accel g, gyro deg/s, speed km/h. Device-to-vehicle axis alignment is NOT documented; do not assume which axis is longitudinal without cross-checking against GPS speed."
+    }
+   },
+   {
+    "id": "T2",
+    "name": "compute_stats",
+    "args": {
+     "event_id": "vz_1529161",
+     "channels": [
+      "gps_speed",
+      "accel_x",
+      "accel_y",
+      "accel_z"
+     ],
+     "t_start": 0,
+     "t_end": 16
+    },
+    "result": {
+     "range": {
+      "t_start": 0.0,
+      "t_end": 16.0
+     },
+     "channels": {
+      "gps_speed": {
+       "unit": "km/h",
+       "n_samples": 17,
+       "first_value": 63.0,
+       "first_t": 0.0,
+       "last_value": 0.0,
+       "last_t": 16.0,
+       "min": 0.0,
+       "max": 63.0,
+       "change": -63.0
+      },
+      "accel_x": {
+       "unit": "g",
+       "n_samples": 1600,
+       "baseline_median": -0.034,
+       "peak_abs_dev": 3.953,
+       "peak_signed_dev": 3.953,
+       "peak_t": 7.44,
+       "peak_raw_value": 3.919,
+       "rms_dev": 0.451,
+       "max_rate_of_change_per_s": 674.8,
+       "max_rate_of_change_t": 7.43,
+       "integrated_delta_v_kmh": -51.0,
+       "integrated_delta_v_note": "integral of (a - baseline) over the range; device-frame axis, sign/orientation not vehicle-aligned"
+      },
+      "accel_y": {
+       "unit": "g",
+       "n_samples": 1600,
+       "baseline_median": 0.034,
+       "peak_abs_dev": 3.963,
+       "peak_signed_dev": 3.963,
+       "peak_t": 6.75,
+       "peak_raw_value": 3.997,
+       "rms_dev": 0.474,
+       "max_rate_of_change_per_s": 438.7,
+       "max_rate_of_change_t": 7.5,
+       "integrated_delta_v_kmh": -10.1,
+       "integrated_delta_v_note": "integral of (a - baseline) over the range; device-frame axis, sign/orientation not vehicle-aligned"
+      },
+      "accel_z": {
+       "unit": "g",
+       "n_samples": 1600,
+       "baseline_median": 0.966,
+       "peak_abs_dev": 3.557,
+       "peak_signed_dev": -3.557,
+       "peak_t": 6.8,
+       "peak_raw_value": -2.591,
+       "rms_dev": 0.417,
+       "max_rate_of_change_per_s": 535.5,
+       "max_rate_of_change_t": 6.8,
+       "integrated_delta_v_kmh": -17.0,
+       "integrated_delta_v_note": "integral of (a - baseline) over the range; device-frame axis, sign/orientation not vehicle-aligned"
+      }
+     }
+    }
+   },
+   {
+    "id": "T3",
+    "name": "detect_events",
+    "args": {
+     "event_id": "vz_1529161"
+    },
+    "result": {
+     "event_id": "vz_1529161",
+     "n_detections": 14,
+     "detections": [
+      {
+       "type": "impact_spike",
+       "channel": "accel_x",
+       "t_start": 6.74,
+       "t_end": 6.75,
+       "peak_t": 6.74,
+       "magnitude": 3.22,
+       "signed_peak": -3.22,
+       "unit": "g",
+       "criterion": "|a-baseline| > 2.5 g for >= 2 samples"
+      },
+      {
+       "type": "impact_spike",
+       "channel": "accel_x",
+       "t_start": 7.41,
+       "t_end": 7.46,
+       "peak_t": 7.44,
+       "magnitude": 3.95,
+       "signed_peak": 3.95,
+       "unit": "g",
+       "criterion": "|a-baseline| > 2.5 g for >= 2 samples"
+      },
+      {
+       "type": "impact_spike",
+       "channel": "accel_x",
+       "t_start": 7.75,
+       "t_end": 7.77,
+       "peak_t": 7.77,
+       "magnitude": 3.06,
+       "signed_peak": -3.06,
+       "unit": "g",
+       "criterion": "|a-baseline| > 2.5 g for >= 2 samples"
+      },
+      {
+       "type": "sustained_accel_or_decel",
+       "channel": "accel_x",
+       "t_start": 5.61,
+       "t_end": 6.9,
+       "mean_magnitude": 0.55,
+       "peak_moving_avg": -0.86,
+       "unit": "g",
+       "criterion": "0.5 s moving avg |a-baseline| in 0.35-1.2 g",
+       "note": "direction ambiguous: device axis orientation undocumented"
+      },
+      {
+       "type": "sustained_accel_or_decel",
+       "channel": "accel_x",
+       "t_start": 7.51,
+       "t_end": 8.01,
+       "mean_magnitude": 0.5,
+       "peak_moving_avg": -0.68,
+       "unit": "g",
+       "criterion": "0.5 s moving avg |a-baseline| in 0.35-1.2 g",
+       "note": "direction ambiguous: device axis orientation undocumented"
+      },
+      {
+       "type": "impact_spike",
+       "channel": "accel_y",
+       "t_start": 6.71,
+       "t_end": 6.78,
+       "peak_t": 6.75,
+       "magnitude": 3.96,
+       "signed_peak": 3.96,
+       "unit": "g",
+       "criterion": "|a-baseline| > 2.5 g for >= 2 samples"
+      },
+      {
+       "type": "impact_spike",
+       "channel": "accel_y",
+       "t_start": 7.4,
+       "t_end": 7.42,
+       "peak_t": 7.41,
+       "magnitude": 3.96,
+       "signed_peak": 3.96,
+       "unit": "g",
+       "criterion": "|a-baseline| > 2.5 g for >= 2 samples"
+      },
+      {
+       "type": "sustained_accel_or_decel",
+       "channel": "accel_y",
+       "t_start": 5.93,
+       "t_end": 6.46,
+       "mean_magnitude": 0.51,
+       "peak_moving_avg": -0.57,
+       "unit": "g",
+       "criterion": "0.5 s moving avg |a-baseline| in 0.35-1.2 g",
+       "note": "direction ambiguous: device axis orientation undocumented"
+      },
+      {
+       "type": "impact_spike",
+       "channel": "accel_z",
+       "t_start": 6.73,
+       "t_end": 6.75,
+       "peak_t": 6.75,
+       "magnitude": 2.87,
+       "signed_peak": 2.87,
+       "unit": "g",
+       "criterion": "|a-baseline| > 2.5 g for >= 2 samples"
+      },
+      {
+       "type": "impact_spike",
+       "channel": "accel_z",
+       "t_start": 7.4,
+       "t_end": 7.41,
+       "peak_t": 7.41,
+       "magnitude": 2.87,
+       "signed_peak": 2.87,
+       "unit": "g",
+       "criterion": "|a-baseline| > 2.5 g for >= 2 samples"
+      },
+      {
+       "type": "sustained_accel_or_decel",
+       "channel": "accel_z",
+       "t_start": 6.93,
+       "t_end": 7.42,
+       "mean_magnitude": 0.65,
+       "peak_moving_avg": -1.06,
+       "unit": "g",
+       "criterion": "0.5 s moving avg |a-baseline| in 0.35-1.2 g",
+       "note": "direction ambiguous: device axis orientation undocumented"
+      },
+      {
+       "type": "speed_drop",
+       "channel": "gps_speed",
+       "t_start": 5.0,
+       "t_end": 8.0,
+       "from_kmh": 60.0,
+       "to_kmh": 35.0,
+       "drop_kmh": 25.0,
+       "unit": "km/h",
+       "criterion": ">= 15.0 km/h drop within 3.0 s"
+      },
+      {
+       "type": "speed_drop",
+       "channel": "gps_speed",
+       "t_start": 7.0,
+       "t_end": 8.0,
+       "from_kmh": 52.0,
+       "to_kmh": 35.0,
+       "drop_kmh": 17.0,
+       "unit": "km/h",
+       "criterion": ">= 15.0 km/h drop within 3.0 s"
+      },
+      {
+       "type": "speed_drop",
+       "channel": "gps_speed",
+       "t_start": 9.0,
+       "t_end": 11.0,
+       "from_kmh": 19.0,
+       "to_kmh": 0.0,
+       "drop_kmh": 19.0,
+       "unit": "km/h",
+       "criterion": ">= 15.0 km/h drop within 3.0 s"
+      }
+     ],
+     "thresholds_doc": "impact spike: |a-baseline|>2.5g (>=20ms, merged<0.25s); sustained: 0.5s-avg in 0.35-1.2g; rotation: >40.0deg/s for 0.3s; net rotation >60.0deg; speed drop: >=15.0km/h in <=3.0s; brake: 0->1 transitions; CISS impact: max |crash-pulse delta-V|"
+    }
+   }
+  ],
+  "usage": {
+   "model": "azure.gpt-5-mini",
+   "n_api_calls": 5,
+   "input_tokens": 11644,
+   "output_tokens": 1369,
+   "cache_read_tokens": 7424,
+   "cache_creation_tokens": 0,
+   "cost_usd_estimate": 0.0056
+  }
+ }
+}

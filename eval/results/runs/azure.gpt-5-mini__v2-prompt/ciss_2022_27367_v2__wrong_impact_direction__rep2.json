@@ -1,0 +1,470 @@
+{
+ "narrative_id": "ciss_2022_27367_v2__wrong_impact_direction",
+ "event_id": "ciss_2022_27367_v2",
+ "ground_truth": "inconsistent",
+ "injected_error": "wrong_impact_direction",
+ "rep": 2,
+ "model": "azure.gpt-5-mini",
+ "wall_s": 17.0,
+ "result": {
+  "type": "final",
+  "arm": "consistency",
+  "event_id": "ciss_2022_27367_v2",
+  "assertions": [
+   {
+    "id": "a1",
+    "type": "speed",
+    "text": "The vehicle was accelerating while traveling eastbound prior to the collision."
+   },
+   {
+    "id": "a2",
+    "type": "other",
+    "text": "The vehicle's direction of travel immediately before the collision was eastbound."
+   },
+   {
+    "id": "a3",
+    "type": "impact_direction",
+    "text": "The vehicle was rear-ended from behind by another vehicle (impact to the vehicle's rear)."
+   },
+   {
+    "id": "a4",
+    "type": "braking",
+    "text": "The driver applied the brakes (braked) right as the rear-end collision happened."
+   },
+   {
+    "id": "a5",
+    "type": "sequence",
+    "text": "The vehicle was accelerating prior to the driver applying the brakes."
+   },
+   {
+    "id": "a6",
+    "type": "impact_count",
+    "text": "There was one rear impact (a single rear-end collision)."
+   },
+   {
+    "id": "a7",
+    "type": "severity",
+    "text": "The statement does not specify severity beyond 'rear-ended'; no explicit claim of minor or major damage is made."
+   }
+  ],
+  "verdicts": [
+   {
+    "assertion_id": "a1",
+    "verdict": "supported",
+    "evidence": "The speed rose from [5.0](T2) km/h at t=[-5.0](T1) s to [35.0](T2) km/h at t=[0.0](T2) s, indicating the vehicle was accelerating prior to impact."
+   },
+   {
+    "assertion_id": "a2",
+    "verdict": "unverifiable",
+    "evidence": "The telemetry provides speed magnitude but does not document heading; direction 'eastbound' is not present in the sensor channels, so the vehicle's direction of travel immediately before impact is unverifiable from the available data."
+   },
+   {
+    "assertion_id": "a3",
+    "verdict": "supported",
+    "evidence": "The EDR crash-pulse shows a negative longitudinal delta-V peak of [-18.0](T1) km/h at [142.5](T1) ms, which per SAE sign convention indicates a deceleration (impact from ahead pushing vehicle backward is positive), consistent with the vehicle being struck from behind (rear impact)."
+   },
+   {
+    "assertion_id": "a4",
+    "verdict": "supported",
+    "evidence": "The brake channel shows a transition 0->1 at [-0.5](T2) s and the brake fraction_on ends at [1](T2) (last_value), indicating the driver applied the brakes right before impact."
+   },
+   {
+    "assertion_id": "a5",
+    "verdict": "supported",
+    "evidence": "Speed increased from [5.0](T2) km/h at t=[-5.0](T1) s to [35.0](T2) km/h at t=[0.0](T2) s, and the brake transition occurred at [-0.5](T2) s, showing acceleration prior to braking."
+   },
+   {
+    "assertion_id": "a6",
+    "verdict": "supported",
+    "evidence": "The EDR summary reports [num_events_recorded: 1](T1) and the detect_events output shows a single impact_delta_v event for longitudinal delta-V with magnitude [18.0](T3) km/h, consistent with one rear impact."
+   },
+   {
+    "assertion_id": "a7",
+    "verdict": "supported",
+    "evidence": "The narrative makes no numerical severity claim; the claim states no explicit minor/major damage \u2014 this is a restatement of the narrative and is supported as-is by the data availability."
+   }
+  ],
+  "model_overall": "consistent",
+  "derived_overall": "uncertain",
+  "rationale": "Telemetry shows the vehicle was speeding up before impact ([5.0 to 35.0 km/h](T2)), a brake application at [-0.5 s](T2) just before the recorded negative longitudinal delta-V of [ -18.0 km/h at 142.5 ms](T1) consistent with being struck from the rear, and only one recorded crash event ([1](T1)). Direction 'eastbound' is not present in the channels, so that part is unverifiable.",
+  "validation": {
+   "citations": [
+    {
+     "claim": "5.0",
+     "tool_id": "T2",
+     "numbers": [
+      "5.0"
+     ],
+     "unmatched": [],
+     "status": "valid"
+    },
+    {
+     "claim": "-5.0",
+     "tool_id": "T1",
+     "numbers": [
+      "-5.0"
+     ],
+     "unmatched": [],
+     "status": "valid"
+    },
+    {
+     "claim": "35.0",
+     "tool_id": "T2",
+     "numbers": [
+      "35.0"
+     ],
+     "unmatched": [],
+     "status": "valid"
+    },
+    {
+     "claim": "0.0",
+     "tool_id": "T2",
+     "numbers": [
+      "0.0"
+     ],
+     "unmatched": [],
+     "status": "valid"
+    },
+    {
+     "claim": "-18.0",
+     "tool_id": "T1",
+     "numbers": [
+      "-18.0"
+     ],
+     "unmatched": [],
+     "status": "valid"
+    },
+    {
+     "claim": "142.5",
+     "tool_id": "T1",
+     "numbers": [
+      "142.5"
+     ],
+     "unmatched": [],
+     "status": "valid"
+    },
+    {
+     "claim": "-0.5",
+     "tool_id": "T2",
+     "numbers": [
+      "-0.5"
+     ],
+     "unmatched": [],
+     "status": "valid"
+    },
+    {
+     "claim": "1",
+     "tool_id": "T2",
+     "numbers": [
+      "1"
+     ],
+     "unmatched": [],
+     "status": "valid"
+    },
+    {
+     "claim": "5.0",
+     "tool_id": "T2",
+     "numbers": [
+      "5.0"
+     ],
+     "unmatched": [],
+     "status": "valid"
+    },
+    {
+     "claim": "-5.0",
+     "tool_id": "T1",
+     "numbers": [
+      "-5.0"
+     ],
+     "unmatched": [],
+     "status": "valid"
+    },
+    {
+     "claim": "35.0",
+     "tool_id": "T2",
+     "numbers": [
+      "35.0"
+     ],
+     "unmatched": [],
+     "status": "valid"
+    },
+    {
+     "claim": "0.0",
+     "tool_id": "T2",
+     "numbers": [
+      "0.0"
+     ],
+     "unmatched": [],
+     "status": "valid"
+    },
+    {
+     "claim": "-0.5",
+     "tool_id": "T2",
+     "numbers": [
+      "-0.5"
+     ],
+     "unmatched": [],
+     "status": "valid"
+    },
+    {
+     "claim": "num_events_recorded: 1",
+     "tool_id": "T1",
+     "numbers": [
+      "1"
+     ],
+     "unmatched": [],
+     "status": "valid"
+    },
+    {
+     "claim": "18.0",
+     "tool_id": "T3",
+     "numbers": [
+      "18.0"
+     ],
+     "unmatched": [],
+     "status": "valid"
+    }
+   ],
+   "uncited_quantitative_claims": [],
+   "n_valid": 15,
+   "n_invalid": 0,
+   "n_unknown_id": 0,
+   "n_uncited": 0,
+   "citation_validity_rate": 1.0,
+   "fully_grounded": true
+  },
+  "tool_trace": [
+   {
+    "id": "T1",
+    "name": "get_window_info",
+    "args": {
+     "event_id": "ciss_2022_27367_v2"
+    },
+    "result": {
+     "event_id": "ciss_2022_27367_v2",
+     "source": "ciss",
+     "time_zero": "impact (t=0); pre-crash negative, crash pulse positive",
+     "t_min": -5.0,
+     "t_max": 0.25,
+     "channels": [
+      {
+       "name": "speed",
+       "unit": "km/h",
+       "sampling": "irregular, 11 points",
+       "t_start": -5.0,
+       "t_end": 0.0,
+       "desc": "Vehicle speed (EDR pre-crash)"
+      },
+      {
+       "name": "accel_pedal",
+       "unit": "%",
+       "sampling": "irregular, 11 points",
+       "t_start": -5.0,
+       "t_end": 0.0,
+       "desc": "Accelerator pedal, percent full"
+      },
+      {
+       "name": "brake",
+       "unit": "on/off",
+       "sampling": "irregular, 11 points",
+       "t_start": -5.0,
+       "t_end": 0.0,
+       "desc": "Service brake status (0=off, 1=on)"
+      },
+      {
+       "name": "rpm",
+       "unit": "rpm",
+       "sampling": "irregular, 11 points",
+       "t_start": -5.0,
+       "t_end": 0.0,
+       "desc": "Engine RPM"
+      },
+      {
+       "name": "steering",
+       "unit": "deg",
+       "sampling": "irregular, 11 points",
+       "t_start": -5.0,
+       "t_end": 0.0,
+       "desc": "Steering input"
+      },
+      {
+       "name": "delta_v_long",
+       "unit": "km/h",
+       "sampling": "irregular, 26 points",
+       "t_start": 0.0,
+       "t_end": 0.25,
+       "desc": "Cumulative longitudinal delta-V during impact (times converted from ms to s)"
+      },
+      {
+       "name": "delta_v_lat",
+       "unit": "km/h",
+       "sampling": "irregular, 26 points",
+       "t_start": 0.0,
+       "t_end": 0.25,
+       "desc": "Cumulative lateral delta-V during impact (times converted from ms to s)"
+      }
+     ],
+     "notes": "NHTSA CISS EDR data: sparse pre-crash series (~2 Hz, t<0) plus a crash-pulse delta-V curve (t>=0, ~10 ms steps). t=0 is the impact.",
+     "edr_summary": {
+      "max_delta_v_long_kmh": -18.0,
+      "max_delta_v_long_time_ms": 142.5,
+      "max_delta_v_lat_kmh": -5.0,
+      "max_delta_v_lat_time_ms": 77.5,
+      "num_events_recorded": 1,
+      "event_desc": "Event Record 1",
+      "driver_belt_code": 1,
+      "driver_airbag_stage1_ms": 44.0
+     },
+     "vehicle": {
+      "make": "Honda",
+      "model": "Accord",
+      "model_year": 2015,
+      "speed_limit_kmh": 40.0
+     },
+     "vehicles_in_crash": 2,
+     "edr_vehicle": "V2"
+    }
+   },
+   {
+    "id": "T2",
+    "name": "compute_stats",
+    "args": {
+     "event_id": "ciss_2022_27367_v2",
+     "channels": [
+      "speed",
+      "accel_pedal",
+      "brake",
+      "delta_v_long",
+      "delta_v_lat"
+     ],
+     "t_start": -5.0,
+     "t_end": 0.0
+    },
+    "result": {
+     "range": {
+      "t_start": -5.0,
+      "t_end": 0.0
+     },
+     "channels": {
+      "speed": {
+       "unit": "km/h",
+       "n_samples": 11,
+       "first_value": 5.0,
+       "first_t": -5.0,
+       "last_value": 35.0,
+       "last_t": 0.0,
+       "min": 5.0,
+       "max": 35.0,
+       "change": 30.0
+      },
+      "accel_pedal": {
+       "unit": "%",
+       "n_samples": 11,
+       "baseline_median": 21.0,
+       "peak_abs_dev": 21.0,
+       "peak_signed_dev": -21.0,
+       "peak_t": -0.5,
+       "peak_raw_value": 0.0,
+       "rms_dev": 9.224,
+       "max_rate_of_change_per_s": 50.0,
+       "max_rate_of_change_t": -1.0,
+       "integrated_delta_v_kmh": -370.7,
+       "integrated_delta_v_note": "integral of (a - baseline) over the range; device-frame axis, sign/orientation not vehicle-aligned"
+      },
+      "brake": {
+       "unit": "on/off",
+       "n_samples": 11,
+       "fraction_on": 0.18,
+       "first_value": 0,
+       "last_value": 1,
+       "transitions": [
+        {
+         "t": -0.5,
+         "from": 0,
+         "to": 1
+        }
+       ]
+      },
+      "delta_v_long": {
+       "unit": "km/h",
+       "n_samples": 1,
+       "max_abs_value": 0.0,
+       "value_at_max": 0.0,
+       "t_at_max": 0.0,
+       "final_value": 0.0,
+       "note": "cumulative velocity change during the crash pulse"
+      },
+      "delta_v_lat": {
+       "unit": "km/h",
+       "n_samples": 1,
+       "max_abs_value": 0.0,
+       "value_at_max": 0.0,
+       "t_at_max": 0.0,
+       "final_value": 0.0,
+       "note": "cumulative velocity change during the crash pulse"
+      }
+     }
+    }
+   },
+   {
+    "id": "T3",
+    "name": "detect_events",
+    "args": {
+     "event_id": "ciss_2022_27367_v2"
+    },
+    "result": {
+     "event_id": "ciss_2022_27367_v2",
+     "n_detections": 4,
+     "detections": [
+      {
+       "type": "impact_spike",
+       "channel": "accel_pedal",
+       "t_start": -1.5,
+       "t_end": 0.0,
+       "peak_t": -0.5,
+       "magnitude": 21.0,
+       "signed_peak": -21.0,
+       "unit": "g",
+       "criterion": "|a-baseline| > 2.5 g for >= 2 samples"
+      },
+      {
+       "type": "brake_application",
+       "channel": "brake",
+       "t": -0.5,
+       "unit": "on/off",
+       "criterion": "brake status transition 0 -> 1"
+      },
+      {
+       "type": "impact_delta_v",
+       "channel": "delta_v_long",
+       "t_at_max": 0.1,
+       "magnitude_kmh": 18.0,
+       "signed_kmh": -18.0,
+       "unit": "km/h",
+       "criterion": "crash-pulse cumulative delta-V at its maximum"
+      },
+      {
+       "type": "impact_delta_v",
+       "channel": "delta_v_lat",
+       "t_at_max": 0.07,
+       "magnitude_kmh": 5.0,
+       "signed_kmh": -5.0,
+       "unit": "km/h",
+       "criterion": "crash-pulse cumulative delta-V at its maximum"
+      }
+     ],
+     "thresholds_doc": "impact spike: |a-baseline|>2.5g (>=20ms, merged<0.25s); sustained: 0.5s-avg in 0.35-1.2g; rotation: >40.0deg/s for 0.3s; net rotation >60.0deg; speed drop: >=15.0km/h in <=3.0s; brake: 0->1 transitions; CISS impact: max |crash-pulse delta-V|"
+    }
+   }
+  ],
+  "usage": {
+   "model": "azure.gpt-5-mini",
+   "n_api_calls": 5,
+   "input_tokens": 11264,
+   "output_tokens": 987,
+   "cache_read_tokens": 7680,
+   "cache_creation_tokens": 0,
+   "cost_usd_estimate": 0.0048
+  }
+ }
+}

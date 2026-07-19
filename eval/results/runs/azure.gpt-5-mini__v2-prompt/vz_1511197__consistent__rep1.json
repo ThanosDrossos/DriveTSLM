@@ -1,0 +1,573 @@
+{
+ "narrative_id": "vz_1511197__consistent",
+ "event_id": "vz_1511197",
+ "ground_truth": "consistent",
+ "injected_error": null,
+ "rep": 1,
+ "model": "azure.gpt-5-mini",
+ "wall_s": 19.2,
+ "result": {
+  "type": "final",
+  "arm": "consistency",
+  "event_id": "vz_1511197",
+  "assertions": [
+   {
+    "id": "a1",
+    "type": "speed",
+    "text": "Vehicle speed was just under 80 km/h before braking/easing off."
+   },
+   {
+    "id": "a2",
+    "type": "braking",
+    "text": "Driver had been easing off (gradually decelerating) for a few seconds before the collision."
+   },
+   {
+    "id": "a3",
+    "type": "sequence",
+    "text": "Easing off/deceleration occurred while traffic ahead slowed, before the collision."
+   },
+   {
+    "id": "a4",
+    "type": "impact_count",
+    "text": "There were two distinct impacts (two jolts) about one second apart."
+   },
+   {
+    "id": "a5",
+    "type": "severity",
+    "text": "The collision reduced the vehicle speed from motorway pace (~just under 80 km/h) to a crawl within two to three seconds."
+   },
+   {
+    "id": "a6",
+    "type": "other",
+    "text": "The vehicle dropped from motorway pace to a crawl within two to three seconds after the impacts."
+   }
+  ],
+  "verdicts": [
+   {
+    "assertion_id": "a1",
+    "verdict": "supported",
+    "evidence": "The GPS speed at the start was [79.0 km/h](T4) and the compute_stats first_value is [79.0](T2), which matches \"just under 80 km/h\"."
+   },
+   {
+    "assertion_id": "a2",
+    "verdict": "supported",
+    "evidence": "detect_events found a sustained decel on accel_x from [8.15 s to 9.92 s](T3) and compute_stats reports accel_x integrated delta-V of [-67.8 km/h](T2), indicating gradual deceleration over seconds before impact."
+   },
+   {
+    "assertion_id": "a3",
+    "verdict": "unverifiable",
+    "evidence": "The sensors show deceleration prior to impact ([8.15 s to 9.92 s](T3)) but do not contain any channel describing traffic ahead; therefore timing relative to traffic slowdown is [unverifiable]."
+   },
+   {
+    "assertion_id": "a4",
+    "verdict": "supported",
+    "evidence": "detect_events identified two impact spikes on accel_x at [9.2 s](T3) and [10.17 s](T3) about [0.97 s apart] (difference between [10.17 s] and [9.2 s] in T3)."
+   },
+   {
+    "assertion_id": "a5",
+    "verdict": "supported",
+    "evidence": "GPS speed dropped from [70.0 km/h at 8.0 s] to [43.0 km/h at 11.0 s] per detect_events (a [27.0 km/h] drop over [~3.0 s]) (T3) and the gps_speed samples show from [8.0 s:70.0] to [11.0 s:43.0] (T4)."
+   },
+   {
+    "assertion_id": "a6",
+    "verdict": "supported",
+    "evidence": "gps_speed samples show speed fell from [70.0 km/h at 8.0 s] to [43.0 km/h at 11.0 s] (T4), i.e. motorway pace to a much lower crawl within [~3 s] (T3)."
+   }
+  ],
+  "model_overall": "consistent",
+  "derived_overall": "uncertain",
+  "rationale": "Telemetry shows initial speed of [79.0 km/h](T2/T4), a sustained deceleration interval [8.15\u20139.92 s](T3), two impact spikes at [9.2 s] and [10.17 s](T3) about [0.97 s] apart, and GPS speed falling from [70.0 km/h] to [43.0 km/h] over [~3 s] (T3/T4), supporting the narrative; relation to traffic ahead is unverifiable.",
+  "validation": {
+   "citations": [
+    {
+     "claim": "79.0 km/h",
+     "tool_id": "T4",
+     "numbers": [
+      "79.0 km/h"
+     ],
+     "unmatched": [],
+     "status": "valid"
+    },
+    {
+     "claim": "79.0",
+     "tool_id": "T2",
+     "numbers": [
+      "79.0"
+     ],
+     "unmatched": [],
+     "status": "valid"
+    },
+    {
+     "claim": "8.15 s to 9.92 s",
+     "tool_id": "T3",
+     "numbers": [
+      "8.15 s",
+      "9.92 s"
+     ],
+     "unmatched": [],
+     "status": "valid"
+    },
+    {
+     "claim": "-67.8 km/h",
+     "tool_id": "T2",
+     "numbers": [
+      "-67.8 km/h"
+     ],
+     "unmatched": [],
+     "status": "valid"
+    },
+    {
+     "claim": "8.15 s to 9.92 s",
+     "tool_id": "T3",
+     "numbers": [
+      "8.15 s",
+      "9.92 s"
+     ],
+     "unmatched": [],
+     "status": "valid"
+    },
+    {
+     "claim": "9.2 s",
+     "tool_id": "T3",
+     "numbers": [
+      "9.2 s"
+     ],
+     "unmatched": [],
+     "status": "valid"
+    },
+    {
+     "claim": "10.17 s",
+     "tool_id": "T3",
+     "numbers": [
+      "10.17 s"
+     ],
+     "unmatched": [],
+     "status": "valid"
+    }
+   ],
+   "uncited_quantitative_claims": [
+    {
+     "match": "80 km/h",
+     "context": "e compute_stats first_value is  , which matches \"just under 80 km/h\".\ndetect_events found a sustained decel on accel_x from   a"
+    },
+    {
+     "match": "0.97 s",
+     "context": "s identified two impact spikes on accel_x at   and   about [0.97 s apart] (difference between [10.17 s] and [9.2 s] in T3).\nGP"
+    },
+    {
+     "match": "10.17 s",
+     "context": "ccel_x at   and   about [0.97 s apart] (difference between [10.17 s] and [9.2 s] in T3).\nGPS speed dropped from [70.0 km/h at 8"
+    },
+    {
+     "match": "9.2 s",
+     "context": "d   about [0.97 s apart] (difference between [10.17 s] and [9.2 s] in T3).\nGPS speed dropped from [70.0 km/h at 8.0 s] to [43"
+    },
+    {
+     "match": "70.0 km/h",
+     "context": "tween [10.17 s] and [9.2 s] in T3).\nGPS speed dropped from [70.0 km/h at 8.0 s] to [43.0 km/h at 11.0 s] per detect_events (a [27"
+    },
+    {
+     "match": "at 8.0",
+     "context": "17 s] and [9.2 s] in T3).\nGPS speed dropped from [70.0 km/h at 8.0 s] to [43.0 km/h at 11.0 s] per detect_events (a [27.0 km/h"
+    },
+    {
+     "match": "43.0 km/h",
+     "context": "s] in T3).\nGPS speed dropped from [70.0 km/h at 8.0 s] to [43.0 km/h at 11.0 s] per detect_events (a [27.0 km/h] drop over [~3.0"
+    },
+    {
+     "match": "at 11.0",
+     "context": ".\nGPS speed dropped from [70.0 km/h at 8.0 s] to [43.0 km/h at 11.0 s] per detect_events (a [27.0 km/h] drop over [~3.0 s]) (T3"
+    },
+    {
+     "match": "27.0 km/h",
+     "context": "/h at 8.0 s] to [43.0 km/h at 11.0 s] per detect_events (a [27.0 km/h] drop over [~3.0 s]) (T3) and the gps_speed samples show fr"
+    },
+    {
+     "match": "3.0 s",
+     "context": "m/h at 11.0 s] per detect_events (a [27.0 km/h] drop over [~3.0 s]) (T3) and the gps_speed samples show from [8.0 s:70.0] to"
+    },
+    {
+     "match": "8.0 s",
+     "context": "op over [~3.0 s]) (T3) and the gps_speed samples show from [8.0 s:70.0] to [11.0 s:43.0] (T4).\ngps_speed samples show speed f"
+    },
+    {
+     "match": "70.0",
+     "context": "r [~3.0 s]) (T3) and the gps_speed samples show from [8.0 s:70.0] to [11.0 s:43.0] (T4).\ngps_speed samples show speed fell f"
+    },
+    {
+     "match": "11.0 s",
+     "context": ") (T3) and the gps_speed samples show from [8.0 s:70.0] to [11.0 s:43.0] (T4).\ngps_speed samples show speed fell from [70.0 km"
+    },
+    {
+     "match": "43.0",
+     "context": "and the gps_speed samples show from [8.0 s:70.0] to [11.0 s:43.0] (T4).\ngps_speed samples show speed fell from [70.0 km/h at"
+    },
+    {
+     "match": "70.0 km/h",
+     "context": "[11.0 s:43.0] (T4).\ngps_speed samples show speed fell from [70.0 km/h at 8.0 s] to [43.0 km/h at 11.0 s] (T4), i.e. motorway pace"
+    },
+    {
+     "match": "at 8.0",
+     "context": ".0] (T4).\ngps_speed samples show speed fell from [70.0 km/h at 8.0 s] to [43.0 km/h at 11.0 s] (T4), i.e. motorway pace to a m"
+    },
+    {
+     "match": "43.0 km/h",
+     "context": "speed samples show speed fell from [70.0 km/h at 8.0 s] to [43.0 km/h at 11.0 s] (T4), i.e. motorway pace to a much lower crawl w"
+    },
+    {
+     "match": "at 11.0",
+     "context": "les show speed fell from [70.0 km/h at 8.0 s] to [43.0 km/h at 11.0 s] (T4), i.e. motorway pace to a much lower crawl within [~"
+    },
+    {
+     "match": "3 s",
+     "context": "s] (T4), i.e. motorway pace to a much lower crawl within [~3 s] (T3)."
+    },
+    {
+     "match": "two impact",
+     "context": "raffic slowdown is [unverifiable].\ndetect_events identified two impact spikes on accel_x at   and   about [0.97 s apart] (differen"
+    }
+   ],
+   "n_valid": 7,
+   "n_invalid": 0,
+   "n_unknown_id": 0,
+   "n_uncited": 20,
+   "citation_validity_rate": 1.0,
+   "fully_grounded": false
+  },
+  "tool_trace": [
+   {
+    "id": "T1",
+    "name": "get_window_info",
+    "args": {
+     "event_id": "vz_1511197"
+    },
+    "result": {
+     "event_id": "vz_1511197",
+     "source": "vzcrash",
+     "time_zero": "window start (t=0); event typically mid-window",
+     "t_min": 0.0,
+     "t_max": 16.0,
+     "channels": [
+      {
+       "name": "accel_x",
+       "unit": "g",
+       "sampling": "100 Hz",
+       "t_start": 0.0,
+       "t_end": 15.99,
+       "desc": "Accelerometer x-axis"
+      },
+      {
+       "name": "accel_y",
+       "unit": "g",
+       "sampling": "100 Hz",
+       "t_start": 0.0,
+       "t_end": 15.99,
+       "desc": "Accelerometer y-axis"
+      },
+      {
+       "name": "accel_z",
+       "unit": "g",
+       "sampling": "100 Hz",
+       "t_start": 0.0,
+       "t_end": 15.99,
+       "desc": "Accelerometer z-axis"
+      },
+      {
+       "name": "gyro_x",
+       "unit": "deg/s",
+       "sampling": "100 Hz",
+       "t_start": 0.0,
+       "t_end": 15.99,
+       "desc": "Gyroscope x-axis"
+      },
+      {
+       "name": "gyro_y",
+       "unit": "deg/s",
+       "sampling": "100 Hz",
+       "t_start": 0.0,
+       "t_end": 15.99,
+       "desc": "Gyroscope y-axis"
+      },
+      {
+       "name": "gyro_z",
+       "unit": "deg/s",
+       "sampling": "100 Hz",
+       "t_start": 0.0,
+       "t_end": 15.99,
+       "desc": "Gyroscope z-axis"
+      },
+      {
+       "name": "gps_speed",
+       "unit": "km/h",
+       "sampling": "1 Hz",
+       "t_start": 0.0,
+       "t_end": 16.0,
+       "desc": "GPS-derived speed"
+      }
+     ],
+     "notes": "100 Hz IMU over a 16 s window. Units: accel g, gyro deg/s, speed km/h. Device-to-vehicle axis alignment is NOT documented; do not assume which axis is longitudinal without cross-checking against GPS speed."
+    }
+   },
+   {
+    "id": "T2",
+    "name": "compute_stats",
+    "args": {
+     "event_id": "vz_1511197",
+     "channels": [
+      "gps_speed",
+      "accel_x",
+      "accel_y",
+      "accel_z"
+     ],
+     "t_start": 0,
+     "t_end": 16
+    },
+    "result": {
+     "range": {
+      "t_start": 0.0,
+      "t_end": 16.0
+     },
+     "channels": {
+      "gps_speed": {
+       "unit": "km/h",
+       "n_samples": 17,
+       "first_value": 79.0,
+       "first_t": 0.0,
+       "last_value": 12.0,
+       "last_t": 16.0,
+       "min": 12.0,
+       "max": 79.0,
+       "change": -67.0
+      },
+      "accel_x": {
+       "unit": "g",
+       "n_samples": 1600,
+       "baseline_median": 0.086,
+       "peak_abs_dev": 5.755,
+       "peak_signed_dev": 5.755,
+       "peak_t": 10.17,
+       "peak_raw_value": 5.841,
+       "rms_dev": 0.536,
+       "max_rate_of_change_per_s": 448.3,
+       "max_rate_of_change_t": 10.12,
+       "integrated_delta_v_kmh": -67.8,
+       "integrated_delta_v_note": "integral of (a - baseline) over the range; device-frame axis, sign/orientation not vehicle-aligned"
+      },
+      "accel_y": {
+       "unit": "g",
+       "n_samples": 1600,
+       "baseline_median": -0.022,
+       "peak_abs_dev": 2.998,
+       "peak_signed_dev": 2.998,
+       "peak_t": 9.22,
+       "peak_raw_value": 2.975,
+       "rms_dev": 0.255,
+       "max_rate_of_change_per_s": 405.7,
+       "max_rate_of_change_t": 9.24,
+       "integrated_delta_v_kmh": 12.7,
+       "integrated_delta_v_note": "integral of (a - baseline) over the range; device-frame axis, sign/orientation not vehicle-aligned"
+      },
+      "accel_z": {
+       "unit": "g",
+       "n_samples": 1600,
+       "baseline_median": 0.98,
+       "peak_abs_dev": 2.37,
+       "peak_signed_dev": -2.37,
+       "peak_t": 10.2,
+       "peak_raw_value": -1.391,
+       "rms_dev": 0.194,
+       "max_rate_of_change_per_s": 281.9,
+       "max_rate_of_change_t": 10.2,
+       "integrated_delta_v_kmh": -0.2,
+       "integrated_delta_v_note": "integral of (a - baseline) over the range; device-frame axis, sign/orientation not vehicle-aligned"
+      }
+     }
+    }
+   },
+   {
+    "id": "T3",
+    "name": "detect_events",
+    "args": {
+     "event_id": "vz_1511197"
+    },
+    "result": {
+     "event_id": "vz_1511197",
+     "n_detections": 6,
+     "detections": [
+      {
+       "type": "impact_spike",
+       "channel": "accel_x",
+       "t_start": 9.19,
+       "t_end": 9.23,
+       "peak_t": 9.2,
+       "magnitude": 4.7,
+       "signed_peak": -4.7,
+       "unit": "g",
+       "criterion": "|a-baseline| > 2.5 g for >= 2 samples"
+      },
+      {
+       "type": "impact_spike",
+       "channel": "accel_x",
+       "t_start": 10.13,
+       "t_end": 10.19,
+       "peak_t": 10.17,
+       "magnitude": 5.75,
+       "signed_peak": 5.75,
+       "unit": "g",
+       "criterion": "|a-baseline| > 2.5 g for >= 2 samples"
+      },
+      {
+       "type": "sustained_accel_or_decel",
+       "channel": "accel_x",
+       "t_start": 8.15,
+       "t_end": 9.92,
+       "mean_magnitude": 0.89,
+       "peak_moving_avg": -1.46,
+       "unit": "g",
+       "criterion": "0.5 s moving avg |a-baseline| in 0.35-1.2 g",
+       "note": "direction ambiguous: device axis orientation undocumented"
+      },
+      {
+       "type": "large_net_rotation",
+       "channel": "gyro_z",
+       "t_start": 0.0,
+       "t_end": 15.99,
+       "net_rotation": 74.1,
+       "unit": "deg",
+       "criterion": "|integrated rotation| > 60.0 deg over window",
+       "note": "rollover-suspect if on a roll/pitch axis; axis frame undocumented"
+      },
+      {
+       "type": "speed_drop",
+       "channel": "gps_speed",
+       "t_start": 8.0,
+       "t_end": 11.0,
+       "from_kmh": 70.0,
+       "to_kmh": 43.0,
+       "drop_kmh": 27.0,
+       "unit": "km/h",
+       "criterion": ">= 15.0 km/h drop within 3.0 s"
+      },
+      {
+       "type": "speed_drop",
+       "channel": "gps_speed",
+       "t_start": 10.0,
+       "t_end": 11.0,
+       "from_kmh": 58.0,
+       "to_kmh": 43.0,
+       "drop_kmh": 15.0,
+       "unit": "km/h",
+       "criterion": ">= 15.0 km/h drop within 3.0 s"
+      }
+     ],
+     "thresholds_doc": "impact spike: |a-baseline|>2.5g (>=20ms, merged<0.25s); sustained: 0.5s-avg in 0.35-1.2g; rotation: >40.0deg/s for 0.3s; net rotation >60.0deg; speed drop: >=15.0km/h in <=3.0s; brake: 0->1 transitions; CISS impact: max |crash-pulse delta-V|"
+    }
+   },
+   {
+    "id": "T4",
+    "name": "slice_window",
+    "args": {
+     "event_id": "vz_1511197",
+     "t_start": 0,
+     "t_end": 16,
+     "channels": [
+      "gps_speed"
+     ],
+     "max_points_per_channel": 100
+    },
+    "result": {
+     "range": {
+      "t_start": 0.0,
+      "t_end": 16.0
+     },
+     "downsampling": "per-bucket sample with the largest |deviation from channel median| is kept",
+     "channels": {
+      "gps_speed": {
+       "unit": "km/h",
+       "note": "raw samples",
+       "points": [
+        [
+         0.0,
+         79.0
+        ],
+        [
+         1.0,
+         78.0
+        ],
+        [
+         2.0,
+         77.0
+        ],
+        [
+         3.0,
+         76.0
+        ],
+        [
+         4.0,
+         75.0
+        ],
+        [
+         5.0,
+         74.0
+        ],
+        [
+         6.0,
+         72.0
+        ],
+        [
+         7.0,
+         71.0
+        ],
+        [
+         8.0,
+         70.0
+        ],
+        [
+         9.0,
+         61.0
+        ],
+        [
+         10.0,
+         58.0
+        ],
+        [
+         11.0,
+         43.0
+        ],
+        [
+         12.0,
+         16.0
+        ],
+        [
+         13.0,
+         14.0
+        ],
+        [
+         14.0,
+         14.0
+        ],
+        [
+         15.0,
+         12.0
+        ],
+        [
+         16.0,
+         12.0
+        ]
+       ]
+      }
+     }
+    }
+   }
+  ],
+  "usage": {
+   "model": "azure.gpt-5-mini",
+   "n_api_calls": 6,
+   "input_tokens": 14741,
+   "output_tokens": 967,
+   "cache_read_tokens": 10752,
+   "cache_creation_tokens": 0,
+   "cost_usd_estimate": 0.0056
+  }
+ }
+}

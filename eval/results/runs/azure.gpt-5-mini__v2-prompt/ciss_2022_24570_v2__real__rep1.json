@@ -1,0 +1,514 @@
+{
+ "narrative_id": "ciss_2022_24570_v2__real",
+ "event_id": "ciss_2022_24570_v2",
+ "ground_truth": "consistent",
+ "injected_error": null,
+ "rep": 1,
+ "model": "azure.gpt-5-mini",
+ "wall_s": 29.8,
+ "result": {
+  "type": "final",
+  "arm": "consistency",
+  "event_id": "ciss_2022_24570_v2",
+  "assertions": [
+   {
+    "id": "a1",
+    "type": "other",
+    "text": "V1 and V2 were traveling northbound on a four-lane, physically divided bidirectional roadway (two lanes northbound, two lanes southbound)."
+   },
+   {
+    "id": "a2",
+    "type": "other",
+    "text": "Both vehicles were negotiating a right-hand curve in the roadway with a slight incline."
+   },
+   {
+    "id": "a3",
+    "type": "other",
+    "text": "V1 was traveling in the leftmost northbound lane (lane one)."
+   },
+   {
+    "id": "a4",
+    "type": "other",
+    "text": "V2 was traveling in the adjacent right northbound lane (lane two) to the right of V1."
+   },
+   {
+    "id": "a5",
+    "type": "sequence",
+    "text": "V1 began to move from lane one into lane two while V2 was attempting to pass V1."
+   },
+   {
+    "id": "a6",
+    "type": "other",
+    "text": "V2 departed its lane to the right (left relative to V1) prior to impact."
+   },
+   {
+    "id": "a7",
+    "type": "impact_direction",
+    "text": "V2's frontal plane impacted V1's rear plane (V2 struck the rear of V1 with its front)."
+   },
+   {
+    "id": "a8",
+    "type": "impact_count",
+    "text": "There was a single distinct impact between V2 and V1 described (one collision event)."
+   },
+   {
+    "id": "a9",
+    "type": "other",
+    "text": "V2 came to final rest off the right side of the roadway."
+   },
+   {
+    "id": "a10",
+    "type": "other",
+    "text": "There was a small fire in the engine compartment of V2 after the collision."
+   },
+   {
+    "id": "a11",
+    "type": "sequence",
+    "text": "V1 continued northbound after the impact and was not located (V1 departed the scene/was not found)."
+   },
+   {
+    "id": "a12",
+    "type": "severity",
+    "text": "The collision produced enough damage/fire to cause a small engine compartment fire in V2."
+   }
+  ],
+  "verdicts": [
+   {
+    "assertion_id": "a1",
+    "verdict": "unverifiable",
+    "evidence": "Roadway geometry (four-lane, physically divided, directions) is not recorded in the vehicle telemetry and cannot be inferred from the provided channels; this is unverifiable from available sensors."
+   },
+   {
+    "assertion_id": "a2",
+    "verdict": "unverifiable",
+    "evidence": "Curvature and incline of the roadway are not directly measured by the device-frame sensors without map/GPS heading/elevation; steering shows a peak of [35.0](T2) degrees at [t=0.0](T2) but that alone does not prove a right-hand curve with slight incline, so the assertion is unverifiable."
+   },
+   {
+    "assertion_id": "a3",
+    "verdict": "unverifiable",
+    "evidence": "Lane position (leftmost northbound lane) is not recorded in telemetry; GPS lane-level position is absent, so this is unverifiable."
+   },
+   {
+    "assertion_id": "a4",
+    "verdict": "unverifiable",
+    "evidence": "Lane assignment (V2 in lane two to right of V1) cannot be determined from the available channels, so this is unverifiable."
+   },
+   {
+    "assertion_id": "a5",
+    "verdict": "unverifiable",
+    "evidence": "The sequence claiming V1 began to move into V2's lane while V2 attempted to pass cannot be established from V2-only telemetry; steering shows a peak of [35.0](T2) degrees at [t=0.0](T2) and a brake transition at [t=-0.5](T2), but these do not prove the described lane change by V1, so unverifiable."
+   },
+   {
+    "assertion_id": "a6",
+    "verdict": "supported",
+    "evidence": "Telemetry shows a lateral crash-pulse with cumulative lateral delta-V peaking at [11.0 km/h](T1) (value [ -11.0](T2) km/h at [t=0.09 s](T1)), indicating V2 experienced a lateral motion consistent with departing its lane to the right prior to impact."
+   },
+   {
+    "assertion_id": "a7",
+    "verdict": "supported",
+    "evidence": "EDR summary labels the event as a [\"Frontal / Rear Crash (Record 1)\"](T1) and the cumulative longitudinal delta-V reaches [ -81.0 km/h](T1) at [t=185 ms](T1), with negative sign indicating a deceleration consistent with V2's front impacting another vehicle's rear."
+   },
+   {
+    "assertion_id": "a8",
+    "verdict": "supported",
+    "evidence": "The crash-pulse shows a single dominant longitudinal delta-V peak of [81.0 km/h](T3) at [t=0.16 s](T2) and the detect_events output reports one impact delta-V event for longitudinal and one for lateral, consistent with a single distinct collision event."
+   },
+   {
+    "assertion_id": "a9",
+    "verdict": "unverifiable",
+    "evidence": "Final rest position off the right side of the roadway is not recorded in the vehicle telemetry; GPS final position is not provided, so this is unverifiable."
+   },
+   {
+    "assertion_id": "a10",
+    "verdict": "unverifiable",
+    "evidence": "Fire in the engine compartment is not measured by vehicle sensors in the available data; no temperature or fire-detection channel is present, so this is unverifiable."
+   },
+   {
+    "assertion_id": "a11",
+    "verdict": "unverifiable",
+    "evidence": "Whether V1 continued northbound after impact and was not located cannot be determined from V2-only telemetry; therefore unverifiable."
+   },
+   {
+    "assertion_id": "a12",
+    "verdict": "supported",
+    "evidence": "The collision produced a high longitudinal delta-V of [ -81.0 km/h](T1) recorded in the EDR summary and detect_events, indicating severe impact energy, which supports that the crash could produce engine damage sufficient to cause a small engine fire."
+   }
+  ],
+  "model_overall": "uncertain",
+  "derived_overall": "uncertain",
+  "rationale": "Device-only telemetry (V2) provides strong evidence for impact direction and a single severe collision (delta-V longitudinal [ -81.0 km/h](T1) and lateral [ -11.0 km/h](T1)), but lane-level positions, final rest location, and fire presence are not recorded; several narrative points are therefore unverifiable.",
+  "validation": {
+   "citations": [
+    {
+     "claim": "35.0",
+     "tool_id": "T2",
+     "numbers": [
+      "35.0"
+     ],
+     "unmatched": [],
+     "status": "valid"
+    },
+    {
+     "claim": "t=0.0",
+     "tool_id": "T2",
+     "numbers": [
+      "0.0"
+     ],
+     "unmatched": [],
+     "status": "valid"
+    },
+    {
+     "claim": "35.0",
+     "tool_id": "T2",
+     "numbers": [
+      "35.0"
+     ],
+     "unmatched": [],
+     "status": "valid"
+    },
+    {
+     "claim": "t=0.0",
+     "tool_id": "T2",
+     "numbers": [
+      "0.0"
+     ],
+     "unmatched": [],
+     "status": "valid"
+    },
+    {
+     "claim": "t=-0.5",
+     "tool_id": "T2",
+     "numbers": [
+      "-0.5"
+     ],
+     "unmatched": [],
+     "status": "valid"
+    },
+    {
+     "claim": "11.0 km/h",
+     "tool_id": "T1",
+     "numbers": [
+      "11.0 km/h"
+     ],
+     "unmatched": [],
+     "status": "valid"
+    },
+    {
+     "claim": " -11.0",
+     "tool_id": "T2",
+     "numbers": [
+      "-11.0"
+     ],
+     "unmatched": [],
+     "status": "valid"
+    },
+    {
+     "claim": "t=0.09 s",
+     "tool_id": "T1",
+     "numbers": [
+      "0.09 s"
+     ],
+     "unmatched": [],
+     "status": "valid"
+    },
+    {
+     "claim": "\"Frontal / Rear Crash (Record 1)\"",
+     "tool_id": "T1",
+     "numbers": [
+      "1"
+     ],
+     "unmatched": [],
+     "status": "valid"
+    },
+    {
+     "claim": " -81.0 km/h",
+     "tool_id": "T1",
+     "numbers": [
+      "-81.0 km/h"
+     ],
+     "unmatched": [],
+     "status": "valid"
+    },
+    {
+     "claim": "t=185 ms",
+     "tool_id": "T1",
+     "numbers": [
+      "185 ms"
+     ],
+     "unmatched": [],
+     "status": "valid"
+    },
+    {
+     "claim": "81.0 km/h",
+     "tool_id": "T3",
+     "numbers": [
+      "81.0 km/h"
+     ],
+     "unmatched": [],
+     "status": "valid"
+    },
+    {
+     "claim": "t=0.16 s",
+     "tool_id": "T2",
+     "numbers": [
+      "0.16 s"
+     ],
+     "unmatched": [],
+     "status": "valid"
+    },
+    {
+     "claim": " -81.0 km/h",
+     "tool_id": "T1",
+     "numbers": [
+      "-81.0 km/h"
+     ],
+     "unmatched": [],
+     "status": "valid"
+    }
+   ],
+   "uncited_quantitative_claims": [
+    {
+     "match": "one impact",
+     "context": "delta-V peak of   at   and the detect_events output reports one impact delta-V event for longitudinal and one for lateral, consist"
+    }
+   ],
+   "n_valid": 14,
+   "n_invalid": 0,
+   "n_unknown_id": 0,
+   "n_uncited": 1,
+   "citation_validity_rate": 1.0,
+   "fully_grounded": false
+  },
+  "tool_trace": [
+   {
+    "id": "T1",
+    "name": "get_window_info",
+    "args": {
+     "event_id": "ciss_2022_24570_v2"
+    },
+    "result": {
+     "event_id": "ciss_2022_24570_v2",
+     "source": "ciss",
+     "time_zero": "impact (t=0); pre-crash negative, crash pulse positive",
+     "t_min": -5.0,
+     "t_max": 0.25,
+     "channels": [
+      {
+       "name": "speed",
+       "unit": "km/h",
+       "sampling": "irregular, 11 points",
+       "t_start": -5.0,
+       "t_end": 0.0,
+       "desc": "Vehicle speed (EDR pre-crash)"
+      },
+      {
+       "name": "accel_pedal",
+       "unit": "%",
+       "sampling": "irregular, 11 points",
+       "t_start": -5.0,
+       "t_end": 0.0,
+       "desc": "Accelerator pedal, percent full"
+      },
+      {
+       "name": "brake",
+       "unit": "on/off",
+       "sampling": "irregular, 11 points",
+       "t_start": -5.0,
+       "t_end": 0.0,
+       "desc": "Service brake status (0=off, 1=on)"
+      },
+      {
+       "name": "rpm",
+       "unit": "rpm",
+       "sampling": "irregular, 11 points",
+       "t_start": -5.0,
+       "t_end": 0.0,
+       "desc": "Engine RPM"
+      },
+      {
+       "name": "steering",
+       "unit": "deg",
+       "sampling": "irregular, 11 points",
+       "t_start": -5.0,
+       "t_end": 0.0,
+       "desc": "Steering input"
+      },
+      {
+       "name": "delta_v_long",
+       "unit": "km/h",
+       "sampling": "irregular, 26 points",
+       "t_start": 0.0,
+       "t_end": 0.25,
+       "desc": "Cumulative longitudinal delta-V during impact (times converted from ms to s)"
+      },
+      {
+       "name": "delta_v_lat",
+       "unit": "km/h",
+       "sampling": "irregular, 26 points",
+       "t_start": 0.0,
+       "t_end": 0.25,
+       "desc": "Cumulative lateral delta-V during impact (times converted from ms to s)"
+      }
+     ],
+     "notes": "NHTSA CISS EDR data: sparse pre-crash series (~2 Hz, t<0) plus a crash-pulse delta-V curve (t>=0, ~10 ms steps). t=0 is the impact.",
+     "edr_summary": {
+      "max_delta_v_long_kmh": -81.0,
+      "max_delta_v_long_time_ms": 185.0,
+      "max_delta_v_lat_kmh": -11.0,
+      "max_delta_v_lat_time_ms": 87.5,
+      "num_events_recorded": null,
+      "event_desc": "Frontal / Rear Crash (Record 1)",
+      "driver_belt_code": 1,
+      "driver_airbag_stage1_ms": 5.0
+     },
+     "vehicle": {
+      "make": "Subaru",
+      "model": "Legacy",
+      "model_year": 2013,
+      "speed_limit_kmh": 113.0
+     },
+     "vehicles_in_crash": 2,
+     "edr_vehicle": "V2"
+    }
+   },
+   {
+    "id": "T2",
+    "name": "compute_stats",
+    "args": {
+     "event_id": "ciss_2022_24570_v2",
+     "channels": [
+      "speed",
+      "steering",
+      "brake",
+      "delta_v_long",
+      "delta_v_lat"
+     ],
+     "t_start": -5.0,
+     "t_end": 0.25
+    },
+    "result": {
+     "range": {
+      "t_start": -5.0,
+      "t_end": 0.25
+     },
+     "channels": {
+      "speed": {
+       "unit": "km/h",
+       "n_samples": 11,
+       "first_value": 121.0,
+       "first_t": -5.0,
+       "last_value": 111.0,
+       "last_t": 0.0,
+       "min": 111.0,
+       "max": 121.0,
+       "change": -10.0
+      },
+      "steering": {
+       "unit": "deg",
+       "n_samples": 11,
+       "baseline_median": -5.0,
+       "peak_abs_dev": 35.0,
+       "peak_signed_dev": 35.0,
+       "peak_t": 0.0,
+       "peak_raw_value": 30.0,
+       "rms_dev": 11.677,
+       "max_rate_of_change_per_s": 40.0,
+       "max_rate_of_change_t": -0.5
+      },
+      "brake": {
+       "unit": "on/off",
+       "n_samples": 11,
+       "fraction_on": 0.18,
+       "first_value": 0,
+       "last_value": 1,
+       "transitions": [
+        {
+         "t": -0.5,
+         "from": 0,
+         "to": 1
+        }
+       ]
+      },
+      "delta_v_long": {
+       "unit": "km/h",
+       "n_samples": 26,
+       "max_abs_value": 81.0,
+       "value_at_max": -81.0,
+       "t_at_max": 0.16,
+       "final_value": 0.0,
+       "note": "cumulative velocity change during the crash pulse"
+      },
+      "delta_v_lat": {
+       "unit": "km/h",
+       "n_samples": 26,
+       "max_abs_value": 11.0,
+       "value_at_max": -11.0,
+       "t_at_max": 0.09,
+       "final_value": 0.0,
+       "note": "cumulative velocity change during the crash pulse"
+      }
+     }
+    }
+   },
+   {
+    "id": "T3",
+    "name": "detect_events",
+    "args": {
+     "event_id": "ciss_2022_24570_v2"
+    },
+    "result": {
+     "event_id": "ciss_2022_24570_v2",
+     "n_detections": 4,
+     "detections": [
+      {
+       "type": "impact_spike",
+       "channel": "accel_pedal",
+       "t_start": -1.0,
+       "t_end": 0.0,
+       "peak_t": -1.0,
+       "magnitude": 33.0,
+       "signed_peak": -33.0,
+       "unit": "g",
+       "criterion": "|a-baseline| > 2.5 g for >= 2 samples"
+      },
+      {
+       "type": "brake_application",
+       "channel": "brake",
+       "t": -0.5,
+       "unit": "on/off",
+       "criterion": "brake status transition 0 -> 1"
+      },
+      {
+       "type": "impact_delta_v",
+       "channel": "delta_v_long",
+       "t_at_max": 0.16,
+       "magnitude_kmh": 81.0,
+       "signed_kmh": -81.0,
+       "unit": "km/h",
+       "criterion": "crash-pulse cumulative delta-V at its maximum"
+      },
+      {
+       "type": "impact_delta_v",
+       "channel": "delta_v_lat",
+       "t_at_max": 0.09,
+       "magnitude_kmh": 11.0,
+       "signed_kmh": -11.0,
+       "unit": "km/h",
+       "criterion": "crash-pulse cumulative delta-V at its maximum"
+      }
+     ],
+     "thresholds_doc": "impact spike: |a-baseline|>2.5g (>=20ms, merged<0.25s); sustained: 0.5s-avg in 0.35-1.2g; rotation: >40.0deg/s for 0.3s; net rotation >60.0deg; speed drop: >=15.0km/h in <=3.0s; brake: 0->1 transitions; CISS impact: max |crash-pulse delta-V|"
+    }
+   }
+  ],
+  "usage": {
+   "model": "azure.gpt-5-mini",
+   "n_api_calls": 5,
+   "input_tokens": 12752,
+   "output_tokens": 1451,
+   "cache_read_tokens": 9088,
+   "cache_creation_tokens": 0,
+   "cost_usd_estimate": 0.0061
+  }
+ }
+}

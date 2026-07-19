@@ -1,0 +1,234 @@
+{
+ "model": "azure.gpt-5-mini",
+ "n_runs": 105,
+ "n_ok": 105,
+ "n_failed": 0,
+ "failed_runs": [],
+ "confusion": {
+  "tp": 42,
+  "fp": 7,
+  "fn": 9,
+  "tn": 47
+ },
+ "contradiction_precision": 0.857,
+ "contradiction_recall": 0.824,
+ "false_positive_rate": 0.13,
+ "per_error_type": {
+  "claimed_braking_absent": {
+   "n": 9,
+   "detected": 6,
+   "recall": 0.667,
+   "localized": 6
+  },
+  "event_count_mismatch": {
+   "n": 9,
+   "detected": 8,
+   "recall": 0.889,
+   "localized": 8
+  },
+  "speed_mismatch": {
+   "n": 15,
+   "detected": 15,
+   "recall": 1.0,
+   "localized": 13
+  },
+  "understated_severity": {
+   "n": 12,
+   "detected": 12,
+   "recall": 1.0,
+   "localized": 12
+  },
+  "wrong_impact_direction": {
+   "n": 6,
+   "detected": 1,
+   "recall": 0.167,
+   "localized": 0
+  }
+ },
+ "abstention_rate": 0.402,
+ "citation_validity_rate_mean": 0.9558,
+ "fully_grounded_runs": 16,
+ "uncited_claims_total": 574,
+ "mean_cost_usd_per_case": 0.0059,
+ "mean_input_tokens": 21779.5048,
+ "mean_output_tokens": 1308.2762,
+ "run_to_run_agreement_mean": 0.8857,
+ "per_narrative_overalls": {
+  "ciss_2022_24570_v2__real": [
+   "uncertain",
+   "inconsistent",
+   "inconsistent"
+  ],
+  "ciss_2022_24570_v2__speed_mismatch": [
+   "inconsistent",
+   "inconsistent",
+   "inconsistent"
+  ],
+  "ciss_2022_24665_v1__real": [
+   "uncertain",
+   "uncertain",
+   "uncertain"
+  ],
+  "ciss_2022_24665_v1__understated_severity": [
+   "inconsistent",
+   "inconsistent",
+   "inconsistent"
+  ],
+  "ciss_2022_24878_v1__event_count_mismatch": [
+   "uncertain",
+   "inconsistent",
+   "inconsistent"
+  ],
+  "ciss_2022_24878_v1__real": [
+   "uncertain",
+   "uncertain",
+   "uncertain"
+  ],
+  "ciss_2022_25326_v1__real": [
+   "uncertain",
+   "uncertain",
+   "uncertain"
+  ],
+  "ciss_2022_25326_v1__speed_mismatch": [
+   "inconsistent",
+   "inconsistent",
+   "inconsistent"
+  ],
+  "ciss_2022_25411_v1__claimed_braking_absent": [
+   "inconsistent",
+   "inconsistent",
+   "inconsistent"
+  ],
+  "ciss_2022_25411_v1__real": [
+   "uncertain",
+   "uncertain",
+   "uncertain"
+  ],
+  "ciss_2022_25581_v1__real": [
+   "uncertain",
+   "uncertain",
+   "uncertain"
+  ],
+  "ciss_2022_25581_v1__understated_severity": [
+   "inconsistent",
+   "inconsistent",
+   "inconsistent"
+  ],
+  "ciss_2022_25905_v2__real": [
+   "uncertain",
+   "uncertain",
+   "uncertain"
+  ],
+  "ciss_2022_25905_v2__wrong_impact_direction": [
+   "inconsistent",
+   "uncertain",
+   "uncertain"
+  ],
+  "ciss_2022_26196_v1__claimed_braking_absent": [
+   "inconsistent",
+   "inconsistent",
+   "inconsistent"
+  ],
+  "ciss_2022_26196_v1__real": [
+   "inconsistent",
+   "uncertain",
+   "uncertain"
+  ],
+  "ciss_2022_26540_v1__real": [
+   "uncertain",
+   "uncertain",
+   "inconsistent"
+  ],
+  "ciss_2022_26540_v1__speed_mismatch": [
+   "inconsistent",
+   "inconsistent",
+   "inconsistent"
+  ],
+  "ciss_2022_27367_v2__real": [
+   "inconsistent",
+   "inconsistent",
+   "uncertain"
+  ],
+  "ciss_2022_27367_v2__wrong_impact_direction": [
+   "consistent",
+   "uncertain",
+   "uncertain"
+  ],
+  "vz_1511197__consistent": [
+   "uncertain",
+   "consistent",
+   "consistent"
+  ],
+  "vz_1511197__event_count_mismatch": [
+   "inconsistent",
+   "inconsistent",
+   "inconsistent"
+  ],
+  "vz_1529161__claimed_braking_absent": [
+   "uncertain",
+   "uncertain",
+   "uncertain"
+  ],
+  "vz_1529161__consistent": [
+   "uncertain",
+   "uncertain",
+   "uncertain"
+  ],
+  "vz_2026308__consistent": [
+   "consistent",
+   "uncertain",
+   "uncertain"
+  ],
+  "vz_2026308__speed_mismatch": [
+   "inconsistent",
+   "inconsistent",
+   "inconsistent"
+  ],
+  "vz_2076649__consistent": [
+   "consistent",
+   "consistent",
+   "uncertain"
+  ],
+  "vz_2076649__understated_severity": [
+   "inconsistent",
+   "inconsistent",
+   "inconsistent"
+  ],
+  "vz_2128081__consistent": [
+   "consistent",
+   "consistent",
+   "consistent"
+  ],
+  "vz_2128081__understated_severity": [
+   "inconsistent",
+   "inconsistent",
+   "inconsistent"
+  ],
+  "vz_23172__consistent": [
+   "uncertain",
+   "uncertain",
+   "inconsistent"
+  ],
+  "vz_2698954__consistent": [
+   "consistent",
+   "uncertain",
+   "consistent"
+  ],
+  "vz_2698954__speed_mismatch": [
+   "inconsistent",
+   "inconsistent",
+   "inconsistent"
+  ],
+  "vz_61371__consistent": [
+   "uncertain",
+   "uncertain",
+   "uncertain"
+  ],
+  "vz_61371__event_count_mismatch": [
+   "inconsistent",
+   "inconsistent",
+   "inconsistent"
+  ]
+ },
+ "tag": "v2-prompt"
+}

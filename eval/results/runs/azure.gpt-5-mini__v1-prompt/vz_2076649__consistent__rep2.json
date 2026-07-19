@@ -1,0 +1,1085 @@
+{
+ "narrative_id": "vz_2076649__consistent",
+ "event_id": "vz_2076649",
+ "ground_truth": "consistent",
+ "injected_error": null,
+ "rep": 2,
+ "model": "azure.gpt-5-mini",
+ "wall_s": 22.4,
+ "result": {
+  "type": "final",
+  "arm": "consistency",
+  "event_id": "vz_2076649",
+  "assertions": [
+   {
+    "id": "a1",
+    "type": "speed",
+    "text": "Vehicle travel speed was around 105 to 110 km/h on the motorway."
+   },
+   {
+    "id": "a2",
+    "type": "impact_count",
+    "text": "The vehicle experienced a single strong blow (one impact)."
+   },
+   {
+    "id": "a3",
+    "type": "severity",
+    "text": "The impact was strong but the car remained drivable."
+   },
+   {
+    "id": "a4",
+    "type": "braking",
+    "text": "The car slowed steadily over the following seconds after the impact (no immediate hard braking indicated)."
+   },
+   {
+    "id": "a5",
+    "type": "sequence",
+    "text": "The strong blow occurred while traveling at 105\u2013110 km/h, and then the car slowed steadily after the impact."
+   }
+  ],
+  "verdicts": [
+   {
+    "assertion_id": "a1",
+    "verdict": "supported",
+    "evidence": "The GPS speed samples show the vehicle at [110.0](T2) km/h at t=0 and values around [103.0](T3)\u2013[104.0](T3) km/h in the seconds before the impact spike, consistent with a travel speed of about [105](T3)\u2013[110](T2) km/h."
+   },
+   {
+    "assertion_id": "a2",
+    "verdict": "supported",
+    "evidence": "Detect_events found a single main impact spike on accel_x at [9.97](T4) s with magnitude [5.51](T4) g and coincident impact spikes on accel_y at [10.0](T4) s ([2.65](T4) g) and accel_z at [10.0](T4) s ([3.72](T4) g); these coincide as one collision event (single strong blow) around [9.97](T4)\u2013[10.0](T4) s."
+   },
+   {
+    "assertion_id": "a3",
+    "verdict": "supported",
+    "evidence": "The accel channel peaks show a strong impact with peak magnitude [5.51](T2) g on accel_x and other axis peaks [3.758](T3) g and [4.79](T3) g around [9.92](T2)\u2013[9.98](T3) s, while GPS speed remains available and the vehicle continued moving (gps samples fall from [104.0](T4) km/h at ~9\u201310 s to [87.0](T4) km/h at 12 s) indicating the car remained drivable after a strong impact."
+   },
+   {
+    "assertion_id": "a4",
+    "verdict": "supported",
+    "evidence": "GPS speed shows values of [104.0](T3) km/h at t\u224810 s, then [92.0](T3) km/h at t=11 s and [87.0](T3) km/h at t=12 s, indicating a steady slowdown over several seconds rather than an immediate single-step drop; detect_events reports speed_drop from [104.0](T4) to [87.0](T4) km/h between t=[9.0](T4)\u2013[12.0](T4) s, consistent with no single instant of hard braking."
+   },
+   {
+    "assertion_id": "a5",
+    "verdict": "supported",
+    "evidence": "The timing shows the impact spike at ~[9.97](T4)\u2013[10.0](T4) s while GPS speed was about [104.0](T3) km/h then the vehicle speed decreased to [87.0](T4) km/h by t=[12.0](T3) s, matching the sequence that the blow occurred at ~[105\u000105](T3)(T2) km/h and then the car slowed steadily after impact."
+   }
+  ],
+  "model_overall": "consistent",
+  "derived_overall": "consistent",
+  "rationale": "Telemetry shows a high pre-impact GPS speed near [110.0](T2) km/h, a single coincident multi-axis impact spike at ~[9.97](T4)\u2013[10.0](T4) s with peak [5.51](T2) g, and a multi-second GPS speed decrease from ~[104.0](T3) to [87.0](T4) km/h, supporting the narrative that a strong blow occurred while traveling ~[105\u0001110](T3)(T2) km/h and the vehicle slowed steadily thereafter.",
+  "validation": {
+   "citations": [
+    {
+     "claim": "110.0",
+     "tool_id": "T2",
+     "numbers": [
+      "110.0"
+     ],
+     "unmatched": [],
+     "status": "valid"
+    },
+    {
+     "claim": "103.0",
+     "tool_id": "T3",
+     "numbers": [
+      "103.0"
+     ],
+     "unmatched": [],
+     "status": "valid"
+    },
+    {
+     "claim": "104.0",
+     "tool_id": "T3",
+     "numbers": [
+      "104.0"
+     ],
+     "unmatched": [],
+     "status": "valid"
+    },
+    {
+     "claim": "105",
+     "tool_id": "T3",
+     "numbers": [
+      "105"
+     ],
+     "unmatched": [
+      "105"
+     ],
+     "status": "invalid"
+    },
+    {
+     "claim": "110",
+     "tool_id": "T2",
+     "numbers": [
+      "110"
+     ],
+     "unmatched": [],
+     "status": "valid"
+    },
+    {
+     "claim": "9.97",
+     "tool_id": "T4",
+     "numbers": [
+      "9.97"
+     ],
+     "unmatched": [],
+     "status": "valid"
+    },
+    {
+     "claim": "5.51",
+     "tool_id": "T4",
+     "numbers": [
+      "5.51"
+     ],
+     "unmatched": [],
+     "status": "valid"
+    },
+    {
+     "claim": "10.0",
+     "tool_id": "T4",
+     "numbers": [
+      "10.0"
+     ],
+     "unmatched": [],
+     "status": "valid"
+    },
+    {
+     "claim": "2.65",
+     "tool_id": "T4",
+     "numbers": [
+      "2.65"
+     ],
+     "unmatched": [],
+     "status": "valid"
+    },
+    {
+     "claim": "10.0",
+     "tool_id": "T4",
+     "numbers": [
+      "10.0"
+     ],
+     "unmatched": [],
+     "status": "valid"
+    },
+    {
+     "claim": "3.72",
+     "tool_id": "T4",
+     "numbers": [
+      "3.72"
+     ],
+     "unmatched": [],
+     "status": "valid"
+    },
+    {
+     "claim": "9.97",
+     "tool_id": "T4",
+     "numbers": [
+      "9.97"
+     ],
+     "unmatched": [],
+     "status": "valid"
+    },
+    {
+     "claim": "10.0",
+     "tool_id": "T4",
+     "numbers": [
+      "10.0"
+     ],
+     "unmatched": [],
+     "status": "valid"
+    },
+    {
+     "claim": "5.51",
+     "tool_id": "T2",
+     "numbers": [
+      "5.51"
+     ],
+     "unmatched": [],
+     "status": "valid"
+    },
+    {
+     "claim": "3.758",
+     "tool_id": "T3",
+     "numbers": [
+      "3.758"
+     ],
+     "unmatched": [],
+     "status": "valid"
+    },
+    {
+     "claim": "4.79",
+     "tool_id": "T3",
+     "numbers": [
+      "4.79"
+     ],
+     "unmatched": [],
+     "status": "valid"
+    },
+    {
+     "claim": "9.92",
+     "tool_id": "T2",
+     "numbers": [
+      "9.92"
+     ],
+     "unmatched": [],
+     "status": "valid"
+    },
+    {
+     "claim": "9.98",
+     "tool_id": "T3",
+     "numbers": [
+      "9.98"
+     ],
+     "unmatched": [],
+     "status": "valid"
+    },
+    {
+     "claim": "104.0",
+     "tool_id": "T4",
+     "numbers": [
+      "104.0"
+     ],
+     "unmatched": [],
+     "status": "valid"
+    },
+    {
+     "claim": "87.0",
+     "tool_id": "T4",
+     "numbers": [
+      "87.0"
+     ],
+     "unmatched": [],
+     "status": "valid"
+    },
+    {
+     "claim": "104.0",
+     "tool_id": "T3",
+     "numbers": [
+      "104.0"
+     ],
+     "unmatched": [],
+     "status": "valid"
+    },
+    {
+     "claim": "92.0",
+     "tool_id": "T3",
+     "numbers": [
+      "92.0"
+     ],
+     "unmatched": [],
+     "status": "valid"
+    },
+    {
+     "claim": "87.0",
+     "tool_id": "T3",
+     "numbers": [
+      "87.0"
+     ],
+     "unmatched": [],
+     "status": "valid"
+    },
+    {
+     "claim": "104.0",
+     "tool_id": "T4",
+     "numbers": [
+      "104.0"
+     ],
+     "unmatched": [],
+     "status": "valid"
+    },
+    {
+     "claim": "87.0",
+     "tool_id": "T4",
+     "numbers": [
+      "87.0"
+     ],
+     "unmatched": [],
+     "status": "valid"
+    },
+    {
+     "claim": "9.0",
+     "tool_id": "T4",
+     "numbers": [
+      "9.0"
+     ],
+     "unmatched": [],
+     "status": "valid"
+    },
+    {
+     "claim": "12.0",
+     "tool_id": "T4",
+     "numbers": [
+      "12.0"
+     ],
+     "unmatched": [],
+     "status": "valid"
+    },
+    {
+     "claim": "9.97",
+     "tool_id": "T4",
+     "numbers": [
+      "9.97"
+     ],
+     "unmatched": [],
+     "status": "valid"
+    },
+    {
+     "claim": "10.0",
+     "tool_id": "T4",
+     "numbers": [
+      "10.0"
+     ],
+     "unmatched": [],
+     "status": "valid"
+    },
+    {
+     "claim": "104.0",
+     "tool_id": "T3",
+     "numbers": [
+      "104.0"
+     ],
+     "unmatched": [],
+     "status": "valid"
+    },
+    {
+     "claim": "87.0",
+     "tool_id": "T4",
+     "numbers": [
+      "87.0"
+     ],
+     "unmatched": [],
+     "status": "valid"
+    },
+    {
+     "claim": "12.0",
+     "tool_id": "T3",
+     "numbers": [
+      "12.0"
+     ],
+     "unmatched": [],
+     "status": "valid"
+    },
+    {
+     "claim": "105\u000105",
+     "tool_id": "T3",
+     "numbers": [
+      "105",
+      "05"
+     ],
+     "unmatched": [
+      "105"
+     ],
+     "status": "invalid"
+    }
+   ],
+   "uncited_quantitative_claims": [
+    {
+     "match": "t=0",
+     "context": "The GPS speed samples show the vehicle at   km/h at t=0 and values around  \u2013  km/h in the seconds before the impact"
+    },
+    {
+     "match": "10 s",
+     "context": "ehicle continued moving (gps samples fall from   km/h at ~9\u201310 s to   km/h at 12 s) indicating the car remained drivable aft"
+    },
+    {
+     "match": "at 12",
+     "context": "d moving (gps samples fall from   km/h at ~9\u201310 s to   km/h at 12 s) indicating the car remained drivable after a strong impa"
+    },
+    {
+     "match": "10 s",
+     "context": "fter a strong impact.\nGPS speed shows values of   km/h at t\u224810 s, then   km/h at t=11 s and   km/h at t=12 s, indicating a s"
+    },
+    {
+     "match": "t=11",
+     "context": "GPS speed shows values of   km/h at t\u224810 s, then   km/h at t=11 s and   km/h at t=12 s, indicating a steady slowdown over s"
+    },
+    {
+     "match": "t=12",
+     "context": "es of   km/h at t\u224810 s, then   km/h at t=11 s and   km/h at t=12 s, indicating a steady slowdown over several seconds rather"
+    },
+    {
+     "match": "one collision",
+     "context": "_y at   s (  g) and accel_z at   s (  g); these coincide as one collision event (single strong blow) around  \u2013  s.\nThe accel channel"
+    }
+   ],
+   "n_valid": 31,
+   "n_invalid": 2,
+   "n_unknown_id": 0,
+   "n_uncited": 7,
+   "citation_validity_rate": 0.939,
+   "fully_grounded": false
+  },
+  "tool_trace": [
+   {
+    "id": "T1",
+    "name": "get_window_info",
+    "args": {
+     "event_id": "vz_2076649"
+    },
+    "result": {
+     "event_id": "vz_2076649",
+     "source": "vzcrash",
+     "time_zero": "window start (t=0); event typically mid-window",
+     "t_min": 0.0,
+     "t_max": 16.0,
+     "channels": [
+      {
+       "name": "accel_x",
+       "unit": "g",
+       "sampling": "100 Hz",
+       "t_start": 0.0,
+       "t_end": 15.99,
+       "desc": "Accelerometer x-axis"
+      },
+      {
+       "name": "accel_y",
+       "unit": "g",
+       "sampling": "100 Hz",
+       "t_start": 0.0,
+       "t_end": 15.99,
+       "desc": "Accelerometer y-axis"
+      },
+      {
+       "name": "accel_z",
+       "unit": "g",
+       "sampling": "100 Hz",
+       "t_start": 0.0,
+       "t_end": 15.99,
+       "desc": "Accelerometer z-axis"
+      },
+      {
+       "name": "gyro_x",
+       "unit": "deg/s",
+       "sampling": "100 Hz",
+       "t_start": 0.0,
+       "t_end": 15.99,
+       "desc": "Gyroscope x-axis"
+      },
+      {
+       "name": "gyro_y",
+       "unit": "deg/s",
+       "sampling": "100 Hz",
+       "t_start": 0.0,
+       "t_end": 15.99,
+       "desc": "Gyroscope y-axis"
+      },
+      {
+       "name": "gyro_z",
+       "unit": "deg/s",
+       "sampling": "100 Hz",
+       "t_start": 0.0,
+       "t_end": 15.99,
+       "desc": "Gyroscope z-axis"
+      },
+      {
+       "name": "gps_speed",
+       "unit": "km/h",
+       "sampling": "1 Hz",
+       "t_start": 0.0,
+       "t_end": 16.0,
+       "desc": "GPS-derived speed"
+      }
+     ],
+     "notes": "100 Hz IMU over a 16 s window. Units: accel g, gyro deg/s, speed km/h. Device-to-vehicle axis alignment is NOT documented; do not assume which axis is longitudinal without cross-checking against GPS speed."
+    }
+   },
+   {
+    "id": "T2",
+    "name": "compute_stats",
+    "args": {
+     "event_id": "vz_2076649",
+     "channels": [
+      "gps_speed",
+      "accel_x",
+      "accel_y",
+      "accel_z"
+     ],
+     "t_start": 0,
+     "t_end": 16
+    },
+    "result": {
+     "range": {
+      "t_start": 0.0,
+      "t_end": 16.0
+     },
+     "channels": {
+      "gps_speed": {
+       "unit": "km/h",
+       "n_samples": 17,
+       "first_value": 110.0,
+       "first_t": 0.0,
+       "last_value": 27.0,
+       "last_t": 16.0,
+       "min": 27.0,
+       "max": 110.0,
+       "change": -83.0
+      },
+      "accel_x": {
+       "unit": "g",
+       "n_samples": 1600,
+       "baseline_median": -0.111,
+       "peak_abs_dev": 5.506,
+       "peak_signed_dev": -5.506,
+       "peak_t": 9.97,
+       "peak_raw_value": -5.617,
+       "rms_dev": 0.417,
+       "max_rate_of_change_per_s": 355.2,
+       "max_rate_of_change_t": 9.92,
+       "integrated_delta_v_kmh": -53.8,
+       "integrated_delta_v_note": "integral of (a - baseline) over the range; device-frame axis, sign/orientation not vehicle-aligned"
+      },
+      "accel_y": {
+       "unit": "g",
+       "n_samples": 1600,
+       "baseline_median": 0.004,
+       "peak_abs_dev": 3.754,
+       "peak_signed_dev": 3.754,
+       "peak_t": 9.98,
+       "peak_raw_value": 3.758,
+       "rms_dev": 0.321,
+       "max_rate_of_change_per_s": 337.2,
+       "max_rate_of_change_t": 10.01,
+       "integrated_delta_v_kmh": 4.9,
+       "integrated_delta_v_note": "integral of (a - baseline) over the range; device-frame axis, sign/orientation not vehicle-aligned"
+      },
+      "accel_z": {
+       "unit": "g",
+       "n_samples": 1600,
+       "baseline_median": 1.01,
+       "peak_abs_dev": 3.78,
+       "peak_signed_dev": 3.78,
+       "peak_t": 9.92,
+       "peak_raw_value": 4.79,
+       "rms_dev": 0.34,
+       "max_rate_of_change_per_s": 539.9,
+       "max_rate_of_change_t": 9.91,
+       "integrated_delta_v_kmh": -1.2,
+       "integrated_delta_v_note": "integral of (a - baseline) over the range; device-frame axis, sign/orientation not vehicle-aligned"
+      }
+     }
+    }
+   },
+   {
+    "id": "T3",
+    "name": "slice_window",
+    "args": {
+     "event_id": "vz_2076649",
+     "t_start": 6,
+     "t_end": 12,
+     "channels": [
+      "gps_speed",
+      "accel_x",
+      "accel_y",
+      "accel_z"
+     ],
+     "max_points_per_channel": 100
+    },
+    "result": {
+     "range": {
+      "t_start": 6.0,
+      "t_end": 12.0
+     },
+     "downsampling": "per-bucket sample with the largest |deviation from channel median| is kept",
+     "channels": {
+      "gps_speed": {
+       "unit": "km/h",
+       "note": "raw samples",
+       "points": [
+        [
+         6.0,
+         103.0
+        ],
+        [
+         7.0,
+         102.0
+        ],
+        [
+         8.0,
+         102.0
+        ],
+        [
+         9.0,
+         104.0
+        ],
+        [
+         10.0,
+         104.0
+        ],
+        [
+         11.0,
+         92.0
+        ],
+        [
+         12.0,
+         87.0
+        ]
+       ]
+      },
+      "accel_x": {
+       "unit": "g",
+       "note": "downsampled from 601 samples",
+       "points": [
+        [
+         6.19,
+         0.089
+        ],
+        [
+         6.38,
+         0.078
+        ],
+        [
+         6.63,
+         0.078
+        ],
+        [
+         6.83,
+         0.105
+        ],
+        [
+         7.03,
+         0.111
+        ],
+        [
+         7.34,
+         0.087
+        ],
+        [
+         7.66,
+         0.093
+        ],
+        [
+         7.79,
+         0.102
+        ],
+        [
+         8.05,
+         0.068
+        ],
+        [
+         8.36,
+         0.038
+        ],
+        [
+         8.55,
+         0.027
+        ],
+        [
+         8.68,
+         -0.004
+        ],
+        [
+         9.09,
+         -0.655
+        ],
+        [
+         9.3,
+         -1.275
+        ],
+        [
+         9.39,
+         -1.249
+        ],
+        [
+         9.77,
+         -0.886
+        ],
+        [
+         9.97,
+         -5.617
+        ],
+        [
+         10.12,
+         -2.14
+        ],
+        [
+         10.51,
+         1.542
+        ],
+        [
+         10.62,
+         -1.332
+        ],
+        [
+         10.84,
+         -0.983
+        ],
+        [
+         11.06,
+         -1.373
+        ],
+        [
+         11.36,
+         -0.623
+        ],
+        [
+         11.63,
+         -0.755
+        ],
+        [
+         11.79,
+         -0.599
+        ]
+       ]
+      },
+      "accel_y": {
+       "unit": "g",
+       "note": "downsampled from 601 samples",
+       "points": [
+        [
+         6.24,
+         -0.07
+        ],
+        [
+         6.29,
+         -0.056
+        ],
+        [
+         6.5,
+         -0.062
+        ],
+        [
+         6.89,
+         -0.056
+        ],
+        [
+         7.04,
+         0.058
+        ],
+        [
+         7.4,
+         -0.07
+        ],
+        [
+         7.57,
+         0.099
+        ],
+        [
+         7.71,
+         -0.031
+        ],
+        [
+         8.05,
+         -0.089
+        ],
+        [
+         8.27,
+         0.041
+        ],
+        [
+         8.46,
+         0.058
+        ],
+        [
+         8.81,
+         -0.048
+        ],
+        [
+         9.08,
+         -0.223
+        ],
+        [
+         9.32,
+         0.461
+        ],
+        [
+         9.39,
+         0.567
+        ],
+        [
+         9.81,
+         0.675
+        ],
+        [
+         9.98,
+         3.758
+        ],
+        [
+         10.09,
+         -1.435
+        ],
+        [
+         10.55,
+         -1.958
+        ],
+        [
+         10.59,
+         -1.917
+        ],
+        [
+         10.94,
+         1.084
+        ],
+        [
+         11.13,
+         -0.827
+        ],
+        [
+         11.4,
+         0.793
+        ],
+        [
+         11.73,
+         1.046
+        ],
+        [
+         11.77,
+         1.018
+        ]
+       ]
+      },
+      "accel_z": {
+       "unit": "g",
+       "note": "downsampled from 601 samples",
+       "points": [
+        [
+         6.15,
+         1.121
+        ],
+        [
+         6.29,
+         1.146
+        ],
+        [
+         6.57,
+         1.106
+        ],
+        [
+         6.88,
+         1.21
+        ],
+        [
+         7.15,
+         1.148
+        ],
+        [
+         7.38,
+         1.11
+        ],
+        [
+         7.63,
+         1.093
+        ],
+        [
+         7.79,
+         1.165
+        ],
+        [
+         8.05,
+         1.196
+        ],
+        [
+         8.26,
+         0.889
+        ],
+        [
+         8.64,
+         0.858
+        ],
+        [
+         8.86,
+         1.126
+        ],
+        [
+         9.0,
+         1.278
+        ],
+        [
+         9.17,
+         0.66
+        ],
+        [
+         9.51,
+         0.489
+        ],
+        [
+         9.65,
+         1.369
+        ],
+        [
+         9.92,
+         4.79
+        ],
+        [
+         10.12,
+         -1.234
+        ],
+        [
+         10.54,
+         3.475
+        ],
+        [
+         10.65,
+         -0.613
+        ],
+        [
+         10.84,
+         -0.225
+        ],
+        [
+         11.12,
+         2.616
+        ],
+        [
+         11.45,
+         0.431
+        ],
+        [
+         11.7,
+         1.711
+        ],
+        [
+         11.78,
+         1.465
+        ]
+       ]
+      }
+     }
+    }
+   },
+   {
+    "id": "T4",
+    "name": "detect_events",
+    "args": {
+     "event_id": "vz_2076649"
+    },
+    "result": {
+     "event_id": "vz_2076649",
+     "n_detections": 11,
+     "detections": [
+      {
+       "type": "impact_spike",
+       "channel": "accel_x",
+       "t_start": 9.9,
+       "t_end": 9.97,
+       "peak_t": 9.97,
+       "magnitude": 5.51,
+       "signed_peak": -5.51,
+       "unit": "g",
+       "criterion": "|a-baseline| > 2.5 g for >= 2 samples"
+      },
+      {
+       "type": "sustained_accel_or_decel",
+       "channel": "accel_x",
+       "t_start": 9.09,
+       "t_end": 9.79,
+       "mean_magnitude": 0.66,
+       "peak_moving_avg": -1.18,
+       "unit": "g",
+       "criterion": "0.5 s moving avg |a-baseline| in 0.35-1.2 g",
+       "note": "direction ambiguous: device axis orientation undocumented"
+      },
+      {
+       "type": "sustained_accel_or_decel",
+       "channel": "accel_x",
+       "t_start": 12.02,
+       "t_end": 12.51,
+       "mean_magnitude": 0.41,
+       "peak_moving_avg": -0.46,
+       "unit": "g",
+       "criterion": "0.5 s moving avg |a-baseline| in 0.35-1.2 g",
+       "note": "direction ambiguous: device axis orientation undocumented"
+      },
+      {
+       "type": "impact_spike",
+       "channel": "accel_y",
+       "t_start": 10.0,
+       "t_end": 10.01,
+       "peak_t": 10.0,
+       "magnitude": 2.65,
+       "signed_peak": 2.65,
+       "unit": "g",
+       "criterion": "|a-baseline| > 2.5 g for >= 2 samples"
+      },
+      {
+       "type": "sustained_accel_or_decel",
+       "channel": "accel_y",
+       "t_start": 10.23,
+       "t_end": 10.77,
+       "mean_magnitude": 0.69,
+       "peak_moving_avg": -0.83,
+       "unit": "g",
+       "criterion": "0.5 s moving avg |a-baseline| in 0.35-1.2 g",
+       "note": "direction ambiguous: device axis orientation undocumented"
+      },
+      {
+       "type": "sustained_accel_or_decel",
+       "channel": "accel_y",
+       "t_start": 11.43,
+       "t_end": 11.93,
+       "mean_magnitude": 0.44,
+       "peak_moving_avg": 0.52,
+       "unit": "g",
+       "criterion": "0.5 s moving avg |a-baseline| in 0.35-1.2 g",
+       "note": "direction ambiguous: device axis orientation undocumented"
+      },
+      {
+       "type": "impact_spike",
+       "channel": "accel_z",
+       "t_start": 10.0,
+       "t_end": 10.03,
+       "peak_t": 10.0,
+       "magnitude": 3.72,
+       "signed_peak": 3.72,
+       "unit": "g",
+       "criterion": "|a-baseline| > 2.5 g for >= 2 samples"
+      },
+      {
+       "type": "speed_drop",
+       "channel": "gps_speed",
+       "t_start": 9.0,
+       "t_end": 12.0,
+       "from_kmh": 104.0,
+       "to_kmh": 87.0,
+       "drop_kmh": 17.0,
+       "unit": "km/h",
+       "criterion": ">= 15.0 km/h drop within 3.0 s"
+      },
+      {
+       "type": "speed_drop",
+       "channel": "gps_speed",
+       "t_start": 11.0,
+       "t_end": 14.0,
+       "from_kmh": 92.0,
+       "to_kmh": 67.0,
+       "drop_kmh": 25.0,
+       "unit": "km/h",
+       "criterion": ">= 15.0 km/h drop within 3.0 s"
+      },
+      {
+       "type": "speed_drop",
+       "channel": "gps_speed",
+       "t_start": 13.0,
+       "t_end": 15.0,
+       "from_kmh": 78.0,
+       "to_kmh": 44.0,
+       "drop_kmh": 34.0,
+       "unit": "km/h",
+       "criterion": ">= 15.0 km/h drop within 3.0 s"
+      },
+      {
+       "type": "speed_drop",
+       "channel": "gps_speed",
+       "t_start": 15.0,
+       "t_end": 16.0,
+       "from_kmh": 44.0,
+       "to_kmh": 27.0,
+       "drop_kmh": 17.0,
+       "unit": "km/h",
+       "criterion": ">= 15.0 km/h drop within 3.0 s"
+      }
+     ],
+     "thresholds_doc": "impact spike: |a-baseline|>2.5g (>=20ms, merged<0.25s); sustained: 0.5s-avg in 0.35-1.2g; rotation: >40.0deg/s for 0.3s; net rotation >60.0deg; speed drop: >=15.0km/h in <=3.0s; brake: 0->1 transitions; CISS impact: max |crash-pulse delta-V|"
+    }
+   }
+  ],
+  "usage": {
+   "model": "azure.gpt-5-mini",
+   "n_api_calls": 6,
+   "input_tokens": 14871,
+   "output_tokens": 1113,
+   "cache_read_tokens": 7040,
+   "cache_creation_tokens": 0,
+   "cost_usd_estimate": 0.0059
+  }
+ }
+}

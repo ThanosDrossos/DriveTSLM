@@ -1,0 +1,388 @@
+{
+ "narrative_id": "ciss_2022_26196_v1__real",
+ "event_id": "ciss_2022_26196_v1",
+ "ground_truth": "consistent",
+ "injected_error": null,
+ "rep": 1,
+ "model": "azure.gpt-5-mini",
+ "wall_s": 19.1,
+ "result": {
+  "type": "final",
+  "arm": "consistency",
+  "event_id": "ciss_2022_26196_v1",
+  "assertions": [
+   {
+    "id": "a1",
+    "type": "other",
+    "text": "V1 was traveling east on a two-lane undivided roadway."
+   },
+   {
+    "id": "a2",
+    "type": "other",
+    "text": "V1 departed the roadway to the right."
+   },
+   {
+    "id": "a3",
+    "type": "impact_direction",
+    "text": "The front of V1 contacted a bridge abutment."
+   },
+   {
+    "id": "a4",
+    "type": "impact_count",
+    "text": "V1 had one impact with the bridge abutment (single impact)."
+   },
+   {
+    "id": "a5",
+    "type": "sequence",
+    "text": "V1 came to final rest at the point of impact (final rest occurred at the location where the front contacted the abutment)."
+   }
+  ],
+  "verdicts": [
+   {
+    "assertion_id": "a1",
+    "verdict": "unverifiable",
+    "evidence": "The telemetry shows GPS/EDR speed samples with first [77.0](T2) km/h at t=[-5.0](T1) s and last pre-impact [87.0](T2) km/h at t=[0.0](T1) s, but there is no heading or lane data to confirm travel direction or that the roadway was two-lane undivided; therefore the claim is unverifiable."
+   },
+   {
+    "assertion_id": "a2",
+    "verdict": "unverifiable",
+    "evidence": "There is a steering baseline and a large steering change with peak raw value [-78.0](T2) deg at t=[0.0](T2) s, but no lateral position, GPS track, or road-edge sensors to determine whether V1 departed the roadway to the right; thus this is unverifiable."
+   },
+   {
+    "assertion_id": "a3",
+    "verdict": "unverifiable",
+    "evidence": "The EDR crash-pulse shows a large longitudinal delta-V with peak cumulative change of [-87.0](T2) km/h at t=[0.09](T2) s and a lateral delta-V peak of [-11.0](T2) km/h at t=[0.04](T2) s, indicating a severe forward-impact-dominant collision, but telemetry cannot identify the struck object as a bridge abutment (that is environment information), so this is unverifiable."
+   },
+   {
+    "assertion_id": "a4",
+    "verdict": "supported",
+    "evidence": "The EDR summary records [num_events_recorded: 1](T1) event and the crash-pulse channels show a single dominant longitudinal delta-V final value of [-87.0](T2) km/h with no separate secondary impact pulses in the available 0\u20130.25 s window, supporting a single impact."
+   },
+   {
+    "assertion_id": "a5",
+    "verdict": "unverifiable",
+    "evidence": "Speed samples end at pre-impact [87.0](T2) km/h at t=[0.0](T1) s and the crash-pulse completes by t\u2248[0.09](T2) s, but there is no post-impact position or speed trace to confirm that final rest occurred at the point of impact; thus this is unverifiable."
+   }
+  ],
+  "model_overall": "uncertain",
+  "derived_overall": "uncertain",
+  "rationale": "Sensor evidence shows a severe forward-dominant impact (longitudinal delta-V \u2248 [ -87.0](T2) km/h) and a single recorded event ([1](T1)), but lacks heading, GPS track, road geometry, and post-impact position to confirm direction, roadway departure side, struck object identity, or final rest location.",
+  "validation": {
+   "citations": [
+    {
+     "claim": "77.0",
+     "tool_id": "T2",
+     "numbers": [
+      "77.0"
+     ],
+     "unmatched": [],
+     "status": "valid"
+    },
+    {
+     "claim": "-5.0",
+     "tool_id": "T1",
+     "numbers": [
+      "-5.0"
+     ],
+     "unmatched": [],
+     "status": "valid"
+    },
+    {
+     "claim": "87.0",
+     "tool_id": "T2",
+     "numbers": [
+      "87.0"
+     ],
+     "unmatched": [],
+     "status": "valid"
+    },
+    {
+     "claim": "0.0",
+     "tool_id": "T1",
+     "numbers": [
+      "0.0"
+     ],
+     "unmatched": [],
+     "status": "valid"
+    },
+    {
+     "claim": "-78.0",
+     "tool_id": "T2",
+     "numbers": [
+      "-78.0"
+     ],
+     "unmatched": [],
+     "status": "valid"
+    },
+    {
+     "claim": "0.0",
+     "tool_id": "T2",
+     "numbers": [
+      "0.0"
+     ],
+     "unmatched": [],
+     "status": "valid"
+    },
+    {
+     "claim": "-87.0",
+     "tool_id": "T2",
+     "numbers": [
+      "-87.0"
+     ],
+     "unmatched": [],
+     "status": "valid"
+    },
+    {
+     "claim": "0.09",
+     "tool_id": "T2",
+     "numbers": [
+      "0.09"
+     ],
+     "unmatched": [],
+     "status": "valid"
+    },
+    {
+     "claim": "-11.0",
+     "tool_id": "T2",
+     "numbers": [
+      "-11.0"
+     ],
+     "unmatched": [],
+     "status": "valid"
+    },
+    {
+     "claim": "0.04",
+     "tool_id": "T2",
+     "numbers": [
+      "0.04"
+     ],
+     "unmatched": [],
+     "status": "valid"
+    },
+    {
+     "claim": "num_events_recorded: 1",
+     "tool_id": "T1",
+     "numbers": [
+      "1"
+     ],
+     "unmatched": [],
+     "status": "valid"
+    },
+    {
+     "claim": "-87.0",
+     "tool_id": "T2",
+     "numbers": [
+      "-87.0"
+     ],
+     "unmatched": [],
+     "status": "valid"
+    },
+    {
+     "claim": "87.0",
+     "tool_id": "T2",
+     "numbers": [
+      "87.0"
+     ],
+     "unmatched": [],
+     "status": "valid"
+    },
+    {
+     "claim": "0.0",
+     "tool_id": "T1",
+     "numbers": [
+      "0.0"
+     ],
+     "unmatched": [],
+     "status": "valid"
+    },
+    {
+     "claim": "0.09",
+     "tool_id": "T2",
+     "numbers": [
+      "0.09"
+     ],
+     "unmatched": [],
+     "status": "valid"
+    }
+   ],
+   "uncited_quantitative_claims": [
+    {
+     "match": "0.25 s",
+     "context": "with no separate secondary impact pulses in the available 0\u20130.25 s window, supporting a single impact.\nSpeed samples end at pr"
+    }
+   ],
+   "n_valid": 15,
+   "n_invalid": 0,
+   "n_unknown_id": 0,
+   "n_uncited": 1,
+   "citation_validity_rate": 1.0,
+   "fully_grounded": false
+  },
+  "tool_trace": [
+   {
+    "id": "T1",
+    "name": "get_window_info",
+    "args": {
+     "event_id": "ciss_2022_26196_v1"
+    },
+    "result": {
+     "event_id": "ciss_2022_26196_v1",
+     "source": "ciss",
+     "time_zero": "impact (t=0); pre-crash negative, crash pulse positive",
+     "t_min": -5.0,
+     "t_max": 0.25,
+     "channels": [
+      {
+       "name": "speed",
+       "unit": "km/h",
+       "sampling": "irregular, 11 points",
+       "t_start": -5.0,
+       "t_end": 0.0,
+       "desc": "Vehicle speed (EDR pre-crash)"
+      },
+      {
+       "name": "accel_pedal",
+       "unit": "%",
+       "sampling": "irregular, 11 points",
+       "t_start": -5.0,
+       "t_end": 0.0,
+       "desc": "Accelerator pedal, percent full"
+      },
+      {
+       "name": "brake",
+       "unit": "on/off",
+       "sampling": "irregular, 11 points",
+       "t_start": -5.0,
+       "t_end": 0.0,
+       "desc": "Service brake status (0=off, 1=on)"
+      },
+      {
+       "name": "rpm",
+       "unit": "rpm",
+       "sampling": "irregular, 11 points",
+       "t_start": -5.0,
+       "t_end": 0.0,
+       "desc": "Engine RPM"
+      },
+      {
+       "name": "steering",
+       "unit": "deg",
+       "sampling": "irregular, 11 points",
+       "t_start": -5.0,
+       "t_end": 0.0,
+       "desc": "Steering input"
+      },
+      {
+       "name": "delta_v_long",
+       "unit": "km/h",
+       "sampling": "irregular, 26 points",
+       "t_start": 0.0,
+       "t_end": 0.25,
+       "desc": "Cumulative longitudinal delta-V during impact (times converted from ms to s)"
+      },
+      {
+       "name": "delta_v_lat",
+       "unit": "km/h",
+       "sampling": "irregular, 26 points",
+       "t_start": 0.0,
+       "t_end": 0.25,
+       "desc": "Cumulative lateral delta-V during impact (times converted from ms to s)"
+      }
+     ],
+     "notes": "NHTSA CISS EDR data: sparse pre-crash series (~2 Hz, t<0) plus a crash-pulse delta-V curve (t>=0, ~10 ms steps). t=0 is the impact.",
+     "edr_summary": {
+      "max_delta_v_long_kmh": -87.101,
+      "max_delta_v_long_time_ms": 90.0,
+      "max_delta_v_lat_kmh": -10.948,
+      "max_delta_v_lat_time_ms": 40.0,
+      "num_events_recorded": 1,
+      "event_desc": "Record 1, Most Recent",
+      "driver_belt_code": 0,
+      "driver_airbag_stage1_ms": 0.0
+     },
+     "vehicle": {
+      "make": "Mercedes-Benz",
+      "model": "CLA-Class",
+      "model_year": 2020,
+      "speed_limit_kmh": 56.0
+     },
+     "vehicles_in_crash": 1,
+     "edr_vehicle": "V1"
+    }
+   },
+   {
+    "id": "T2",
+    "name": "compute_stats",
+    "args": {
+     "event_id": "ciss_2022_26196_v1",
+     "channels": [
+      "speed",
+      "steering",
+      "delta_v_long",
+      "delta_v_lat"
+     ],
+     "t_start": -5.0,
+     "t_end": 0.25
+    },
+    "result": {
+     "range": {
+      "t_start": -5.0,
+      "t_end": 0.25
+     },
+     "channels": {
+      "speed": {
+       "unit": "km/h",
+       "n_samples": 11,
+       "first_value": 77.0,
+       "first_t": -5.0,
+       "last_value": 87.0,
+       "last_t": 0.0,
+       "min": 77.0,
+       "max": 90.0,
+       "change": 10.0
+      },
+      "steering": {
+       "unit": "deg",
+       "n_samples": 11,
+       "baseline_median": -12.0,
+       "peak_abs_dev": 66.0,
+       "peak_signed_dev": -66.0,
+       "peak_t": 0.0,
+       "peak_raw_value": -78.0,
+       "rms_dev": 24.907,
+       "max_rate_of_change_per_s": 52.0,
+       "max_rate_of_change_t": -1.0
+      },
+      "delta_v_long": {
+       "unit": "km/h",
+       "n_samples": 26,
+       "max_abs_value": 87.0,
+       "value_at_max": -87.0,
+       "t_at_max": 0.09,
+       "final_value": -87.0,
+       "note": "cumulative velocity change during the crash pulse"
+      },
+      "delta_v_lat": {
+       "unit": "km/h",
+       "n_samples": 26,
+       "max_abs_value": 11.0,
+       "value_at_max": -11.0,
+       "t_at_max": 0.04,
+       "final_value": -1.0,
+       "note": "cumulative velocity change during the crash pulse"
+      }
+     }
+    }
+   }
+  ],
+  "usage": {
+   "model": "azure.gpt-5-mini",
+   "n_api_calls": 4,
+   "input_tokens": 7207,
+   "output_tokens": 932,
+   "cache_read_tokens": 4736,
+   "cache_creation_tokens": 0,
+   "cost_usd_estimate": 0.0037
+  }
+ }
+}

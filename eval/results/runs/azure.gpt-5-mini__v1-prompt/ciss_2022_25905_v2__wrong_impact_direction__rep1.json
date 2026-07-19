@@ -1,0 +1,855 @@
+{
+ "narrative_id": "ciss_2022_25905_v2__wrong_impact_direction",
+ "event_id": "ciss_2022_25905_v2",
+ "ground_truth": "inconsistent",
+ "injected_error": "wrong_impact_direction",
+ "rep": 1,
+ "model": "azure.gpt-5-mini",
+ "wall_s": 21.1,
+ "result": {
+  "type": "final",
+  "arm": "consistency",
+  "event_id": "ciss_2022_25905_v2",
+  "assertions": [
+   {
+    "id": "a1",
+    "type": "sequence",
+    "text": "The vehicle was making a right turn onto a southbound road."
+   },
+   {
+    "id": "a2",
+    "type": "speed",
+    "text": "The vehicle had just accelerated from a near stop immediately before the collision."
+   },
+   {
+    "id": "a3",
+    "type": "impact_direction",
+    "text": "Another car struck the left side of the Outback."
+   },
+   {
+    "id": "a4",
+    "type": "impact_count",
+    "text": "There was a single impact between the Outback and the other car."
+   },
+   {
+    "id": "a5",
+    "type": "other",
+    "text": "The collision occurred during the right-turn maneuver onto the southbound road."
+   },
+   {
+    "id": "a6",
+    "type": "severity",
+    "text": "Severity is not explicitly stated (no claim of minor or severe damage)."
+   }
+  ],
+  "verdicts": [
+   {
+    "assertion_id": "a1",
+    "verdict": "unverifiable",
+    "evidence": "The telemetry shows steering angle changing from [220.0 deg at t=-5.0 s](T2) to [22.5 deg at t=0.0 s](T1), indicating a steering maneuver, but device axes alignment to cardinal directions (north/south) or mapping steering sign to a right turn is not documented, so whether it was a right turn onto a southbound road is unverifiable."
+   },
+   {
+    "assertion_id": "a2",
+    "verdict": "supported",
+    "evidence": "Speed increased from [6.0 km/h at t=-5.0 s] (T2) to [28.0 km/h at t=0.0 s] (T4) and accelerator pedal rose to [22.0% at t=-1.0 s] then dropped to [0.0% at t=-0.5 s] (T2), indicating the vehicle accelerated from near-stop immediately before impact."
+   },
+   {
+    "assertion_id": "a3",
+    "verdict": "contradicted",
+    "evidence": "The crash pulse shows lateral cumulative delta-V peaking at [4.0 km/h at t=0.07 s] and longitudinal cumulative delta-V reaching [\u221217.0 km/h at t=0.19 s] (T3); the larger magnitude longitudinal negative delta-V indicates a primary rear/forward-directed impulse rather than a dominant left-side lateral impact on the vehicle; the telemetry does not show a lateral delta-V consistent with a left-side strike, thus the specific claim that another car struck the left side is contradicted."
+   },
+   {
+    "assertion_id": "a4",
+    "verdict": "supported",
+    "evidence": "CISS delta-V curves show a single crash pulse with longitudinal delta-V evolving smoothly to [\u221217.0 km/h by t=0.19 s] and lateral delta-V rising once to [4.0 km/h by t=0.07 s] then holding (T3), consistent with a single impact event recorded."
+   },
+   {
+    "assertion_id": "a5",
+    "verdict": "unverifiable",
+    "evidence": "While steering and speed traces show a turning maneuver (steering at [17.5 deg at t=-0.5 s] and [22.5 deg at t=0.0 s] and speed near [28.0 km/h at t=0.0 s]) (T2,T4), telemetry cannot determine the road heading (southbound) or whether the collision occurred during the right-turn maneuver specifically, so this assertion is unverifiable."
+   },
+   {
+    "assertion_id": "a6",
+    "verdict": "supported",
+    "evidence": "The narrative makes no explicit quantitative statement about damage severity; telemetry EDR summary shows max delta-V longitudinal magnitude [17.0 km/h] and driver airbag stage triggered at [45.0 ms] (T1), but the assertion that severity is not stated is a statement about the narrative content and is supported (no severity claim present)."
+   }
+  ],
+  "model_overall": "uncertain",
+  "derived_overall": "inconsistent",
+  "rationale": "Telemetry supports that the vehicle accelerated from near-stop and that a single impact occurred, and shows a dominant longitudinal delta-V of [\u221217.0 km/h at t=0.19 s] (T3), which contradicts a clear left-side strike; however steering/heading and roadway orientation are not determinable from the device-frame data, so several assertions about turn direction and road heading remain unverifiable.",
+  "validation": {
+   "citations": [
+    {
+     "claim": "220.0 deg at t=-5.0 s",
+     "tool_id": "T2",
+     "numbers": [
+      "220.0 deg",
+      "-5.0 s"
+     ],
+     "unmatched": [],
+     "status": "valid"
+    },
+    {
+     "claim": "22.5 deg at t=0.0 s",
+     "tool_id": "T1",
+     "numbers": [
+      "22.5 deg",
+      "0.0 s"
+     ],
+     "unmatched": [
+      "22.5 deg"
+     ],
+     "status": "invalid"
+    }
+   ],
+   "uncited_quantitative_claims": [
+    {
+     "match": "6.0 km/h",
+     "context": "to a southbound road is unverifiable.\nSpeed increased from [6.0 km/h at t=-5.0 s] (T2) to [28.0 km/h at t=0.0 s] (T4) and accele"
+    },
+    {
+     "match": "t=-5.0",
+     "context": "und road is unverifiable.\nSpeed increased from [6.0 km/h at t=-5.0 s] (T2) to [28.0 km/h at t=0.0 s] (T4) and accelerator peda"
+    },
+    {
+     "match": "28.0 km/h",
+     "context": "iable.\nSpeed increased from [6.0 km/h at t=-5.0 s] (T2) to [28.0 km/h at t=0.0 s] (T4) and accelerator pedal rose to [22.0% at t="
+    },
+    {
+     "match": "t=0.0",
+     "context": "increased from [6.0 km/h at t=-5.0 s] (T2) to [28.0 km/h at t=0.0 s] (T4) and accelerator pedal rose to [22.0% at t=-1.0 s] t"
+    },
+    {
+     "match": "22.0%",
+     "context": "[28.0 km/h at t=0.0 s] (T4) and accelerator pedal rose to [22.0% at t=-1.0 s] then dropped to [0.0% at t=-0.5 s] (T2), indic"
+    },
+    {
+     "match": "t=-1.0",
+     "context": "/h at t=0.0 s] (T4) and accelerator pedal rose to [22.0% at t=-1.0 s] then dropped to [0.0% at t=-0.5 s] (T2), indicating the"
+    },
+    {
+     "match": "0.0%",
+     "context": "elerator pedal rose to [22.0% at t=-1.0 s] then dropped to [0.0% at t=-0.5 s] (T2), indicating the vehicle accelerated from"
+    },
+    {
+     "match": "t=-0.5",
+     "context": "pedal rose to [22.0% at t=-1.0 s] then dropped to [0.0% at t=-0.5 s] (T2), indicating the vehicle accelerated from near-stop"
+    },
+    {
+     "match": "4.0 km/h",
+     "context": "he crash pulse shows lateral cumulative delta-V peaking at [4.0 km/h at t=0.07 s] and longitudinal cumulative delta-V reaching ["
+    },
+    {
+     "match": "t=0.07",
+     "context": "se shows lateral cumulative delta-V peaking at [4.0 km/h at t=0.07 s] and longitudinal cumulative delta-V reaching [\u221217.0 km/h"
+    },
+    {
+     "match": "17.0 km/h",
+     "context": "at t=0.07 s] and longitudinal cumulative delta-V reaching [\u221217.0 km/h at t=0.19 s] (T3); the larger magnitude longitudinal negati"
+    },
+    {
+     "match": "t=0.19",
+     "context": "and longitudinal cumulative delta-V reaching [\u221217.0 km/h at t=0.19 s] (T3); the larger magnitude longitudinal negative delta-V"
+    },
+    {
+     "match": "17.0 km/h",
+     "context": "rash pulse with longitudinal delta-V evolving smoothly to [\u221217.0 km/h by t=0.19 s] and lateral delta-V rising once to [4.0 km/h b"
+    },
+    {
+     "match": "t=0.19",
+     "context": "th longitudinal delta-V evolving smoothly to [\u221217.0 km/h by t=0.19 s] and lateral delta-V rising once to [4.0 km/h by t=0.07 s"
+    },
+    {
+     "match": "4.0 km/h",
+     "context": "\u221217.0 km/h by t=0.19 s] and lateral delta-V rising once to [4.0 km/h by t=0.07 s] then holding (T3), consistent with a single im"
+    },
+    {
+     "match": "t=0.07",
+     "context": "y t=0.19 s] and lateral delta-V rising once to [4.0 km/h by t=0.07 s] then holding (T3), consistent with a single impact event"
+    },
+    {
+     "match": "17.5 deg",
+     "context": "ring and speed traces show a turning maneuver (steering at [17.5 deg at t=-0.5 s] and [22.5 deg at t=0.0 s] and speed near [28.0"
+    },
+    {
+     "match": "t=-0.5",
+     "context": "ed traces show a turning maneuver (steering at [17.5 deg at t=-0.5 s] and [22.5 deg at t=0.0 s] and speed near [28.0 km/h at t"
+    },
+    {
+     "match": "22.5 deg",
+     "context": "a turning maneuver (steering at [17.5 deg at t=-0.5 s] and [22.5 deg at t=0.0 s] and speed near [28.0 km/h at t=0.0 s]) (T2,T4),"
+    },
+    {
+     "match": "t=0.0",
+     "context": "neuver (steering at [17.5 deg at t=-0.5 s] and [22.5 deg at t=0.0 s] and speed near [28.0 km/h at t=0.0 s]) (T2,T4), telemetr"
+    },
+    {
+     "match": "28.0 km/h",
+     "context": "deg at t=-0.5 s] and [22.5 deg at t=0.0 s] and speed near [28.0 km/h at t=0.0 s]) (T2,T4), telemetry cannot determine the road h"
+    },
+    {
+     "match": "t=0.0",
+     "context": "5 s] and [22.5 deg at t=0.0 s] and speed near [28.0 km/h at t=0.0 s]) (T2,T4), telemetry cannot determine the road heading (s"
+    },
+    {
+     "match": "17.0 km/h",
+     "context": "metry EDR summary shows max delta-V longitudinal magnitude [17.0 km/h] and driver airbag stage triggered at [45.0 ms] (T1), but t"
+    },
+    {
+     "match": "45.0 ms",
+     "context": "magnitude [17.0 km/h] and driver airbag stage triggered at [45.0 ms] (T1), but the assertion that severity is not stated is a s"
+    }
+   ],
+   "n_valid": 1,
+   "n_invalid": 1,
+   "n_unknown_id": 0,
+   "n_uncited": 24,
+   "citation_validity_rate": 0.5,
+   "fully_grounded": false
+  },
+  "tool_trace": [
+   {
+    "id": "T1",
+    "name": "get_window_info",
+    "args": {
+     "event_id": "ciss_2022_25905_v2"
+    },
+    "result": {
+     "event_id": "ciss_2022_25905_v2",
+     "source": "ciss",
+     "time_zero": "impact (t=0); pre-crash negative, crash pulse positive",
+     "t_min": -5.0,
+     "t_max": 0.25,
+     "channels": [
+      {
+       "name": "speed",
+       "unit": "km/h",
+       "sampling": "irregular, 11 points",
+       "t_start": -5.0,
+       "t_end": 0.0,
+       "desc": "Vehicle speed (EDR pre-crash)"
+      },
+      {
+       "name": "accel_pedal",
+       "unit": "%",
+       "sampling": "irregular, 11 points",
+       "t_start": -5.0,
+       "t_end": 0.0,
+       "desc": "Accelerator pedal, percent full"
+      },
+      {
+       "name": "brake",
+       "unit": "on/off",
+       "sampling": "irregular, 11 points",
+       "t_start": -5.0,
+       "t_end": 0.0,
+       "desc": "Service brake status (0=off, 1=on)"
+      },
+      {
+       "name": "rpm",
+       "unit": "rpm",
+       "sampling": "irregular, 11 points",
+       "t_start": -5.0,
+       "t_end": 0.0,
+       "desc": "Engine RPM"
+      },
+      {
+       "name": "steering",
+       "unit": "deg",
+       "sampling": "irregular, 11 points",
+       "t_start": -5.0,
+       "t_end": 0.0,
+       "desc": "Steering input"
+      },
+      {
+       "name": "delta_v_long",
+       "unit": "km/h",
+       "sampling": "irregular, 26 points",
+       "t_start": 0.0,
+       "t_end": 0.25,
+       "desc": "Cumulative longitudinal delta-V during impact (times converted from ms to s)"
+      },
+      {
+       "name": "delta_v_lat",
+       "unit": "km/h",
+       "sampling": "irregular, 26 points",
+       "t_start": 0.0,
+       "t_end": 0.25,
+       "desc": "Cumulative lateral delta-V during impact (times converted from ms to s)"
+      }
+     ],
+     "notes": "NHTSA CISS EDR data: sparse pre-crash series (~2 Hz, t<0) plus a crash-pulse delta-V curve (t>=0, ~10 ms steps). t=0 is the impact.",
+     "edr_summary": {
+      "max_delta_v_long_kmh": -17.0,
+      "max_delta_v_long_time_ms": 300.0,
+      "max_delta_v_lat_kmh": 4.0,
+      "max_delta_v_lat_time_ms": 75.0,
+      "num_events_recorded": null,
+      "event_desc": "Record 1",
+      "driver_belt_code": 1,
+      "driver_airbag_stage1_ms": 45.0
+     },
+     "vehicle": {
+      "make": "Subaru",
+      "model": "Outback",
+      "model_year": 2018,
+      "speed_limit_kmh": 64.0
+     },
+     "vehicles_in_crash": 2,
+     "edr_vehicle": "V2"
+    }
+   },
+   {
+    "id": "T2",
+    "name": "slice_window",
+    "args": {
+     "event_id": "ciss_2022_25905_v2",
+     "t_start": -5.0,
+     "t_end": 0.0,
+     "channels": [
+      "speed",
+      "accel_pedal",
+      "brake",
+      "steering"
+     ],
+     "max_points_per_channel": 100
+    },
+    "result": {
+     "range": {
+      "t_start": -5.0,
+      "t_end": 0.0
+     },
+     "downsampling": "per-bucket sample with the largest |deviation from channel median| is kept",
+     "channels": {
+      "speed": {
+       "unit": "km/h",
+       "note": "raw samples",
+       "points": [
+        [
+         -5.0,
+         6.0
+        ],
+        [
+         -4.5,
+         8.0
+        ],
+        [
+         -4.0,
+         11.0
+        ],
+        [
+         -3.5,
+         13.0
+        ],
+        [
+         -3.0,
+         16.0
+        ],
+        [
+         -2.5,
+         18.0
+        ],
+        [
+         -2.0,
+         20.0
+        ],
+        [
+         -1.5,
+         23.0
+        ],
+        [
+         -1.0,
+         26.0
+        ],
+        [
+         -0.5,
+         29.0
+        ],
+        [
+         0.0,
+         28.0
+        ]
+       ]
+      },
+      "accel_pedal": {
+       "unit": "%",
+       "note": "raw samples",
+       "points": [
+        [
+         -5.0,
+         11.0
+        ],
+        [
+         -4.5,
+         10.0
+        ],
+        [
+         -4.0,
+         11.0
+        ],
+        [
+         -3.5,
+         12.0
+        ],
+        [
+         -3.0,
+         12.0
+        ],
+        [
+         -2.5,
+         18.0
+        ],
+        [
+         -2.0,
+         20.0
+        ],
+        [
+         -1.5,
+         20.0
+        ],
+        [
+         -1.0,
+         22.0
+        ],
+        [
+         -0.5,
+         0.0
+        ],
+        [
+         0.0,
+         0.0
+        ]
+       ]
+      },
+      "brake": {
+       "unit": "on/off",
+       "note": "raw samples",
+       "points": [
+        [
+         -5.0,
+         0.0
+        ],
+        [
+         -4.5,
+         0.0
+        ],
+        [
+         -4.0,
+         0.0
+        ],
+        [
+         -3.5,
+         0.0
+        ],
+        [
+         -3.0,
+         0.0
+        ],
+        [
+         -2.5,
+         0.0
+        ],
+        [
+         -2.0,
+         0.0
+        ],
+        [
+         -1.5,
+         0.0
+        ],
+        [
+         -1.0,
+         0.0
+        ],
+        [
+         -0.5,
+         1.0
+        ],
+        [
+         0.0,
+         1.0
+        ]
+       ]
+      },
+      "steering": {
+       "unit": "deg",
+       "note": "raw samples",
+       "points": [
+        [
+         -5.0,
+         220.0
+        ],
+        [
+         -4.5,
+         212.5
+        ],
+        [
+         -4.0,
+         192.5
+        ],
+        [
+         -3.5,
+         182.5
+        ],
+        [
+         -3.0,
+         187.5
+        ],
+        [
+         -2.5,
+         172.5
+        ],
+        [
+         -2.0,
+         137.5
+        ],
+        [
+         -1.5,
+         105.0
+        ],
+        [
+         -1.0,
+         45.0
+        ],
+        [
+         -0.5,
+         17.5
+        ],
+        [
+         0.0,
+         22.5
+        ]
+       ]
+      }
+     }
+    }
+   },
+   {
+    "id": "T3",
+    "name": "slice_window",
+    "args": {
+     "event_id": "ciss_2022_25905_v2",
+     "t_start": 0.0,
+     "t_end": 0.25,
+     "channels": [
+      "delta_v_long",
+      "delta_v_lat"
+     ],
+     "max_points_per_channel": 100
+    },
+    "result": {
+     "range": {
+      "t_start": 0.0,
+      "t_end": 0.25
+     },
+     "downsampling": "per-bucket sample with the largest |deviation from channel median| is kept",
+     "channels": {
+      "delta_v_long": {
+       "unit": "km/h",
+       "note": "raw samples",
+       "points": [
+        [
+         0.0,
+         0.0
+        ],
+        [
+         0.01,
+         -2.0
+        ],
+        [
+         0.02,
+         -4.0
+        ],
+        [
+         0.03,
+         -7.0
+        ],
+        [
+         0.04,
+         -10.0
+        ],
+        [
+         0.05,
+         -12.0
+        ],
+        [
+         0.06,
+         -14.0
+        ],
+        [
+         0.07,
+         -15.0
+        ],
+        [
+         0.08,
+         -15.0
+        ],
+        [
+         0.09,
+         -16.0
+        ],
+        [
+         0.1,
+         -16.0
+        ],
+        [
+         0.11,
+         -16.0
+        ],
+        [
+         0.12,
+         -16.0
+        ],
+        [
+         0.13,
+         -16.0
+        ],
+        [
+         0.14,
+         -16.0
+        ],
+        [
+         0.15,
+         -16.0
+        ],
+        [
+         0.16,
+         -16.0
+        ],
+        [
+         0.17,
+         -16.0
+        ],
+        [
+         0.18,
+         -16.0
+        ],
+        [
+         0.19,
+         -17.0
+        ],
+        [
+         0.2,
+         -17.0
+        ],
+        [
+         0.21,
+         -17.0
+        ],
+        [
+         0.22,
+         -17.0
+        ],
+        [
+         0.23,
+         -17.0
+        ],
+        [
+         0.24,
+         -17.0
+        ],
+        [
+         0.25,
+         -17.0
+        ]
+       ]
+      },
+      "delta_v_lat": {
+       "unit": "km/h",
+       "note": "raw samples",
+       "points": [
+        [
+         0.0,
+         0.0
+        ],
+        [
+         0.01,
+         0.0
+        ],
+        [
+         0.02,
+         1.0
+        ],
+        [
+         0.03,
+         2.0
+        ],
+        [
+         0.04,
+         2.0
+        ],
+        [
+         0.05,
+         3.0
+        ],
+        [
+         0.06,
+         3.0
+        ],
+        [
+         0.07,
+         4.0
+        ],
+        [
+         0.08,
+         4.0
+        ],
+        [
+         0.09,
+         4.0
+        ],
+        [
+         0.1,
+         4.0
+        ],
+        [
+         0.11,
+         3.0
+        ],
+        [
+         0.12,
+         3.0
+        ],
+        [
+         0.13,
+         3.0
+        ],
+        [
+         0.14,
+         3.0
+        ],
+        [
+         0.15,
+         2.0
+        ],
+        [
+         0.16,
+         2.0
+        ],
+        [
+         0.17,
+         2.0
+        ],
+        [
+         0.18,
+         2.0
+        ],
+        [
+         0.19,
+         2.0
+        ],
+        [
+         0.2,
+         2.0
+        ],
+        [
+         0.21,
+         2.0
+        ],
+        [
+         0.22,
+         2.0
+        ],
+        [
+         0.23,
+         2.0
+        ],
+        [
+         0.24,
+         2.0
+        ],
+        [
+         0.25,
+         2.0
+        ]
+       ]
+      }
+     }
+    }
+   },
+   {
+    "id": "T4",
+    "name": "compute_stats",
+    "args": {
+     "event_id": "ciss_2022_25905_v2",
+     "t_start": -5.0,
+     "t_end": 0.0,
+     "channels": [
+      "speed",
+      "steering",
+      "accel_pedal",
+      "brake"
+     ]
+    },
+    "result": {
+     "range": {
+      "t_start": -5.0,
+      "t_end": 0.0
+     },
+     "channels": {
+      "speed": {
+       "unit": "km/h",
+       "n_samples": 11,
+       "first_value": 6.0,
+       "first_t": -5.0,
+       "last_value": 28.0,
+       "last_t": 0.0,
+       "min": 6.0,
+       "max": 29.0,
+       "change": 22.0
+      },
+      "steering": {
+       "unit": "deg",
+       "n_samples": 11,
+       "baseline_median": 172.5,
+       "peak_abs_dev": 155.0,
+       "peak_signed_dev": -155.0,
+       "peak_t": -0.5,
+       "peak_raw_value": 17.5,
+       "rms_dev": 81.544,
+       "max_rate_of_change_per_s": 120.0,
+       "max_rate_of_change_t": -1.5
+      },
+      "accel_pedal": {
+       "unit": "%",
+       "n_samples": 11,
+       "baseline_median": 12.0,
+       "peak_abs_dev": 12.0,
+       "peak_signed_dev": -12.0,
+       "peak_t": -0.5,
+       "peak_raw_value": 0.0,
+       "rms_dev": 7.122,
+       "max_rate_of_change_per_s": 44.0,
+       "max_rate_of_change_t": -1.0,
+       "integrated_delta_v_kmh": 185.3,
+       "integrated_delta_v_note": "integral of (a - baseline) over the range; device-frame axis, sign/orientation not vehicle-aligned"
+      },
+      "brake": {
+       "unit": "on/off",
+       "n_samples": 11,
+       "fraction_on": 0.18,
+       "first_value": 0,
+       "last_value": 1,
+       "transitions": [
+        {
+         "t": -0.5,
+         "from": 0,
+         "to": 1
+        }
+       ]
+      }
+     }
+    }
+   }
+  ],
+  "usage": {
+   "model": "azure.gpt-5-mini",
+   "n_api_calls": 6,
+   "input_tokens": 14852,
+   "output_tokens": 1137,
+   "cache_read_tokens": 10880,
+   "cache_creation_tokens": 0,
+   "cost_usd_estimate": 0.006
+  }
+ }
+}

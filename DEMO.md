@@ -39,17 +39,25 @@ run is slow; run live if latency cooperates.
 - Click **Reveal ground truth**: "single injected error, understated severity — caught
   and localized. This is scored, not curated: every narrative variant carries its
   ground truth by construction."
-- Switch to the prepared failure case (pick from eval results, e.g. a run where the
-  checker abstained on a real contradiction or flagged a consistent narrative):
-> "And an honest miss: [describe]. The eval harness counts these — this demo is an
-> evaluation, not a highlight reel."
+- Switch to the prepared failure case — the Honda Accord (`ciss_2022_27367_v2`),
+  narrative "Claimant statement A" (fabricated "rear-ended from behind"):
+> "And an honest miss: the EDR recorded a −18 km/h longitudinal delta-V — a frontal
+> deceleration, physically incompatible with being struck from behind — yet the checker
+> marks the rear-end claim as supported in all three repetitions. Sign-convention
+> physics is a real capability gap at this model tier, and the eval quantifies it:
+> direction errors are the weakest type at 1 of 6 detected. This demo is an evaluation,
+> not a highlight reel."
 
 ## 2:30–3:15 — The numbers (Results view)
 
 - Scroll the results table:
 > "Every narrative, three repetitions: contradiction precision/recall per error type,
 > abstention rate, citation validity, cost per case, and run-to-run agreement —
-> deterministic scoring, no LLM judge."
+> deterministic scoring, no LLM judge. Precision 0.86, recall 0.82 at half a cent per
+> case; severity and speed errors detect at or near 100%, direction errors barely at
+> all — knowing *which* error types are detectable is the research question."
+- Point briefly at the sidebar model picker: "everything reruns on any of these
+> ChatGPT, Gemini or Claude models — cost and behavior become comparable axes."
 
 ## 3:15–4:00 — Thesis framing (README architecture section on screen)
 
