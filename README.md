@@ -13,7 +13,7 @@ ground-truth-by-construction narrative perturbations.
 ## Quick start
 
 ```bash
-cp .env.example .env        # fill in ANTHROPIC_API_KEY + DEMO_PASSWORD
+cp .env.example .env        # fill in OPENAI_API_KEY (KIT AI Toolbox) + DEMO_PASSWORD
 docker compose up           # build + serve everything on http://localhost:8000
 ```
 
@@ -84,8 +84,23 @@ frontend/    Vite+React+TS SPA: Explorer | Grounded Analysis | Claims Desk | Res
 eval/run_eval.py  ->  eval/results/summary.{json,md}  (rendered in the app)
 ```
 
-Model: any current Claude model via `CLAUDE_MODEL` (default `claude-opus-4-8`), Anthropic
-Messages API with tool use; costs estimated from per-call usage and shown per run.
+Models: the agent speaks the OpenAI-compatible chat-completions API against the **KIT AI
+Toolbox** (`https://ki-toolbox.scc.kit.edu/api/v1`, any OpenAI-compatible endpoint works
+via `OPENAI_BASE_URL`). A curated **model picker** in the UI covers the latest ChatGPT
+generations (GPT-5.4/5.5/5.6 variants, GPT-5 mini/nano), Gemini (2.5 Flash/Pro, 3.1,
+3.5 Flash) and Claude (Sonnet 5, Opus 4.8, Haiku 4.5) as exposed by the toolbox — all
+probed for tool-calling + vision support. Default: `azure.gpt-5-mini` (cheap and reliable;
+a full grounded analysis costs ~$0.003 at public list prices, a consistency check ~$0.004).
+Costs shown per run are estimates from public per-MTok prices; models newer than the
+public price sheets show "n/a".
+
+One robustness mechanism worth naming: **validator-in-the-loop**. If a final answer
+contains zero valid citations (typically a model using bare `[T2]` tags instead of
+`[claim](T2)` links), the backend feeds the validator's complaints back once and demands a
+rewrite. In live testing this took gpt-5-mini from 0 valid / 25 uncited to 12 valid — and
+the validator then caught a genuinely fabricated number (a claimed 74.1° net rotation
+where the cited tool result said 19.1°), which is precisely the failure mode the PoC is
+built to expose.
 
 ## Agent rules (enforced, not vibes)
 

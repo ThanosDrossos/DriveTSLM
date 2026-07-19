@@ -40,8 +40,9 @@ from app.llm import DEFAULT_MODEL  # noqa: E402
 RUNS_DIR = ROOT / "eval" / "results" / "runs"
 
 
-def _runs_dir(model: str) -> Path:
-    return RUNS_DIR / model.replace("/", "_").replace(":", "_")
+def _runs_dir(model: str, tag: str = "") -> Path:
+    slug = model.replace("/", "_").replace(":", "_")
+    return RUNS_DIR / (f"{slug}__{tag}" if tag else slug)
 
 ERROR_TO_ASSERTION_TYPE = {
     "speed_mismatch": "speed",
@@ -52,8 +53,8 @@ ERROR_TO_ASSERTION_TYPE = {
 }
 
 
-def run_one(narrative: dict, rep: int, model: str) -> dict:
-    path = _runs_dir(model) / f"{narrative['narrative_id']}__rep{rep}.json"
+def run_one(narrative: dict, rep: int, model: str, tag: str = "") -> dict:
+    path = _runs_dir(model, tag) / f"{narrative['narrative_id']}__rep{rep}.json"
     if path.exists():
         return json.loads(path.read_text(encoding="utf-8"))
 
@@ -76,7 +77,7 @@ def run_one(narrative: dict, rep: int, model: str) -> dict:
         "wall_s": round(time.time() - t0, 1),
         "result": final,
     }
-    _runs_dir(model).mkdir(parents=True, exist_ok=True)
+    _runs_dir(model, tag).mkdir(parents=True, exist_ok=True)
     path.write_text(json.dumps(record, indent=1), encoding="utf-8")
     return record
 
@@ -208,6 +209,9 @@ def main() -> None:
     ap.add_argument("--model", default=DEFAULT_MODEL)
     ap.add_argument("--workers", type=int, default=2)
     ap.add_argument("--only", help="only narrative_ids starting with this prefix")
+    ap.add_argument("--tag", default="",
+                    help="prompt/config version tag; separates run caches and "
+                         "archives the summary as summary__TAG.*")
     args = ap.parse_args()
 
     ns = narratives.load_all()
@@ -219,7 +223,7 @@ def main() -> None:
 
     records = []
     with ThreadPoolExecutor(max_workers=args.workers) as pool:
-        futures = {pool.submit(run_one, n, rep, args.model): (n, rep)
+        futures = {pool.submit(run_one, n, rep, args.model, args.tag): (n, rep)
                    for n, rep in jobs}
         for i, fut in enumerate(as_completed(futures), 1):
             n, rep = futures[fut]
@@ -231,11 +235,18 @@ def main() -> None:
             records.append(rec)
 
     summary = summarize(records)
+    if args.tag:
+        summary["tag"] = args.tag
     out_dir = ROOT / "eval" / "results"
     out_dir.mkdir(parents=True, exist_ok=True)
     (out_dir / "summary.json").write_text(json.dumps(summary, indent=1),
                                           encoding="utf-8")
     (out_dir / "summary.md").write_text(to_markdown(summary), encoding="utf-8")
+    if args.tag:
+        (out_dir / f"summary__{args.tag}.json").write_text(
+            json.dumps(summary, indent=1), encoding="utf-8")
+        (out_dir / f"summary__{args.tag}.md").write_text(
+            to_markdown(summary), encoding="utf-8")
     print("\n" + to_markdown(summary))
     print(f"wrote {out_dir / 'summary.json'} and summary.md")
 

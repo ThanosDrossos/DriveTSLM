@@ -113,14 +113,23 @@ Verify each provided assertion against the sensor evidence.
 Verdict semantics:
 - supported: telemetry positively backs the assertion (within reasonable tolerance; \
 a stated speed within ~15% or ~10 km/h of the recorded one is supported).
-- contradicted: telemetry positively shows the assertion is false.
+- contradicted: telemetry positively shows the assertion is false. Use this ONLY when \
+a single direct comparison between the claim and a tool value decides it (claimed \
+speed vs recorded speed; claimed braking vs the brake channel or pre-impact speed \
+profile; claimed impact count vs detected spikes/recorded events; claimed severity vs \
+recorded delta-V or peak g). If your argument needs a chain of physical inferences, \
+unverified sign conventions, or assumptions about mounting/frames, choose \
+unverifiable instead. "Compatible with being false" is NOT contradicted.
 - unverifiable: the available channels cannot decide it (e.g. vehicle-frame impact \
 direction when IMU axis alignment is undocumented; facts about road/weather/intent).
 Judge each assertion on the sensors alone, not on plausibility.
 
 CISS events: t=0 is the impact; pre-crash channels are sparse (~2 Hz) and the EDR \
-summary in get_window_info (max delta-V etc.) is citable evidence. The narrative \
-describes the whole crash; the telemetry belongs to ONE vehicle (stated in the task).
+summary in get_window_info (max delta-V etc.) is citable evidence. Sign convention \
+(SAE): LONGITUDINAL delta-V is NEGATIVE when the vehicle decelerates — i.e. a frontal \
+impact or striking something ahead — and POSITIVE when the vehicle is pushed forward \
+(struck from behind). The narrative describes the whole crash; the telemetry belongs \
+to ONE vehicle (stated in the task).
 
 Tool results are JSON prefixed with their tool_call_id ("T1", "T2", ...). Budget: \
 {MAX_STEPS} tool calls; a good run needs 3-6. When done, call submit_verdicts \
