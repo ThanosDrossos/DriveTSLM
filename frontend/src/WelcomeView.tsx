@@ -107,9 +107,12 @@ export default function WelcomeView({
           (<a href="https://arxiv.org/abs/2510.02410" {...ext}>ICML 2026</a>) established
           time-series language models: natural-language reasoning grounded directly in raw
           sensor streams — so far in medical domains (ECG, sleep, activity). This PoC previews
-          a thesis that brings that idea to a domain the lab's TSLM portfolio does not yet
-          occupy, automotive telematics, where interpretability is not a nice-to-have but the
-          product:
+          a thesis that brings that idea to a vertical the lab's TSLM portfolio does not yet
+          occupy, automotive telematics — and one that sits squarely on the lab's second
+          flagship asset, the partnership with the <b>Zurich Insurance AI Lab</b>: insurance
+          claims are a setting where auditable, evidence-grounded reasoning is not an
+          interpretability nicety but the product itself, and where a validated
+          narrative-vs-telemetry checker has a direct route to real-world evaluation:
         </p>
         <ul style={{ lineHeight: 1.65 }}>
           <li>
