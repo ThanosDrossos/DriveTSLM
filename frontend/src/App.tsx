@@ -4,9 +4,10 @@ import { api } from "./api";
 import ClaimsDeskView from "./ClaimsDeskView";
 import ExplorerView from "./ExplorerView";
 import ResultsView from "./ResultsView";
+import WelcomeView from "./WelcomeView";
 import type { EventRow, ModelInfo } from "./types";
 
-type Tab = "explorer" | "analysis" | "claims" | "results";
+type Tab = "welcome" | "explorer" | "analysis" | "claims" | "results";
 
 function Login({ onOk }: { onOk: () => void }) {
   const [pw, setPw] = useState("");
@@ -41,7 +42,7 @@ function Login({ onOk }: { onOk: () => void }) {
 
 export default function App() {
   const [locked, setLocked] = useState<boolean | null>(null);
-  const [tab, setTab] = useState<Tab>("explorer");
+  const [tab, setTab] = useState<Tab>("welcome");
   const [events, setEvents] = useState<EventRow[]>([]);
   const [models, setModels] = useState<ModelInfo[]>([]);
   const [model, setModel] = useState("");
@@ -68,6 +69,7 @@ export default function App() {
   if (locked) return <Login onOk={load} />;
 
   const tabs: [Tab, string][] = [
+    ["welcome", "Welcome"],
     ["explorer", "Event Explorer"],
     ["analysis", "Grounded Analysis"],
     ["claims", "Claims Desk"],
@@ -106,6 +108,9 @@ export default function App() {
         </div>
       </aside>
       <main className="main">
+        {tab === "welcome" && (
+          <WelcomeView onNavigate={setTab} nEvents={events.length} model={model} />
+        )}
         {tab === "explorer" && (
           <ExplorerView events={events} selected={selected} onSelect={setSelected} />
         )}

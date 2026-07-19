@@ -1,1 +1,1 @@
-{"root":["./src/AnalysisView.tsx","./src/App.tsx","./src/ClaimsDeskView.tsx","./src/ExplorerView.tsx","./src/ResultsView.tsx","./src/api.ts","./src/main.tsx","./src/types.ts","./src/ui.tsx"],"version":"5.9.3"}
+{"root":["./src/AnalysisView.tsx","./src/App.tsx","./src/ClaimsDeskView.tsx","./src/ExplorerView.tsx","./src/ResultsView.tsx","./src/WelcomeView.tsx","./src/api.ts","./src/main.tsx","./src/types.ts","./src/ui.tsx"],"version":"5.9.3"}
