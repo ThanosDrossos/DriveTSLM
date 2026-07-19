@@ -1,7 +1,7 @@
 """Baseline arm: same model, no tools. Input is a well-rendered full-window
-plot of every channel plus the channel legend (names, units, sampling) — a fair
-plot-reading setup, deliberately not strawmanned. Its claims cannot carry
-citations; the UI labels the arm accordingly."""
+plot of every channel plus the channel legend (names, units, sampling) — a
+deliberately fair plot-reading setup. Its claims cannot carry citations; the
+UI labels the arm accordingly."""
 
 from __future__ import annotations
 

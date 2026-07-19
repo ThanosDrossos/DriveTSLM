@@ -109,7 +109,7 @@ the validator then caught a genuinely fabricated number (a claimed 74.1° net ro
 where the cited tool result said 19.1°), which is precisely the failure mode the PoC is
 built to expose.
 
-## Agent rules (enforced, not vibes)
+## Agent rules (machine-enforced)
 
 1. Every quantitative claim in a final answer must be written `[claim](Tn)`, citing the
    tool call whose result contains the number. The backend validator re-checks every

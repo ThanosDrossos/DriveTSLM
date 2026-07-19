@@ -1,5 +1,39 @@
 const ext = { target: "_blank", rel: "noreferrer" };
 
+const stroke = {
+  fill: "none",
+  stroke: "currentColor",
+  strokeWidth: 1.8,
+  strokeLinecap: "round" as const,
+  strokeLinejoin: "round" as const,
+};
+
+const Icons = {
+  explorer: (
+    <svg width="19" height="19" viewBox="0 0 24 24" {...stroke}>
+      <polyline points="2 12 6 12 9 5 13 19 16 12 22 12" />
+    </svg>
+  ),
+  analysis: (
+    <svg width="19" height="19" viewBox="0 0 24 24" {...stroke}>
+      <rect x="3" y="4" width="7.5" height="16" rx="1.5" />
+      <rect x="13.5" y="4" width="7.5" height="16" rx="1.5" />
+    </svg>
+  ),
+  claims: (
+    <svg width="19" height="19" viewBox="0 0 24 24" {...stroke}>
+      <rect x="4" y="3" width="16" height="18" rx="2" />
+      <path d="M8 8h8M8 12h8" />
+      <path d="M8 16.5l2 2 4-4" />
+    </svg>
+  ),
+  results: (
+    <svg width="19" height="19" viewBox="0 0 24 24" {...stroke}>
+      <path d="M4 20V10M10 20V4M16 20v-7M22 20H2" />
+    </svg>
+  ),
+};
+
 export default function WelcomeView({
   onNavigate,
   nEvents,
@@ -11,46 +45,45 @@ export default function WelcomeView({
 }) {
   const pages: {
     tab: "explorer" | "analysis" | "claims" | "results";
+    icon: React.ReactNode;
     title: string;
     text: string;
   }[] = [
     {
       tab: "explorer",
-      title: "1 · Event Explorer",
+      icon: Icons.explorer,
+      title: "Event Explorer",
       text:
-        `The raw material: ${nEvents || 50} real events — VZCrash windows (100 Hz accelerometer + ` +
-        "gyroscope, 1 Hz GPS speed, labeled crash / near-miss / normal) and NHTSA CISS cases " +
-        "(real technician crash narratives paired with the vehicle's EDR recording). Inspect " +
-        "every channel and the deterministic threshold detections the agent will later use.",
+        `${nEvents || 50} real events: VZCrash windows (100 Hz IMU, GPS speed, labeled) and ` +
+        "NHTSA CISS cases (technician narrative + EDR recording), with per-channel plots and " +
+        "the deterministic threshold detections available to the agent.",
     },
     {
       tab: "analysis",
-      title: "2 · Grounded Analysis",
+      icon: Icons.analysis,
+      title: "Grounded Analysis",
       text:
-        "The core comparison, side by side on the same model: an agent that must inspect the " +
-        "signals through tools and cite a tool result for every number it states — versus a " +
-        "baseline given only a rendered plot. The backend re-validates every citation; wrong " +
-        "or missing ones are flagged red. Tool-call trace, token counts and cost are shown " +
-        "for both arms.",
+        "The same model in two arms: a tool-using agent under the citation constraint versus " +
+        "a plot-only baseline. Tool-call trace, validated citations, token counts and cost " +
+        "are shown for both.",
     },
     {
       tab: "claims",
-      title: "3 · Claims Desk",
+      icon: Icons.claims,
+      title: "Claims Desk",
       text:
-        "The application: pick an accident narrative (real technician summary or a claimant " +
-        "statement with exactly one injected, documented error), and the checker extracts " +
-        "atomic assertions, verifies each against the sensors, and returns supported / " +
-        "contradicted / unverifiable verdicts with cited evidence. Ground truth is revealed " +
-        "only after the verdict — an evaluation, not a magic trick.",
+        "A narrative is decomposed into typed assertions, each verified against the sensors: " +
+        "supported, contradicted, or unverifiable, with cited evidence. Ground truth is " +
+        "revealed only after the verdict.",
     },
     {
       tab: "results",
-      title: "4 · Results",
+      icon: Icons.results,
+      title: "Results",
       text:
-        "The numbers behind the demo: every narrative variant × 3 repetitions, scored " +
-        "deterministically against ground-truth-by-construction (no LLM judge). " +
-        "Contradiction precision/recall per error type, abstention rate, citation validity, " +
-        "cost per case, and run-to-run agreement — failures included.",
+        "All narrative variants × 3 repetitions, scored deterministically against injected " +
+        "single errors: precision/recall per error type, abstention, citation validity, " +
+        "cost per case, run-to-run agreement.",
     },
   ];
 
@@ -58,23 +91,22 @@ export default function WelcomeView({
     <>
       <h1>Claims Desk — evidence-grounded agentic reasoning over crash telemetry</h1>
       <p className="sub">
-        Proof-of-concept for the <b>DriveTSLM + CrashCheck</b> master-thesis proposal
-        (ETH Agentic Systems Lab application, Thanos Drossos). Everything here runs on real,
-        public sensor data — no synthetic traces anywhere.
+        Proof-of-concept for the <b>DriveTSLM + CrashCheck</b> thesis proposal
+        (ETH Agentic Systems Lab application, Thanos Drossos). Real, public sensor data
+        throughout; no synthetic traces.
       </p>
 
-      <div className="panel">
-        <h3>The problem</h3>
-        <p className="mt0" style={{ lineHeight: 1.65, margin: 0 }}>
-          Insurers collect high-frequency driving telemetry, yet claims are settled on
-          narratives that nobody systematically checks against what the vehicle actually
-          recorded — while telematics risk scoring stays a black box no adjuster, customer or
-          court can audit. Large language models could bridge the two, but only if every
-          quantitative statement they make is <i>verifiably grounded</i> in the signal. This
-          PoC builds that accountability loop with a frontier model and deterministic tools:
-          the agent may only state numbers it can cite from a tool result, a backend validator
-          re-checks every citation (unit-aware, rounding-consistent), and accident narratives
-          are cross-examined against the sensors with per-assertion verdicts.
+      <div className="panel prose">
+        <h3>Overview</h3>
+        <p className="mt0" style={{ margin: 0 }}>
+          Insurance claims are settled on narratives that are rarely checked against what the
+          vehicle recorded. Claims Desk investigates whether an LLM agent can close that gap
+          under verifiable grounding: the agent inspects raw crash telemetry exclusively
+          through deterministic tools, every quantitative statement must cite the tool result
+          that produced it, and a backend validator re-derives each cited number (unit-aware,
+          rounding-consistent). The same machinery cross-examines accident narratives and
+          returns per-assertion verdicts with cited evidence. Current model:{" "}
+          <code>{model}</code>, selectable in the sidebar; cost is reported per run.
         </p>
       </div>
 
@@ -83,68 +115,73 @@ export default function WelcomeView({
         <div className="card-grid">
           {pages.map((p) => (
             <button key={p.tab} className="nav-card" onClick={() => onNavigate(p.tab)}>
-              <div className="nav-card-title">{p.title}</div>
+              <div className="nav-card-head">
+                <span className="nav-card-icon">{p.icon}</span>
+                <span className="nav-card-title">{p.title}</span>
+              </div>
               <div className="nav-card-text">{p.text}</div>
               <div className="nav-card-go">open view →</div>
             </button>
           ))}
         </div>
-        <p className="small" style={{ marginBottom: 0 }}>
-          Agent rules, enforced (not vibes): every quantitative claim must be written as a
-          citation of the tool call that produced it; insufficient evidence must become
-          "unverifiable" rather than a guess; undocumented sensor frames (VZCrash device axes)
-          may not be interpreted as vehicle directions. Current model:{" "}
-          <code>{model}</code> — switchable in the sidebar (ChatGPT, Gemini and Claude
-          generations via the KIT AI Toolbox), with cost reported per run.
-        </p>
       </div>
 
-      <div className="panel">
+      <div className="panel prose">
         <h3>Connection to the Agentic Systems Lab · OpenTSLM</h3>
-        <p className="mt0" style={{ lineHeight: 1.65 }}>
-          The lab's{" "}
+        <p className="mt0">
           <a href="https://github.com/StanfordBDHG/OpenTSLM" {...ext}>OpenTSLM</a>{" "}
           (<a href="https://arxiv.org/abs/2510.02410" {...ext}>ICML 2026</a>) established
-          time-series language models: natural-language reasoning grounded directly in raw
-          sensor streams — so far in medical domains (ECG, sleep, activity). This PoC previews
-          a thesis that brings that idea to a vertical the lab's TSLM portfolio does not yet
-          occupy, automotive telematics — and one that sits squarely on the lab's second
-          flagship asset, the partnership with the <b>Zurich Insurance AI Lab</b>: insurance
-          claims are a setting where auditable, evidence-grounded reasoning is not an
-          interpretability nicety but the product itself, and where a validated
-          narrative-vs-telemetry checker has a direct route to real-world evaluation:
+          time-series language models — natural-language reasoning grounded in raw sensor
+          streams — in medical domains. The proposed thesis extends this line to automotive
+          telematics, a vertical the lab's TSLM portfolio does not yet occupy and one aligned
+          with the lab's <b>Zurich Insurance AI Lab</b> partnership: in claims processing,
+          auditable grounding is the deliverable itself.
         </p>
-        <ul style={{ lineHeight: 1.65 }}>
+        <ul>
           <li>
-            <b>DriveTSLM</b> — the first generative TSLM for automotive telemetry, trained with
-            the OpenTSLM-Flamingo recipe on{" "}
+            <b>DriveTSLM</b> — a generative TSLM for automotive telemetry
+            (OpenTSLM-Flamingo recipe,{" "}
             <a href="https://huggingface.co/datasets/vzc-research-chapter/VZCrash" {...ext}>
               VZCrash
-            </a>{" "}
-            (190k real crash windows), evaluated against specialized detectors <i>and</i>{" "}
-            against the no-training tool agent shown here — accuracy and cost as reported axes
-            (medical→kinematic transfer is the open scientific question).
+            </a>, 190k windows), evaluated against specialized detectors and against the
+            tool-using agent shown here.
           </li>
           <li>
-            <b>CrashCheck</b> — the first benchmark for narrative-vs-telemetry consistency
-            checking, scaled from the ~1,300 joinable{" "}
+            <b>CrashCheck</b> — a benchmark for narrative-vs-telemetry consistency checking
+            built from{" "}
             <a href="https://www.nhtsa.gov/crash-data-systems/crash-investigation-sampling-system" {...ext}>
               NHTSA CISS
             </a>{" "}
-            narrative+EDR cases per year with controlled perturbations — exactly the
-            ground-truth-by-construction scoring this demo already runs in miniature.
+            narrative+EDR pairs with controlled perturbations; this demo runs the protocol in
+            miniature.
           </li>
         </ul>
+        <div className="rq-box">
+          <div className="rq-head">Research questions of the thesis</div>
+          <ol>
+            <li>
+              <b>Transfer.</b> Do time-series language models transfer from medical to
+              kinematic sensor domains, zero-shot and fine-tuned?
+            </li>
+            <li>
+              <b>Grounded reasoning vs. specialized models.</b> Can a telematics TSLM match
+              specialized crash detectors while producing auditable rationales, and at what
+              token and compute cost relative to a no-training tool-using agent?
+            </li>
+            <li>
+              <b>Consistency.</b> At what precision can narrative-vs-telemetry checking
+              detect misreported claims, and which error types — direction, magnitude,
+              count, sequence — are detectable?
+            </li>
+          </ol>
+        </div>
         <p className="small" style={{ marginBottom: 0 }}>
-          The citation validator and the deterministic eval harness carry over to the thesis
-          unchanged. Style deliberately echoes the lab's example PoC: naive model vs
-          tool-using agent, side by side, on real data, with inspectable traces. Code:{" "}
+          Code:{" "}
           <a href="https://github.com/ThanosDrossos/DriveTSLM" {...ext}>
             github.com/ThanosDrossos/DriveTSLM
           </a>{" "}
-          · Lab:{" "}
-          <a href="https://www.agenticsystemslab.org" {...ext}>agenticsystemslab.org</a> · Data
-          licenses: VZCrash CC BY-NC 4.0 (gated), CISS public.
+          · Lab: <a href="https://www.agenticsystemslab.org" {...ext}>agenticsystemslab.org</a>{" "}
+          · Data: VZCrash (CC BY-NC 4.0, gated), NHTSA CISS (public).
         </p>
       </div>
     </>

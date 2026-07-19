@@ -37,8 +37,8 @@ part of the argument.
 - Select a VZCrash crash event, *Run both arms*.
 > "Both arms are the same model. The left arm holds tools — window metadata, slicing,
 > per-channel statistics, threshold detections, plot rendering — and is bound by the
-> citation rule. The right arm receives a fully rendered plot of every channel; a
-> deliberately fair plot-reading baseline, not a strawman."
+> citation rule. The right arm receives a fully rendered plot of every channel: a
+> deliberately fair plot-reading baseline."
 - While the trace streams, point at individual calls:
 > "Each call is logged with arguments and returned values; citations in the final answer
 > resolve to these exact results. The validator is unit-aware — kilometres per hour

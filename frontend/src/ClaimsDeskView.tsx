@@ -68,7 +68,7 @@ export default function ClaimsDeskView({ events, model }: { events: EventRow[]; 
         Pick an event and a narrative. The checker extracts atomic assertions, verifies each
         against the sensors through tools, and returns per-assertion verdicts with cited
         evidence. The narrative's ground truth (whether an error was injected, and which) is
-        revealed only <i>after</i> the verdict — this is an evaluation, not a magic trick.
+        revealed only <i>after</i> the verdict has been rendered.
       </p>
       <div className="panel">
         <div className="row" style={{ alignItems: "center", flexWrap: "wrap" }}>
