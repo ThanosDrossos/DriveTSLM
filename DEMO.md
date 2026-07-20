@@ -1,4 +1,4 @@
-# DEMO.md — video walkthrough
+# DEMO.md · video walkthrough
 
 A single screen recording of the deployed application, around four minutes, unhurried.
 Log in first so the recording opens on the Welcome view. The text below is written to be
