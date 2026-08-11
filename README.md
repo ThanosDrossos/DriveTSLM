@@ -140,60 +140,64 @@ telemetry at authoring time (see `note` fields in `data/narratives/narratives.js
 
 ### Results (35 narratives × 3 reps, `azure.gpt-5-mini`, committed in `eval/results/`)
 
-Two checker-prompt versions were evaluated; the delta is itself a finding. **v1** allowed
-free-form contradiction reasoning; **v2** restricts "contradicted" to single direct
-claim-vs-value comparisons and states the SAE delta-V sign convention.
+| metric | value |
+|---|---|
+| contradiction precision | **0.857** |
+| contradiction recall | **0.824** |
+| false-positive rate (consistent narratives flagged) | **0.130** |
+| abstention rate (unverifiable / all verdicts) | 0.402 |
+| citation validity (validator pass rate) | 0.956 |
+| mean cost per case (public list prices) | $0.0059 |
+| run-to-run agreement (majority share, 3 reps) | 0.886 |
+| runs completed | 105/105 |
 
-| metric | v1 prompt | v2 prompt (shipped) |
-|---|---|---|
-| contradiction precision | 0.784 | **0.857** |
-| contradiction recall | 0.784 | **0.824** |
-| false-positive rate (consistent narratives flagged) | 0.208 | **0.130** |
-| abstention rate (unverifiable / all verdicts) | 0.389 | 0.402 |
-| citation validity (validator pass rate) | 0.965 | 0.956 |
-| mean cost per case (public list prices) | $0.0057 | $0.0059 |
-| run-to-run agreement (majority share, 3 reps) | 0.876 | 0.886 |
-| runs completed | 104/105 | 105/105 |
+Confusion matrix: 42 true positives, 7 false positives, 9 false negatives, 47 true
+negatives, over 51 perturbed and 54 consistent runs.
 
-Per injected error type (v2, detected/runs, with v1 in parentheses):
+Per injected error type (detected / runs):
 
 | error type | detected | localized to the right assertion |
 |---|---|---|
-| speed_mismatch | **15/15** (14/15) | 13 |
-| understated_severity | **12/12** (12/12) | 12 |
-| event_count_mismatch | **8/9** (4/9) | 8 |
-| claimed_braking_absent | 6/9 (6/9) | 6 |
-| wrong_impact_direction | **1/6** (4/6) | 0 |
+| speed_mismatch | **15/15** | 13 |
+| understated_severity | **12/12** | 12 |
+| event_count_mismatch | **8/9** | 8 |
+| claimed_braking_absent | 6/9 | 6 |
+| wrong_impact_direction | **1/6** | 0 |
 
 **Honest failures, named** (run JSONs in `eval/results/runs/`):
 
-1. **The calibration frontier is per-error-type.** v2's stricter contradiction bar fixed
-   the false positives and doubled event-count detection — and *collapsed* direction
-   detection (4/6 → 1/6): the model now files sign-convention reasoning under "chain of
-   inference" and abstains, despite the convention being spelled out. Worse, on
-   `ciss_2022_27367_v2` it marks the fabricated "rear-ended from behind" as *supported*
-   in all 3 reps while the EDR shows −18 km/h longitudinal delta-V (a frontal
-   deceleration). Sign-convention physics is a real capability gap at this model tier.
-2. **Silence read as denial.** Two v2 false positives come from the *extraction* step
+1. **Sign-convention physics is a real capability gap at this model tier.** Impact
+   direction is the worst class by a wide margin (1/6, none localized): the checker files
+   sign-convention reasoning under "chain of inference" and abstains, despite the SAE
+   convention being stated verbatim in the prompt. Worse, on `ciss_2022_27367_v2` it
+   marks the fabricated "rear-ended from behind" as *supported* in all 3 reps while the
+   EDR shows −18 km/h longitudinal delta-V (a frontal deceleration). The contradiction
+   bar is also not a single global knob: raising it to suppress false positives is
+   exactly what pushes borderline direction and inferred-braking cases into abstention,
+   so calibration has to happen per assertion type rather than prompt-wide.
+2. **Silence read as denial.** Two of the false positives come from the *extraction* step
    inventing a negative assertion ("the narrative does not state that braking occurred")
    from a narrative that merely omits braking — which the recorded brake application then
    "contradicts". Extraction, not verification, is the weak link there.
 3. **Absence-of-evidence claims are genuinely hard.** "The other car clipped me once"
    (`vz_61371`, ground truth: no contact, pure braking profile) is detected in only 1-2 of
    3 reps; abstaining is defensible — a light clip needn't exceed the 2.5 g spike
-   threshold. Conversely, one v1 rep *contradicted the true* "we never touched" narrative
-   by circularly citing the absence of impact evidence.
+   threshold.
 4. **Ground truth is soft where the EDR under-counts.** The real `ciss_2022_27367_v2`
    summary describes two contacts (initial + sideslap); the EDR recorded 1 qualifying
    event, so the checker flags the *real* narrative (2 of 3 reps). For thesis-scale
    CrashCheck this argues for excluding EDR-threshold-sensitive assertion types from the
    "consistent" ground truth or modeling event-recording thresholds explicitly.
-5. **VZ braking inference was traded away.** v2 detects CISS braking errors (direct brake
-   channel) at 6/9 but misses all 3 reps of `vz_1529161` (braking must be inferred from
-   the GPS speed profile — exactly the inference chain v2 discourages).
+5. **Inferred braking is missed.** CISS braking errors are caught 6/9 through the direct
+   brake channel, but all 3 reps of `vz_1529161` are missed: there braking has to be
+   inferred from the GPS speed profile, which is precisely the multi-step chain the
+   contradiction rule tells the checker to report as unverifiable.
 
 Reproduce: `python eval/run_eval.py --reps 3 --workers 3 --tag v2-prompt` (resumable;
 ~$0.60 and ~50 min for the full sweep on gpt-5-mini).
+
+An earlier revision of the checker prompt, together with its own full sweep, is kept in
+`eval/results/` and in the git history; the figures above are the shipped configuration.
 
 ## Limitations (known, deliberate)
 
