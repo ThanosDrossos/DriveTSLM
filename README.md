@@ -238,6 +238,12 @@ backend/     FastAPI app, agent loop, tools, citation validator, tests, CLI
 frontend/    React SPA (4 views)
 data/        pipelines (VZCrash gated fetch, CISS join), working set, narratives
 eval/        harness + committed results
+docs/        deployment and data-pipeline runbooks
 ```
 
 Tests: `python -m pytest backend/tests` (25 validator + tool sanity tests).
+
+Further documentation: `CLAUDE.md` (architecture, invariants, conventions for anyone —
+human or agent — working in the repo), `docs/DEPLOYMENT.md` (Azure Container Apps runbook),
+`docs/DATA_PIPELINE.md` (regenerating the working set and narratives, with the verified
+schema facts behind them).
